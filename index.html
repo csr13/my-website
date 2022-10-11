@@ -9,16 +9,24 @@
     </head>
     
     <body>
-      <div>
-        <h3>Workaround for preprocessing db data or stuff like that.</h3>
-        <script src="https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
-      </div> 
+      <div id="notes">
+        <div class="note">
+          <script src="https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+        </div> 
+      </div>
    </body>
     
     <!-- Pulling some stuff -->
     <script> 
        fetch("https://itstealthki.github.io/site-data.json")
-         .then(resp => console.log(resp))
+         .then(resp => resp.json()).then(function(data) {
+            var snippets = data.snippets;
+            snippets.forEach(function(snip, x) {
+                 console.log(snip.title)
+                 console.log(snip.script)
+                 console.log(x)
+            })
+          })
          .catch(error => console.log(error))
     </script>
 

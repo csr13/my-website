@@ -10,9 +10,7 @@
     
     <body>
       <div id="notes">
-        <div class="note">
-          <script src="https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
-        </div> 
+         
       </div>
    </body>
     
@@ -22,9 +20,13 @@
          .then(resp => resp.json()).then(function(data) {
             var snippets = data.snippets;
             snippets.forEach(function(snip, x) {
-                 console.log(snip.title)
-                 console.log(snip.script)
-                 console.log(x)
+                 var notes = document.getElementById("notes")
+                 var note = document.createElement("div")
+                 var title = document.createElement("h3")
+                 var script = snip.script
+                 title.innerText = `( ${x + 1} ${snip.title}`
+                 note.appendChild(title)
+                 note.appendChild(script
             })
           })
          .catch(error => console.log(error))

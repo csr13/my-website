@@ -1,7 +1,7 @@
 {"snippets" : 
    [
       {
-         "script" : "<script src='https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js'></script>",
+         "script" : "https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js",
          "title" : "Task management for Django apps."
       }
    ]

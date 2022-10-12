@@ -33,8 +33,9 @@
               var script = document.createElement("script")
               script.src = snip.script
               title.innerText = `( ${x + 1} ${snip.title}`
-              note.appendChild(title)
-              note.appendChild(script)
+              note.appendChild(title);
+              note.appendChild(script);
+              notes.appendChild(note);
             })
           })
          .catch(error => console.log(error))

@@ -14,34 +14,14 @@
           <small> &#9827; &#9827; &#9827; &#9827; &#9827; </small>
         <p>
       </div>
-      
       <!-- notes -->
-      <div id="notes"></div>
+      <div id="notes">
+        <div class="note">
+          <h3> 1) task management, systems, django </h3>
+          <script src="https://gist.github.com/itstealthki/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+        </div>
+      </div>
       <!-- end of notes -->
    </body>
-    
-    <!-- Pulling some stuff -->
-    <script> 
-      document.addEventListener("DOMContentLoaded", function() {
-       fetch("https://itstealthki.github.io/site-data.json")
-         .then(resp => resp.json())
-         .then(function(data) {
-            var snippets = data.snippets;
-            snippets.forEach(function(snip, x) {
-              var notes = document.getElementById("notes")
-              var note = document.createElement("div")
-              var title = document.createElement("h3")
-              var script = document.createElement("script")
-              script.src = snip.script
-              title.innerText = `( ${x + 1} ${snip.title}`
-              note.appendChild(title);
-              note.appendChild(script);
-              notes.appendChild(note);
-            })
-          })
-         .catch(error => console.log(error))
-      })
-    </script>
-    
   </html>
 <html5>

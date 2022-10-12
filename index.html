@@ -17,20 +17,20 @@
     <!-- Pulling some stuff -->
     <script> 
        fetch("https://itstealthki.github.io/site-data.json")
-         .then(resp => resp.json()).then(function(data) {
+         .then(resp => resp.json())
+         .then(function(data) {
             var snippets = data.snippets;
             snippets.forEach(function(snip, x) {
-                 var notes = document.getElementById("notes")
-                 var note = document.createElement("div")
-                 var title = document.createElement("h3")
-                 var script = snip.script
-                 title.innerText = `( ${x + 1} ${snip.title}`
-                 note.appendChild(title)
-                 note.appendChild(script
+              var notes = document.getElementById("notes")
+              var note = document.createElement("div")
+              var title = document.createElement("h3")
+              var script = snip.script
+              title.innerText = `( ${x + 1} ${snip.title}`
+              note.appendChild(title)
+              note.appendChild(script)
             })
           })
          .catch(error => console.log(error))
     </script>
-
   </html>
 <html5>

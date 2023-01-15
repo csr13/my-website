@@ -1,4 +1,2 @@
-.rotate {
-  -webkit-animation: rotate 5s normal linear infinite;
-  animation: rotate 5s normal linear infinite;
-}
+body{font-family:monospace;background:black;color:white;}
+.rotate {-webkit-animation: rotate 5s normal linear infinite;animation: rotate 5s normal linear infinite;}

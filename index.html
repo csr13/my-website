@@ -15,6 +15,15 @@
             .warning-style{color:yellow;background:black;border:1px solid yellow;}
             .happy-style{color:limegreen;background:blue;border:1px solid limegreen;}
         </style>
+        <script>
+            window.addEventListener("DOMContentLoaded", function(){
+                if (window.confirm("Howdy PartN3r!, this junKYard is 18+ ONLY! continue, yes or nah?")) {
+                    alert("W3Lcome to my JunkYard!! Do Not Take Shit Personal, Im Crazy.");
+                } else {
+                    window.close()
+                }
+            })
+        </script>
     </head>
     <body>
       <div id="title">
@@ -24,7 +33,17 @@
           <small> &#9827; </small>
         <h2>
       </div>
+      <div class="counter">
+      <code> 
+        <span> Total Rants - </span> 
+        <span id="total-counts" class="angry-style"> </span>
+      </code>
+      </div>
       <!-- notes -->
+      <div class="note">
+        <h3> What R we Doin Next? </h3>
+        <p> Your MOM. </p>
+      </div>
       <div class="note">
           <h3> ChROnIcaLLy ALiv3</h3>
           <p>
@@ -81,14 +100,8 @@
       </div>
       <!-- end of notes -->
     <script>
-        window.addEventListener("DOMContentLoaded", function(){
-            var confirm = window.confirm("Howdy PartN3r!, this junKYard is 18+ ONLY! continue, yes or nah?");
-            if (confirm) {
-                alert("W3Lcome to my JunkYard!! Do Not Take Shit Personal, Im Crazy.");
-            } else {
-                window.close()
-            }
-        })
+        var notesTotal = document.getElementsByClassName("note").length;
+        document.getElementById("total-counts").innerText=notesTotal;
     </script>
    </body>
 </html>

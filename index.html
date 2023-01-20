@@ -27,23 +27,22 @@
     </head>
     <body>
       <div id="title">
-        <h2>
-          <small> &#9827; </small>
-          Dumb SHIT
-          <small> &#9827; </small>
-        <h2>
+        <center>
+            <h2>
+                <span class="cross"> &#x2626; </span>
+                    JunkYard
+                <span class="cross"> &#x2626;</span>
+            <h2>
+        </center>
       </div>
       <div class="counter">
-      <code> 
-        <span> Total Rants - </span> 
-        <span id="total-counts" class="angry-style"> </span>
-      </code>
+        <code> 
+            <span> Total Rants - </span> 
+            <span id="total-counts" class="angry-style"> </span>
+        </code>
       </div>
       <!-- notes -->
-      <div class="note">
-        <h3> What R we Doin Next? </h3>
-        <p> Your MOM. </p>
-      </div>
+      <hr>
       <div class="note">
           <h3> ChROnIcaLLy ALiv3</h3>
           <p>
@@ -102,6 +101,10 @@
     <script>
         var notesTotal = document.getElementsByClassName("note").length;
         document.getElementById("total-counts").innerText=notesTotal;
+        var cross = document.getElementsByClassName("cross");
+        for (let i = 0; i < cross.length; i++) {
+            cross[i].style.transform = "rotate(180deg)"
+        }
     </script>
    </body>
 </html>

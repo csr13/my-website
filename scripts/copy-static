@@ -1,0 +1,15 @@
+#!/bin/bash
+
+dire=$(basename "$PWD")
+
+if [ $dire = scripts ]; then
+    echo "[!] Copiando y peGando static a /var/www/html/static ... ";
+    cp ../static -R /var/www/html;
+    echo "[!] Listo."
+else
+    echo "[!] Run script on scripts dire estupIdo";
+fi
+
+if [ $# -eq 1 ]; then
+    chown $1:users -R /var/www/html/static
+fi;

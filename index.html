@@ -26,14 +26,14 @@
         </script>
     </head>
     <body>
-      <div id="title">
+      <div id="title-div">
         <center>
             <h2>
                 <span style='font-size:50px;'>&#9749;</span>
-                    RantYard
+                    <span id="title">RantYard</span>
                 <span style='font-size:50px;'>&#9749;</span>
             <h2>
-            <code> In Coffee We Trust</code>
+            <code id="twista"> In Coffee We Trust</code>
         </center>
       </div>
       <div class="counter">
@@ -41,99 +41,148 @@
             <span> Total Rants - </span> 
             <span id="total-counts" class="angry-style"> </span>
         </code>
+        <code>
+            <button id="show-what-is-this" /> See Confession </button>
+        </code>
         <br>
       </div>
+      <!-- What the fug is this -->
+      <div id="what-the-fuck-is-this" hidden>
+          <h3>ConfessIon<span class="happy-style">:X</span></h3>
+        <p>
+            This confession has meant nothing -- <code> Patrick BatEmAn. </code>
+        </p>
+      </div>
+      <!-- End of what the fug is this -->
       <!-- notes -->
-      <hr>
-      <div class="note">
-          <h3> <code> <span class="happy-style">InfecTed</span> </code> </h3>
-          <p>
-          Assume everythin is infected, every component, switch, router is infected,
-          the internet and is infected with satanic methods designed to influence
-          your choice of actions, BlaK Ops ZeCts OwN your DaTa.
-          </p>
-      </div>
-      <hr>
-      <div class="note">
-          <h3> <code><span class="warning-style"> PaTheThic </span> </code></h3>
-          <p>
-            Do you know how patHetic YoU loOk TryIng to be all ThAt you are not?
-          </p>
-      </div>
-      <hr>
-      <div class="note">
-          <h3> It's not that I hate you ... </h3>
-          <p> 
-            I don't hate you, it's only that you have proven to be a piece of <span class="snake-style">shit</span> to
-            everyone you are/were close to, how in the fuck will I ever consider any sort
-            of relationship with you if you betray your own kin.
-          </p>
-      </div>
-      <hr>
-      <div class="note">
-          <h3> ChROnIcaLLy ALiv3</h3>
-          <p>
-            HAHAH are you on meds??? Yea and you? No LMAO why WouLd I neeD them.
-            I am per3ctlly NormaL right? HAHAHA SuRe Hon3y ...
-            DeNiAl at it's best silly.
-            <br>
-            <code> 
-                <span class="snake-style"> 
-                    PS: GET FUCKING HELP YOU DEMENTED MANIPULATIVE SNAKE 
-                </span>
-            </code>
-            BYE :)
-          </p>
-      </div>
-      <hr>
-      <div id="notes">
+      <div class="notes">
+        <hr>
         <div class="note">
-            <h3> What is this nonsense, buillshit!</h3>
+            <h3> <code> <span class="happy-style">InfecTed</span> </code> </h3>
             <p>
-                Do you have really bad autism, to the point were you screeeeeam!!!!
-                fucking lound when the salad dressing touches the meat on a plate?
-                huh??? IDIOT haha <bold>*evil voice*</bold> a group of psycopathic
-                <code style="background-color: black;"> 
-                    <span style="color: red;">terminal enjoyers</span> 
-                </code>
-                will be comming for you, bigot, fake ass, "friend".
+            Assume everythin is infected, every component, switch, router is infected,
+            the internet and is infected with satanic methods designed to influence
+            your choice of actions, BlaK Ops ZeCts OwN your DaTa.
             </p>
         </div>
         <hr>
         <div class="note">
-            <h3> Bores ME!</h3>
+            <h3> <code><span class="warning-style"> PaTheThic </span> </code></h3>
+            <p>
+                Do you know how patHetic YoU loOk TryIng to be all ThAt you are not?
+            </p>
+        </div>
+        <hr>
+        <div class="note">
+            <h3> It's not that I hate you ... </h3>
             <p> 
-                Bores me with academic linguistics, when something gets to propah
-                too much blah mouth farts, just fucking 
-                <code>
-                    <span class="snake-style">
-                    ~$ systemctl disable your-ass.service && rm -v /etc/system/systemd/your-ass.service
-                    </span>
-                </code> from my system you snake tzzzzzzzzz *snake sounds*
+                I don't hate you, it's only that you have proven to be a piece of <span class="snake-style">shit</span> to
+                everyone you are/were close to, how in the fuck will I ever consider any sort
+                of relationship with you if you betray your own kin.
             </p>
         </div>
         <hr>
         <div class="note">
-          <h3>  management, systems, django .. BORING </h3>
-          <p> 
-            Sometimes u just don't want to add 3rd party packages to handle crons
-            for backend web api's that run on python and django, so here is a STUPID
-            way of doing it. Add stuff to 
-            <code>/etc/cron.daily</code> 
-                or 
-            <code> /etc/cron.hourly </code>
-          </p>
-          <script src="https://gist.github.com/xzan0x7c7/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+            <h3> ChROnIcaLLy ALiv3</h3>
+            <p>
+                HAHAH are you on meds??? Yea and you? No LMAO why WouLd I neeD them.
+                I am per3ctlly NormaL right? HAHAHA SuRe Hon3y ...
+                DeNiAl at it's best silly.
+                <br>
+                <code> 
+                    <span class="snake-style"> 
+                        PS: GET FUCKING HELP YOU DEMENTED MANIPULATIVE SNAKE 
+                    </span>
+                </code>
+                BYE :)
+            </p>
+        </div>
+        <hr>
+        <div id="notes">
+            <div class="note">
+                <h3> What is this nonsense, buillshit!</h3>
+                <p>
+                    Do you have really bad autism, to the point were you screeeeeam!!!!
+                    fucking lound when the salad dressing touches the meat on a plate?
+                    huh??? IDIOT haha <bold>*evil voice*</bold> a group of psycopathic
+                    <code style="background-color: black;"> 
+                        <span style="color: red;">terminal enjoyers</span> 
+                    </code>
+                    will be comming for you, bigot, fake ass, "friend".
+                </p>
+            </div>
+            <hr>
+            <div class="note">
+                <h3> Bores ME!</h3>
+                <p> 
+                    Bores me with academic linguistics, when something gets to propah
+                    too much blah mouth farts, just fucking 
+                    <code>
+                        <span class="snake-style">
+                        ~$ systemctl disable your-ass.service && rm -v /etc/system/systemd/your-ass.service
+                        </span>
+                    </code> from my system you snake tzzzzzzzzz *snake sounds*
+                </p>
+            </div>
+            <hr>
+            <div class="note">
+            <h3>  management, systems, django .. BORING </h3>
+            <p> 
+                Sometimes u just don't want to add 3rd party packages to handle crons
+                for backend web api's that run on python and django, so here is a STUPID
+                way of doing it. Add stuff to 
+                <code>/etc/cron.daily</code> 
+                    or 
+                <code> /etc/cron.hourly </code>
+            </p>
+            <script src="https://gist.github.com/xzan0x7c7/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+            </div>
         </div>
       </div>
       <!-- end of notes -->
     <script>
-        var notesTotal = document.getElementsByClassName("note").length;
-        document.getElementById("total-counts").innerText=notesTotal;
-        var cross = document.getElementsByClassName("cross");
-        for (let i = 0; i < cross.length; i++) {
-            cross[i].style.transform = "rotate(180deg)"
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var nt = document.getElementsByClassName("note").length;
+            function i1() {
+                var ts  = document.getElementById("twista");
+                var tst = "IN Trust We Coffee LMAO"
+                if (ts.innerText == tst) {
+                    ts.innerText = "In Coffee We Trust";
+                } else {
+                    ts.innerText = tst
+                }
+            }
+            function i2() {
+                var ts  = document.getElementById("title");
+                var tst = "YardJunky"
+                if (ts.innerText == tst) {
+                    ts.innerText = "JunkYard";
+                } else {
+                    ts.innerText = tst
+                }
+            }
+            function ri() {
+                window.clearInterval(i1);
+                window.clearInterval(i2);
+            }
+            document.getElementById("total-counts").innerText=nt;
+            document.getElementById("show-what-is-this").addEventListener(
+                "click", function(e) {
+                    var t = e.target
+                    var l = document.getElementById("what-the-fuck-is-this");
+                    if (l.hidden) {
+                        l.hidden = false;
+                        t.innerText = "Close ConFessIOn"
+                    } else {
+                        l.hidden = true
+                        t.innerText = "See ConFessIOn"
+                    }
+                }
+            )
+            const si1 = window.setInterval(i1, 3000)
+            const si2 = window.setInterval(i2, 4000)
+            window.onbeforeunload = ri;
+        })
     </script>
    </body>
 </html>

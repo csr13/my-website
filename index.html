@@ -318,6 +318,10 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var nt = document.getElementsByClassName("note").length;
+            function generateConfession() {
+                fetch("https://xzan0x7c7.github.io/static/data/confessions.json")
+                    .then(resp => console.log(resp.json))
+            }
             function i1() {
                 var ts  = document.getElementById("twista");
                 var tst = "IN Trust We Coffee LMAO"
@@ -358,6 +362,7 @@
                     }
                 }
             )
+            generateConfession()
             const si1 = window.setInterval(i1, 3000)
             const si2 = window.setInterval(i2, 4000)
             window.onbeforeunload = ri;

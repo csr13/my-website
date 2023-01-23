@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-  <!-- Si estas por aqui, eres un/a stalker, o de plano medio curioso/a en todo caso -->
-  <!-- No uso auto generadores estaticos, me gusta escribir todo esto asi a mano, mega OCD -->
-  <!-- Templates para secciones multiples /copy/pasta -->
-  <!-- Easier to Copy paste this shit
+<!-- Si estas por aqui, eres un/a stalker, o de plano medio curioso/a en todo caso -->
+<!-- No uso auto generadores estaticos, me gusta escribir todo esto asi a mano, mega OCD -->
+<!-- Templates para secciones multiples /copy/pasta -->
+<!-- Easier to Copy paste this shit
     <div class="confession">
         <div class="confession-title">
             <h3> </h3>
@@ -14,8 +14,8 @@
             <img src='' class="confession-image"/>
         </div>
     </div>
--->
-  <html>
+    -->
+<html>
     <head>
         <title>🗑</title>
         <meta charset="utf-8">
@@ -25,9 +25,9 @@
         <style>
             body {font-family: monospace;}
             #title-div{background-image: url("./static/images/pb2.png"); height:
-                200px; width: 100%}
-            #title{color: white;background-color:rgba(255,0,255,.50);}
-            #twista{background-color: rgba(255,0,255,.50); color: white;}
+            200px; width: 100%}
+            #title{color: white;background-color:rgba(0,0,255,.50);}
+            #twista{background-color: rgba(0,0,255,.50); color: white;}
             .meme-sized{width: 100px; height: 100px;}
             .black-background{background-color:black}
             .snake-style{color:limegreen;background:black;border:1px solid crimson;}
@@ -36,6 +36,11 @@
             .trans-style{color: white; background: pink; border: 3px solid lightblue;}
             .block-of-code{background: black; border 1px solid crimson}
             .block-of-code code {color: white; overflow: auto; width: 100%; display: block;}
+            .main-nav{background: fuchsia; padding: 5px;}
+            .nav-link{color: white; background: blue; border: 3px solid black;}
+            .nav-link:not(:first-of-type){margin-left: 5px;}
+            .sticky{position: fixed; top:0;}
+            header{margin-bottom: 15px;}
         </style>
         <script>
             window.addEventListener("DOMContentLoaded", function(){
@@ -48,133 +53,178 @@
         </script>
     </head>
     <body>
-      <div id="title-div">
-        <center>
-            <h2>
-                <span style='font-size:50px;'>&#9749;</span>
+        <header>
+            <div class="main-nav sticky">
+                <nav class="">
+                    <a 
+                        class="nav-link happy-style"
+                        onclick="alert('Not ready to confess')"/> 
+                        Confessions 
+                    </a>
+                    <a class="nav-link happy-style" id="dark-mode-trigger"/> Dark mOde</a>
+                </nav>
+            </div>
+            <div id="title-div">
+                <center>
+                    <h2>
+                    <span style='font-size:50px;'>&#9749;</span>
                     <span id="title">RantYard</span>
-                <span style='font-size:50px;'>&#9749;</span>
-            <h2>
-            <code id="twista"> In Coffee We Trust</code>
-        </center>
-      </div>
-      <br>
-      <div class="counter">
-        <code> 
-            <span> Total Rants - </span> 
-            <span id="total-counts" class="angry-style"> </span>
-        </code>
-        <code>
-            <button id="show-what-is-this" /> See Confessions </button>
-        </code>
-        <br>
-      </div>
-      <!-- confessions -->
-      <div id="what-the-fuck-is-this" hidden>
-        <div class="confession">
-            <div class="confession-title">
-                <h3>ConfessIon<span class="happy-style">:X</span></h3>
+                    <span style='font-size:50px;'>&#9749;</span>
+                    <h2>
+                    <code id="twista"> In Coffee We Trust</code>
+                </center>
             </div>
-            <div class="confession-body">
-                <p>I am NoT EvEn TryIng!!!!!</p>
+        </header>
+
+        <!-- notes -->
+        <div class="notes">
+            <div class="counter">
+                <code> 
+                    <span> Total Rants - </span> 
+                    <span id="total-counts" class="angry-style"> </span>
+                </code>
             </div>
-            <div class="confession-image">
-                <img width=350 height=200 src="./static/images/pb.gif"/>
+            <div class="note">
+                <div class="note-title">
+                    <h3>
+                    <code class="note">OCI Review</code>
+                    <h3>
+                </div>
+                <div class="note-body">
+                    <p> Open Systems Interconnection Reference Model</p>
+                    <small> FOr people getting into INFOSEC, this is crucial </small>
+
+                    <p> 
+                        It is a reference for how a network protocol stack should operate.
+                        Each layer provides a set of function to communicate with the
+                        layer above, and it also relies on sets of function from the
+                        layer below ... Vertical Communication. 
+                    </p>
+                    <h3>The 7 layers</h3>
+                    <ol>
+                        <li>
+                            Application - File Transfers, Emulators, Restful APIS
+                        </li>
+                        <li>
+                            Presentation - Formating of information or encryption
+                        </li>
+                        <li>
+                            Session - Keep Alive Sessions
+                        </li>
+                        <li>
+                            Transport - Reliable END 2 END transport (TCP/IP UDP Protocols, etc)
+                        </li>
+                        <li>
+                            Network - Packet deliver, routing.
+                        </li>
+                        <li>
+                            Data Link - Framing of information units and error
+                            handling.
+                        </li>
+                        <li>
+                            Physical - Transmission of bits on the actual hardware.
+                        </li>
+                    </ol>
+                    <p>
+                        <bold>Most</bold> applications regular users of the internet use are at
+                        the Application, Presentation, and Session levels of the OCI Model.
+                    </p>
+                    <small> Source: IBM TCP/IP Technical Overview, Sixth Edition</small>
+                </div>
             </div>
-          </div>
-      </div>
-      <!-- end of confessions -->
-      <!-- notes -->
-      <div class="notes">
-        <div class="note">
-            <h3><code class="snake-style">5 digits deployments</code></h3>
-            <p>
-                Deploying stuff on servers, could be just relayer api's for remote
-                RPC's on complex systems .. whatever .. 
-            </p>
-            <p>
-                If the server is not hosted on a cloud provider, then a simple
-                IPTABLES execution will do it, given the server is LInuX, can be
-                house computer, but need to modify  your router to redirect incomming
-                traffic to port whatever to machine serving IP, that machine has some
-                reverse proxy sitting infront of it.
-                <br>
-                <p> open up some ports </p>
-                <div class="block-of-code">
-                    <code>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3><code class="snake-style">5 digits deployments</code></h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        Deploying stuff on servers, could be just relayer api's for remote
+                        RPC's on complex systems .. whatever .. 
+                    </p>
+                    <p>
+                        If the server is not hosted on a cloud provider, then a simple
+                        IPTABLES execution will do it, given the server is LInuX, can be
+                        house computer, but need to modify  your router to redirect incomming
+                        traffic to port whatever to machine serving IP, that machine has some
+                        reverse proxy sitting infront of it.
+                        <br>
+                    <p> open up some ports </p>
+                    <div class="block-of-code">
+                        <code>
                         iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
                         <br>
                         iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-                    </code>
-                </div>
-            </p>
-            <p> 
-                For now docker-compose example for serving a static site w nginx,
-                pretty stupid and noob, the spin are the quirks for hardening the web
-                server and scoring over a D on <code> securityheaders.org </code>,
-                and proxy log analysis for monitoring. Remoteley smart competition
-                can eat your bread by presenting a report with your application list
-                of vulnerabilities, because not many devs are security oriented, they
-                just want to turn in a job and get paid.
-            <p>
-            <bold> 
-                A compose file for the host (install docker & docker-compose)
-            </bold>
-            <script src="https://gist.github.com/xzan0x7c7/47c6d328ef4994ab9e763d6c67de51da.js"></script>
-            <small> 
-                Enabling volumes to avoid rebuilding app, and editing directly on
-                host, not on container, saves the sysadmin time. 
-            </small>
-            <p> Dockerfile located on build context nginx/Dockerfile </p>
-            <script src="https://gist.github.com/xzan0x7c7/d70df65dd94a475ef4b90c4c57ec5f8f.js"></script>
-            <p> Nginx conf file </p>
-            <script src="https://gist.github.com/xzan0x7c7/24060a789672b2f1a7d4a9cdb8a41df8.js"></script>
-            <p> 
-                <br>
-                However, I am now interested in monitoring visitors and
-                keeping track of IP's by parsing my reverse proxy logs, I don't wanna use
-                something like DynaTrace or New relic, because I am interested in using
-                something like OpenCTI to monitor APT's on my stupid website.
-                <br><br>
-                <div class="block-of-code">
-                    <code>
+                        </code>
+                    </div>
+                    </p>
+                    <p> 
+                        For now docker-compose example for serving a static site w nginx,
+                        pretty stupid and noob, the spin are the quirks for hardening the web
+                        server and scoring over a D on <code> securityheaders.org </code>,
+                        and proxy log analysis for monitoring. Remoteley smart competition
+                        can eat your bread by presenting a report with your application list
+                        of vulnerabilities, because not many devs are security oriented, they
+                        just want to turn in a job and get paid.
+                    <p>
+                        <bold> 
+                            A compose file for the host (install docker & docker-compose)
+                        </bold>
+                        <script src="https://gist.github.com/xzan0x7c7/47c6d328ef4994ab9e763d6c67de51da.js"></script>
+                        <small> 
+                        Enabling volumes to avoid rebuilding app, and editing directly on
+                        host, not on container, saves the sysadmin time. 
+                        </small>
+                    <p> Dockerfile located on build context nginx/Dockerfile </p>
+                    <script src="https://gist.github.com/xzan0x7c7/d70df65dd94a475ef4b90c4c57ec5f8f.js"></script>
+                    <p> Nginx conf file </p>
+                    <script src="https://gist.github.com/xzan0x7c7/24060a789672b2f1a7d4a9cdb8a41df8.js"></script>
+                    <p> 
+                        <br>
+                        However, I am now interested in monitoring visitors and
+                        keeping track of IP's by parsing my reverse proxy logs, I don't wanna use
+                        something like DynaTrace or New relic, because I am interested in using
+                        something like OpenCTI to monitor APT's on my stupid website.
+                        <br><br>
+                    <div class="block-of-code">
+                        <code>
                         # dump logs 2 file
                         <br>
                         ~$ docker-compose logs --follow web-server &> /var/log/web-server.log &
-                    </code>
-                </div>
-                <small> Start listening to container logs on the background, could be
+                        </code>
+                    </div>
+                    <small> Start listening to container logs on the background, could be
                     done as a systemctl unit file, but this serves the purpose,
                     monitor this process and kill it with htop or the <code>kill</code> cmd
-                </small>
-                <br>
-                <br>
-                <p>
-                    For the purpose a super simple shell or python script to parse
-                    this log file works, only want something fairly stupid, which is to extract ip, with
-                    datetime from the logfile, so to ship it to any analysis
-                    program or system -- for further analysis, in this case further
-                    processing for analysis and visualization.
-                </p>
-                <div class="block-of-code">
-                    <code>
-                    #!/bin/bash
+                    </small>
                     <br>
-                    grep -E -o
-                    "([0-9]{1,3}[\.]){3}[0-9]{1,3}\s-\s-\s\[[0-9]{1,2}\/\w+\/[0-9]{4}\:[0-9]{2}\:[0-9]{2}\:[0-9]{2}.*\]"
-                    /var/log/web-server.log > /usr/share/data/monitoring/web-server-visitors.txt
-                    </code>
-                </div>
-                <p>
+                    <br>
+                    <p>
+                        For the purpose a super simple shell or python script to parse
+                        this log file works, only want something fairly stupid, which is to extract ip, with
+                        datetime from the logfile, so to ship it to any analysis
+                        program or system -- for further analysis, in this case further
+                        processing for analysis and visualization.
+                    </p>
+                    <div class="block-of-code">
+                        <code>
+                        #!/bin/bash
+                        <br>
+                        grep -E -o
+                        "([0-9]{1,3}[\.]){3}[0-9]{1,3}\s-\s-\s\[[0-9]{1,2}\/\w+\/[0-9]{4}\:[0-9]{2}\:[0-9]{2}\:[0-9]{2}.*\]"
+                        /var/log/web-server.log > /usr/share/data/monitoring/web-server-visitors.txt
+                        </code>
+                    </div>
+                    <p>
                     <div style="width: 410px; overflow: auto;">
                         <img src="./static/images/ips.gif" width=auto/>
                     </div>
                     <small> 
-                        Once the script runs 
-                        <code> 
-                            cat /usr/share/data/monitoring/web-server-visitors.txt
-                        </code>
-                        I am grepping directly on the output file, but u can cat it. 
+                    Once the script runs 
+                    <code> 
+                    cat /usr/share/data/monitoring/web-server-visitors.txt
+                    </code>
+                    I am grepping directly on the output file, but u can cat it. 
                     </small>
                     <br>
                     <br>
@@ -195,13 +245,13 @@
                         </code>
                     </div>
                     <small>
-                        Either add this script with 
-                        <code class="happy-style">
-                            crontab -e
-                        </code> or add it to 
-                        <code class="happy-style"> 
-                            /etc/cron.hourly 
-                        </code>
+                    Either add this script with 
+                    <code class="happy-style">
+                    crontab -e
+                    </code> or add it to 
+                    <code class="happy-style"> 
+                    /etc/cron.hourly 
+                    </code>
                     </small>
                     <br>
                     <br>
@@ -209,164 +259,292 @@
                     stupidly use a tool like nmap or greenbone to scan that IP for
                     open ports, and do recoinassance on visitors, for further
                     malicious activity.
-                </p>
-            </p>
-        </div>
-        <hr>
-        <div class="note">
-            <h3> <span class="trans-style">Big DIfEr3nceS </span> </h3>
-            <p>
-                Big fuking difference in between a transexual and a transvestite you
-                fucking ignorant piece of shit. A 
-                    <span class="trans-style">transexual</span> 
-                is someone who medically transitions via cellular genetic hack through modifying
-                protein synthesis via hormonal replacement therapy, developing
-                goodies like tits and femenine fat redistribution as well as soft
-                skin and cute face, female body smell, etc.. ........ and transvestite is
-                someone who just dresses like a female for the thrill of it ... I
-                can't make a single motherfucker out of 10 of you idiots -- If I was
-                the dad of any of you I would be <code> 
-                    <span class="snake-style"> ASHAMED</span> 
-                </code>
-                of you -- HAIL SATAN BITCH!!
-            </p>
-        </div>
-        <hr>
-        <div class="note">
-            <h3> <code> <span class="happy-style">InfecTed</span> </code> </h3>
-            <p>
-            Assume everythin is infected, every component, switch, router is infected,
-            the internet and is infected with satanic methods designed to influence
-            your choice of actions, BlaK Ops ZeCts OwN your DaTa.
-            </p>
-        </div>
-        <hr>
-        <div class="note">
-            <h3> <code><span class="warning-style"> PaTheThic </span> </code></h3>
-            <p>
-                Do you know how patHetic YoU loOk TryIng to be all ThAt you are not?
-            </p>
-        </div>
-        <hr>
-        <div class="note">
-            <h3> It's not that I hate you ... </h3>
-            <p> 
-                I don't hate you, it's only that you have proven to be a piece of <span class="snake-style">shit</span> to
-                everyone you are/were close to, how in the fuck will I ever consider any sort
-                of relationship with you if you betray your own kin.
-            </p>
-        </div>
-        <hr>
-        <div class="note">
-            <h3> ChROnIcaLLy ALiv3</h3>
-            <p>
-                HAHAH are you on meds??? Yea and you? No LMAO why WouLd I neeD them.
-                I am per3ctlly NormaL right? HAHAHA SuRe Hon3y ...
-                DeNiAl at it's best silly.
-                <br>
-                <code> 
-                    <span class="snake-style"> 
-                        PS: GET FUCKING HELP YOU DEMENTED MANIPULATIVE SNAKE 
-                    </span>
-                </code>
-                BYE :)
-            </p>
-        </div>
-        <hr>
-        <div id="notes">
-            <div class="note">
-                <h3> What is this nonsense, buillshit!</h3>
-                <p>
-                    Do you have really bad autism, to the point were you screeeeeam!!!!
-                    fucking lound when the salad dressing touches the meat on a plate?
-                    huh??? IDIOT haha <bold>*evil voice*</bold> a group of psycopathic
-                    <code style="background-color: black;"> 
-                        <span style="color: red;">terminal enjoyers</span> 
-                    </code>
-                    will be comming for you, bigot, fake ass, "friend".
-                </p>
+                    </p>
+                    </p>
+                </div>
             </div>
             <hr>
             <div class="note">
-                <h3> Bores ME!</h3>
-                <p> 
-                    Bores me with academic linguistics, when something gets to propah
-                    too much blah mouth farts, just fucking 
-                    <code>
+                <div class="note-title">
+                    <h3>
+                        <span class="trans-style">Big DIfEr3nceS </span>
+                    </h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        Big fuking difference in between a transexual and a transvestite you
+                        fucking ignorant piece of shit. A 
+                        <span class="trans-style">transexual</span> 
+                        is someone who medically transitions via cellular genetic hack through modifying
+                        protein synthesis via hormonal replacement therapy, developing
+                        goodies like tits and femenine fat redistribution as well as soft
+                        skin and cute face, female body smell, etc.. ........ and transvestite is
+                        someone who just dresses like a female for the thrill of it ... I
+                        can't make a single motherfucker out of 10 of you idiots -- If I was
+                        the dad of any of you I would be <code> 
+                        <span class="snake-style"> ASHAMED</span> 
+                        </code>
+                        of you -- HAIL SATAN BITCH!!
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div>
+                    <h3>
+                        <code> 
+                        <span class="happy-style">InfecTed</span>
+                        </code> 
+                    </h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        Assume everythin is infected, every component, switch, router is infected,
+                        the internet and is infected with satanic methods designed to influence
+                        your choice of actions, BlaK Ops ZeCts OwN your DaTa.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3>
+                        <code>
+                        <span class="warning-style"> PaTheThic </span>
+                        </code>
+                    </h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        Do you know how patHetic YoU loOk TryIng to be all ThAt you are not?
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3> It's not that I hate you ... </h3>
+                </div>
+                <div class="note-body">
+                    <p> 
+                        I don't hate you, it's only that you have proven to be a piece of <span class="snake-style">shit</span> to
+                        everyone you are/were close to, how in the fuck will I ever consider any sort
+                        of relationship with you if you betray your own kin.
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3> ChROnIcaLLy ALiv3</h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        HAHAH are you on meds??? Yea and you? No LMAO why WouLd I neeD them.
+                        I am per3ctlly NormaL right? HAHAHA SuRe Hon3y ...
+                        DeNiAl at it's best silly.
+                        <br>
+                        <code> 
+                        <span class="snake-style"> 
+                        PS: GET FUCKING HELP YOU DEMENTED MANIPULATIVE SNAKE 
+                        </span>
+                        </code>
+                        BYE :)
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3> What is this nonsense, buillshit!</h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                        Do you have really bad autism, to the point were you screeeeeam!!!!
+                        fucking lound when the salad dressing touches the meat on a plate?
+                        huh??? IDIOT haha 
+                        <bold>*evil voice*</bold>
+                        a group of psycopathic
+                        <code style="background-color: black;"> 
+                        <span style="color: red;">terminal enjoyers</span> 
+                        </code>
+                        will be comming for you, bigot, fake ass, "friend".
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="note">
+                <div class="note-title">
+                    <h3> Bores ME!</h3>
+                </div>
+                <div class="note-body">
+                    <p> 
+                        Bores me with academic linguistics, when something gets to propah
+                        too much blah mouth farts, just fucking 
+                        <code>
                         <span class="snake-style">
                         ~$ systemctl disable your-ass.service && rm -v /etc/system/systemd/your-ass.service
                         </span>
-                    </code> from my system you snake tzzzzzzzzz *snake sounds*
-                </p>
+                        </code> from my system you snake tzzzzzzzzz *snake sounds*
+                    </p>
+                </div>
             </div>
             <hr>
             <div class="note">
-            <h3>  management, systems, django .. BORING </h3>
-            <p> 
-                Sometimes u just don't want to add 3rd party packages to handle crons
-                for backend web api's that run on python and django, so here is a STUPID
-                way of doing it. Add stuff to 
-                <code>/etc/cron.daily</code> 
-                    or 
-                <code> /etc/cron.hourly </code>
-            </p>
-            <script src="https://gist.github.com/xzan0x7c7/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+                <div class="note-title">
+                    <h3>  management, systems, django .. BORING </h3>
+                </div>
+                <div class="note-body">
+                    <p> 
+                        Sometimes u just don't want to add 3rd party packages to handle crons
+                        for backend web api's that run on python and django, so here is a STUPID
+                        way of doing it. Add stuff to 
+                        <code>/etc/cron.daily</code> 
+                        or 
+                        <code> /etc/cron.hourly </code>
+                    </p>
+                    <script src="https://gist.github.com/xzan0x7c7/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+                </div>
             </div>
         </div>
-      </div>
-      <!-- end of notes -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var nt = document.getElementsByClassName("note").length;
-            function generateConfession() {
-                fetch("https://xzan0x7c7.github.io/static/data/confessions.json")
-                    .then(resp => console.log(resp.json))
-            }
-            function i1() {
-                var ts  = document.getElementById("twista");
-                var tst = "IN Trust We Coffee LMAO"
-                if (ts.innerText == tst) {
-                    ts.innerText = "In Coffee We Trust";
-                } else {
-                    ts.innerText = tst
+        <!-- end of notes -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var state = {
+                    "darkMode" : false, 
+                    "confessions" : []
                 }
-            }
-            function i2() {
-                var ts  = document.getElementById("title");
-                var tst = "YardJunky"
-                if (ts.innerText == tst) {
-                    ts.innerText = "JunkYard";
-                } else {
-                    ts.innerText = tst
+             
+                function modeSwitch() {
+                    var t = document.getElementById("dark-mode-trigger")
+                    t.addEventListener("click", function(e) {
+                        if (state.darkMode) {
+                            t.innerText = "Dark mOde"
+                            state.darkMode = false
+                            setMode("light")
+                        } else {
+                            t.innerText = "Light mOde"
+                            state.darkMode = true
+                            setMode("dark")
+                        }
+                    })
                 }
-            }
-            function sayonaraBitchh() {
-                alert("Sayonara BiatCh!!! Go  2 HeLl!");
-            }
-            function ri() {
-                window.clearInterval(i1);
-                window.clearInterval(i2);
-                sayonaraBitchh()
-            }
-            document.getElementById("total-counts").innerText=nt;
-            document.getElementById("show-what-is-this").addEventListener(
-                "click", function(e) {
-                    var t = e.target
-                    var l = document.getElementById("what-the-fuck-is-this");
-                    if (l.hidden) {
-                        l.hidden = false;
-                        t.innerText = "Close ConFessIOn"
+                
+                function setMode(mode) {
+                    var t = document.getElementsByTagName("body")[0];
+                    if (mode == "light") {
+                        t.style.background = "white";
+                        t.style.color = "black"
                     } else {
-                        l.hidden = true
-                        t.innerText = "See ConFessIOn"
+                        t.style.background = "black";
+                        t.style.color = "white"
                     }
                 }
-            )
-            generateConfession()
-            const si1 = window.setInterval(i1, 3000)
-            const si2 = window.setInterval(i2, 4000)
-            window.onbeforeunload = ri;
-        })
-    </script>
-   </body>
+
+                function generateScore() {
+                    var nt = document.getElementsByClassName("note").length;
+                    document.getElementById("total-counts").innerText=nt;
+                }
+
+                function cs1() {
+                    document.getElementById("show-what-is-this").addEventListener(
+                        "click", function(e) {
+                            var t = e.target
+                            var l = document.getElementById("what-the-fuck-is-this");
+                            if (l.hidden) {
+                                l.hidden = false;
+                                t.innerText = "Close ConFessIOn"
+                            } else {
+                                l.hidden = true
+                                t.innerText = "See ConFessIOn"
+                            }
+                        }
+                    )
+                }
+
+                function generateConfession() {
+                    fetch("https://xzan0x7c7.github.io/static/data/confessions.json")
+                        .then(resp => resp.json())
+                        .then(resp => buildConfessions(resp))
+                        .catch(error => alert(error))
+                }
+               
+                function buildConfessions(confessions) {
+                    for (let i = 0; i < confessions.length; i ++) {
+                        var conf = confessions[i]
+                        var title = conf.title
+                        var img = conf.image_src;
+                        var body = conf.body || "&#128520";
+                        var confession = `
+                            <div class="confession-${i}">
+                                <div class="confession-title">
+                                    <h3>${title}</h3>
+                                </div>
+                                <div class="confession-body">
+                                    <p>${body}</p>
+                                </div>
+                                <div class="confession-image">
+                                    <img src='${img}' class="confession-image"/>
+                                </div>
+                            </div>
+                        `
+                        state.confessions.push([i, confession])
+                    }
+                    buildConfessionary(state);
+                }
+                
+                function buildConfessionary(tst) {
+                    // TO DO      
+                }
+
+                function i1() {
+                    var ts  = document.getElementById("twista");
+                    var tst = "IN Trust We Coffee"
+                    if (ts.innerText == tst) {
+                        ts.innerText = "In Coffee We Trust";
+                    } else {
+                        ts.innerText = tst
+                    }
+                }
+                
+                function i2() {
+                    var ts  = document.getElementById("title");
+                    var tst = "YardJunky"
+                    if (ts.innerText == tst) {
+                        ts.innerText = "JunkYard";
+                    } else {
+                        ts.innerText = tst
+                    }
+                }
+                
+                function ri() {
+                    window.clearInterval(i1);
+                    window.clearInterval(i2);
+                }
+                
+                function cs1() {
+                    document.getElementById("show-what-is-this").addEventListener(
+                        "click", function(e) {
+                            var t = e.target
+                            var l = document.getElementById("what-the-fuck-is-this");
+                            if (l.hidden) {
+                                l.hidden = false;
+                                t.innerText = "Close ConFessIOn"
+                            } else {
+                                l.hidden = true
+                                t.innerText = "See ConFessIOn"
+                            }
+                        }
+                    )
+                }
+                
+                modeSwitch()
+                generateConfession()
+                const si1 = window.setInterval(i1, 3000)
+                const si2 = window.setInterval(i2, 4000)
+                window.onbeforeunload = ri;
+                            
+            })
+        </script>
+    </body>
 </html>

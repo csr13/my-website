@@ -150,42 +150,37 @@
                 <br>
                 <br>
                 <p>
-                    Then we can use a super simple shell or python script to parse
-                    this log file, scripts like these are available on github, but we
-                    only want something fairly stupid, which is to extract ip, with
-                    datetime from the logfile, so we can ship em to any analysis
-                    program or system that we want, for further analysis, in this
-                    case I want to store them neatly on some json file, so I can then
-                    read it, and load them to another system on another host, for
-                    further processing with a cron that uses OpenCTI on that same
-                    host for analysis and visualization.
+                    For the purpose a super simple shell or python script to parse
+                    this log file works, only want something fairly stupid, which is to extract ip, with
+                    datetime from the logfile, so to ship it to any analysis
+                    program or system -- for further analysis, in this case further
+                    processing for analysis and visualization.
                 </p>
                 <div class="block-of-code">
                     <code>
                     #!/bin/bash
                     <br>
                     grep -E -o
-                    "([0-9]{1,3}[\.]){3}[0-9]{1,3}\s-\s-\s\[[0-9]{1,2}\/\w+\/[0-9]{4}\:[0-9]{2}\:[0-9]{2}\:[0-9]{2}.*\]" > /usr/share/data/monitoring/web-server-visitors.txt
+                    "([0-9]{1,3}[\.]){3}[0-9]{1,3}\s-\s-\s\[[0-9]{1,2}\/\w+\/[0-9]{4}\:[0-9]{2}\:[0-9]{2}\:[0-9]{2}.*\]"
+                    /var/log/web-server.log > /usr/share/data/monitoring/web-server-visitors.txt
                     </code>
                 </div>
                 <p>
-                    Once the script runs 
-                    <code> 
-                        cat /usr/share/data/monitoring/web-server-visitors.txt
-                    </code>
-                    <br>
-                    <div style="width: 500px; overflow: auto;">
+                    <div style="width: 410px; overflow: auto;">
                         <img src="./static/images/ips.gif" width=auto/>
                     </div>
                     <small> 
+                        Once the script runs 
+                        <code> 
+                            cat /usr/share/data/monitoring/web-server-visitors.txt
+                        </code>
                         I am grepping directly on the output file, but u can cat it. 
                     </small>
                     <br>
                     <br>
-                    The date can server as a distinct reference point for entries on
+                    The date can serve as a distinct reference point for entries on
                     whatever storage unit u wish to persist analysis.
-                </p>
-                <p>
+                    <br><br>
                     The last step is to cook a script to load this file, and either
                     send it as a batch to another server on the same network, or,
                     another network running some api that receives this data and
@@ -196,17 +191,15 @@
                         <code>
                         #!/bin/bash
                         <br>
-                        curl -d \ <br>
-                        @/usr/share/data/monitoring/web-server-visitors.txt \<br>
-                        http://10.0.10.2/analyze-web-server-visistors
+                        curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/analyze-web-server-visistors
                         </code>
                     </div>
                     <small>
                         Either add this script with 
-                        <code style="happy-style">
+                        <code class="happy-style">
                             crontab -e
                         </code> or add it to 
-                        <code> 
+                        <code class="happy-style"> 
                             /etc/cron.hourly 
                         </code>
                     </small>

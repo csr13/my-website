@@ -34,8 +34,8 @@
             .warning-style{color:yellow;background:black;border:1px solid yellow;}
             .happy-style{color:limegreen;background:blue;border:1px solid limegreen;}
             .trans-style{color: white; background: pink; border: 3px solid lightblue;}
-            .block-of-code{background: black; border 1px solid crimson}
-            .block-of-code code {color: white; overflow: auto; width: 100%; display: block;}
+            .block-of-code{background: black; border 1px solid crimson; width: auto; overflow: auto;}
+            .block-of-code code {color: white; overflow: auto; width:auto; display: block;}
             .main-nav{height: 20px}
             .nav-link{color: white; background: blue; border: 3px solid black;}
             .nav-link:not(:first-of-type){margin-left: 5px;}
@@ -60,6 +60,99 @@
                     <span id="total-counts" class="angry-style"> </span>
                 </code>
             </div>
+            <div class="note">
+                <div class="note-title">
+                    <h3> Dicking Down IP's for good</p>
+                </div>
+                <div class="note-body">
+                    <p>
+                        IP is a standard protocol, STD 5 (Standard 5) meaning, it has
+                        been approved by the IAB (Internet Advisory Board) a sort of
+                        branch of the 
+                        IEFT (Internet Engeneering Task Force) the one who issues the
+                        standards,  as well as the IANA (Internet Assigned Board). IP is the Internet
+                        Protocol, and IP number, is just a number used to id stuff on that protocol.
+                    </p>
+                    <p>
+                        The Internet Protocol is an unreliable, connectionless packet
+                        delivery protocol, and it assumes that data can be lost
+                        during delivery, but since it is part of the OCI model
+                        (read below) it assumes higher protocols handle the loss of
+                        data during delivery aka catching errors.
+                    </p>
+                    <p>
+                        The usage of a connectionless packet delivery method
+                        tackles the issue of it depending on central computing
+                        centers that use other networks models. The DOD (Department of Defence of the United States) 
+                        decided to deploy a network that was best suitable to evade network distuption
+                        in an unforseen event that could compromise lines of
+                        communication in a certain geographical location, and so the
+                        network was deployed to counter any such event, and
+                        it has been proven true and works.
+                    </p>
+                    <p>
+                        <h4> IP numbers </h4>
+                        <p>
+                        IP numbers are 32-bit unsigned values, they are expressed
+                        like this 10.10.10.1 in a dotted decimal notation.
+                        </p>   
+                        <code>
+                            IP address = {network number}-{host number}
+                            <br>
+                            192.2[network address].10.2[host number] 
+                        </code>
+                        <p>
+                            In binary it looks like this.
+                            <br>
+                            <code>
+                                11000000.00000010.00001010.00000010
+                            </code>
+                        </p>
+                        <p>
+                            Shortcut to convert IP nums to binary
+                        </p>
+                        <div class="block-of-code">
+                            <code>
+                                #!/bin/bash
+                                <br>
+                                # This can go inside a loop after cating
+                                <br>
+                                # file of IP's
+                                <br><br>
+                                ip=$1
+                                <br>
+                                temp=$(echo $ip | sed 's/\./;/g');
+                                <br>
+                                binary_ip=$(echo "obase=2;$temp" | bc | tr -d '\n');
+                                <br>
+                                printf "%d\n" $binary_ip
+                            </code>
+                        </div>
+                        </p>
+                        <p>
+                            These addresses are used by the Internet Protocol to
+                            identify hosts on the internet
+                            <h4> Five classes of IP addresses and it's usages +
+                                brief properties </h4>
+                            <ol>
+                                <li>Class A - these use 7 bits of the network section
+                                and 24 bits for the host section -- suitable for
+                                networks with many hosts.</li>
+                                <li>Class B - these use 14 bits for the network
+                                    section and 16 for the host section -- suitable
+                                    for networks with a medium-large number of hosts.</li>
+                                <li>Class C - these use 21 bits for the network
+                                    section, and 8 bits for the host section --
+                                    suitable for a network with a small number of
+                                    hosts.</li>
+                                <li>Class D - these are used for multicasting.</li>
+                                <li>Class E - these are of experimental use.</li>
+                            </ol>
+                        </p>
+                    </p>
+                </div>
+            </div>
+            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>

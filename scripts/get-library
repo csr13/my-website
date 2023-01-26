@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function help() {
+    echo "get-library <tipo - css|js> <nombre> <url>"
+    exit 0
+}
+
+if [ "$1" = "--help" ] || [ "$#" -ne 3 ]; then
+    help;
+fi
+
+dire=$(basename "$PWD")
+if [ $dire = scripts ]; then
+    if [ ! -d ../static/vendors ]; then
+        echo "[!] Creando folder de vendors";
+        mkdir -p ../static/vendors;
+        mkdir -p ../static/vendors/css;
+        mkdir -p ../static/vendors/js;
+    fi
+    echo "[!] getting escript.";
+    if [ $1 = "css" ]; then
+        wget --quiet --show-progress -O ../static/vendors/css/$2 $3;
+    else
+        wget --quiet --show-progress -O ../static/vendors/js/$2 $3;
+    fi
+    echo "[!] Listo .. ejecutando copy-static para ti bro.";
+    ./copy-static;
+else
+    echo "[!] Run script on scripts dire estupIdo";
+fi;

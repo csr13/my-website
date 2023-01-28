@@ -88,8 +88,9 @@ networks:
                     <small>
                         On the command: section of the dockerfile, putting flower
                         on the background so the worker can operate normally, notice
-                        the ampersand <code> & </code> and the <code> ; </code> so
-                        the 
+                        the ampersand <code> & </code> and the <code> ; </code> if
+                        the previous command fails, the container won't be marked as
+                        <code>exited</code> by the docker daemon.
                     </small>
                     <p>
                         Usually setting up a shared task monitoring tool over public

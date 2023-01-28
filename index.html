@@ -55,9 +55,9 @@
                         required per client specifications.
                         </p>
                         <p>
-                        For this instances I amost always use docker which runs
-                        shared tasks and a shared task monitoring tool such as Flower
-                        </p>
+                        For these instances I tend to dockerize celery redis and
+                        monitor them with Flower, which provides visualization for
+                        the performance of system asychronous tasks.
                     </div>
                     <div class="pre-code"><code>
 version: '3.9'

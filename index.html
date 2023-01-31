@@ -214,32 +214,29 @@
                     monitor them with Flower, which provides visualization for
                     the performance of system asychronous tasks.
                     <div class="pre-code"><code>
-    version: '3.9'
+version: '3.9'
 
-    services:
-    .... rest of services (redis, etc)
-    tasks:
+services:
+  .... rest of services (redis, etc)
+  tasks:
+    build:
+      context: .
+      dockerfile: ./docker/tasks/Dockerfile
+    command: >
+      sh -c "python3 -m celery -A my_system flower --address=0.0.0.0 --port=5566 &; python3 -m celery -A my_system worker -l INFO -E"
+    env_file:
+      - ./docker/tasks/.env
+    depends_on:
+      - redis
+    restart: unless-stopped
+    network:
+    my-network:
+        ipv4_address: 10.10.10.2
+    expose:
+      - "5566"
 
-        build:
-        context: .
-        dockerfile: ./docker/tasks/Dockerfile
-        command: >
-        sh -c "python3 -m celery -A my_system flower --address=0.0.0.0 --port=5566 &;
-
-                python3 -m celery -A my_system worker -l INFO -E"
-        env_file:
-        - ./docker/tasks/.env
-        depends_on:
-        - redis
-        restart: unless-stopped
-        network:
-        my-network:
-            ipv4_address: 10.10.10.2
-        expose:
-        - "5566"
-
-    networks:
-    ... network config</code>
+networks:
+  ... network config</code>
                     </div>
                     <small>
                         On the command: section of the dockerfile, putting flower

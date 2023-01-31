@@ -47,6 +47,94 @@
             </div>
                 <div class="note" >
                     <div class="note-title">
+                        <h3>
+                            A rant on implementing API's -- 
+                            from pure experience, not books or
+                            youtube tutorials.
+                        </h3>
+                    </div>
+                    <div class="note-body">
+                        In my opinion,
+                        <ol>
+                            <li>
+                                Monolithic small frameworks are good if the purpose is a micro
+                                service that can be written in less than 1000 lines of
+                                code, and can be reusable, and pluggable -- my personal opinion.
+                            </li>
+                            <li>
+                                Validation/Verification is always one of the first things to do,
+                                if you want to provide the end user of the system with a
+                                pleasant usage experience.
+                            </li>
+                            <li>
+                                Database relations, using foreign keys to create
+                                relational models, not text id's, otherwise, deletion of
+                                related models is a real pain, it is important to point
+                                this out to the entry level engineers.
+                            </li>
+                            <li>
+                                Document the endpoints, check know OpenApi, leverage
+                                tools like swagger -- for django or I recommend using
+                                drf-yasg, and applying <code style="background:
+                                                                    black; color: white;">@swagger_auto_schema</code>
+                                decorator with both request body, query parameter and
+                                response serializers to provide accurate
+                                description on what the endpoint needs for context
+                                negotiation, and what it returns. You can specify all
+                                status code of responses, good, leverage it, use it. Make
+                                frontend team happy to work with you, and gain good
+                                karma.
+                            </li>
+
+                            <li>
+                                Scaling up is fucking easy, scaling down, not so much.
+                            </li>
+                            <li>
+                                Sometimes threading is better than integrating an entire
+                                task management system, for fucks sake.
+                            </li>
+                            <li>
+                                Do not allow the entry level developer to refactor, just
+                                write detailed tasks, and make him/her follow them to the
+                                letter.
+                            </li>
+                            <li>
+                                Refactor comes after v1 is stable. End of discussion.
+                            </li>
+                            <li>
+                                Sometimes management will make the mistake of asking
+                                entry level developers on estimates for tasks, correct
+                                this mistake by making management understand, not all
+                                engineers have the same level of skill/experience.
+                                Situations like this fuck the so called 'Agile' bullshit
+                                planning.
+                            </li>
+                            <li>
+                                Work as a team, if you are a new engineer, do not be the egocentric developer,
+                                there is someone else who will come and make an example
+                                of you. No matter how good you are .. emm *claim to be**, 
+                                you will lack expereince. Need to be battle
+                                tested, that means, at leats, perhaps, going through a couple of
+                                erroneous managerial estimates for high profile, big
+                                investment clients. Enough suffering that will make
+                                you question your carrer choices. You need to overcome
+                                not having a social life, being assigned to contribute
+                                to an important system and suffer because of
+                                deadlines. Watching on the sidelines as losers
+                                interact with your crush, while you sit, pathetic at your
+                                workstation trying to make the deadline -- this is they
+                                way to pacify egocentric entry level developers.
+                            </li>
+                            <li>
+                                A good coffee machine will save you money in the long
+                                run.
+                            </li>
+                        <ol>
+                    </div>
+                </div>
+                <hr>
+                <div class="note" >
+                    <div class="note-title">
                         <h3>Celery Flower and Worker</h3>
                     </div>
                     <div class="note-body">

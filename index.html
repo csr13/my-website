@@ -114,9 +114,20 @@
                     In my opinion,
                     <ol>
                         <li>
-                            Monolithic small frameworks are good if the purpose is a micro
-                            service that can be written in less than 1000 lines of
-                            code, and can be reusable, and pluggable -- my personal opinion.
+                            Singleton applications are a good fit for a microservice.
+                            Take sanic, Flask, etc, as examples of a single
+                            application instance objects -- single files, single
+                            object, micro service.
+                        </li>
+                        <li>
+                            Monolithic applications are good if it's purpose is to be
+                            *a* single micro service in a system with a network of micro services,
+                            and it can be written in less than 1000 lines of
+                            code, and can be reusable, and pluggable. What? I said it is my personal
+                            opinion, you can call it a microservice and remove the
+                            monolithic if you want, but when u find yourself writting
+                            a *single file* rest api 'microservice' think about it
+                            for a second.
                         </li>
                         <li>
                             Validation/Verification is always one of the first things to do,

@@ -10,14 +10,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./static/vendors/css/highlight.min.css" />
         <style>
-            body {font-family: monospace;}
+            body {font-family: monospace; background: crimson;}
             header{margin-bottom: 15px;}
             .pre-code {white-space: pre; background: whitesmoke; border:
                 1px solid lightgrey; padding:5px; overflow: auto;}
             #title{color: white;background-color:rgba(0,0,255,.50);}
-            #twista{background-color: rgba(0,0,255,.50); color: white;}
-            .meme-sized{width: 100px; height: 100px;}
-            .black-background{background-color:black}
             .snake-style{color:limegreen;background:black;border:1px solid crimson;}
             .warning-style{color:yellow;background:black;border:1px solid yellow;}
             .happy-style{color:limegreen;background:blue;border:1px solid limegreen;}
@@ -25,10 +22,11 @@
             .block-of-code{background: black; border 1px solid crimson; width: auto; overflow: auto;}
             .block-of-code code {color: white; overflow: auto; width:auto; display: block;}
             .main-nav{height: 20px}
-            .nav-link{color: white; background: blue; border: 3px solid black;}
+            .nav-link{color: white; background: black; border: 3px groove crimson;margin-right: 20px;}
             .nav-link:not(:first-of-type){margin-left: 5px;}
-            .sticky{position: fixed; top:2;}
-            .note{box-shadow: 3px 6px black; border: 2px groove black;
+            .sticky{ width: 100%; position: fixed; top:2;}
+            .note{color: white; background-color: rgba(0,0,0,0.51); box-shadow: 3px
+                6px black; border: 2px solid black;
                 margin-bottom: 20px;}
             .note-title{padding:0px 10px 10px 10px;}
             .note-body{padding:0px 10px 10px 10px;}
@@ -40,14 +38,16 @@
             .space-between{justify-content: space-between;}
             .signature-right{
                 padding:0; margin:0; 
-                border-left: 2px groove black; 
-                border-bottom: 2px groove black
+                border-left: 2px solid black; 
+                border-bottom: 2px solid black;
+                background: black;
             }
             .signature-left{
                 padding:0; 
                 margin:0; 
-                border-right: 2px groove black; 
-                border-bottom: 2px groove black
+                border-right: 2px solid black; 
+                border-bottom: 2px solid black;
+                background: black;
             }
             #loading {
                 display: block;
@@ -90,16 +90,16 @@
     </head>
     <body id="page">
         <div id="loading"></div>
-        <header>
+        <header style="position: relative;">
             <div class="main-nav">
-                <nav class="sticky">
-                    <a class="nav-link happy-style" id="dark-mode-trigger"/> 
+                <div class="sticky flex flex-row space-between">
+                    <div class="nav-link">iT$Psyc0x7c7</div>
+                    <div class="nav-link" id="dark-mode-trigger"/> 
                         Dark mOde 
-                    </a>
-                </nav>
+                    </div>
+                </div>
             </div>
         </header>
-
         <!-- notes -->
         <div class="notes">
             <div class="note" >
@@ -490,10 +490,10 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </div>
                     <small>
                     Either add this script with 
-                    <code class="happy-style">
+                    <code>
                     crontab -e
                     </code> or add it to 
-                    <code class="happy-style"> 
+                    <code> 
                     /etc/cron.hourly 
                     </code>
                     </small>
@@ -531,7 +531,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
             <div class="note">
                 <div class="note-title">
                     <h3>
-                        <span class="happy-style">Infected 0 trust</span>
+                        Infected 0 trust
                     </h3>
                 </div>
                 <div class="note-body">
@@ -545,9 +545,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
             <div class="note">
                 <div class="note-title">
                     <h3>
-                        <code>
-                        <span class="warning-style"> Pathetic</span>
-                        </code>
+                        Pathetic
                     </h3>
                 </div>
                 <div class="note-body">
@@ -605,7 +603,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                         </span>
                         </code>
                     </p>
-            ; margin-bottom: 10px;    </div>
+                </div>
             </div>
             <div class="note">
                 <div class="note-title">
@@ -639,7 +637,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                             state.darkMode = false
                             setMode("light")
                         } else {
-                            t.innerText = "Light mOde"
+                            t.innerText = "Red mOde"
                             state.darkMode = true
                             setMode("dark")
                         }
@@ -649,7 +647,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                 function setMode(mode) {
                     var t = document.getElementsByTagName("body")[0];
                     if (mode == "light") {
-                        t.style.background = "white";
+                        t.style.background = "crimson";
                         t.style.color = "black"
                     } else {
                         t.style.background = "black";
@@ -678,8 +676,8 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                         d1.classList.add("flex-row")
                         d1.classList.add("space-between")
                         
-                        g1.height = 20; g1.width = 20;
-                        g2.height = 20; g2.width = 20;
+                        g1.height = 25; g1.width = 25;
+                        g2.height = 25; g2.width = 25;
                         g1.src = "./static/images/gifs/me.gif"
                         g2.src = "./static/images/gifs/me.gif"
                         

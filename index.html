@@ -28,126 +28,182 @@
             .nav-link{color: white; background: blue; border: 3px solid black;}
             .nav-link:not(:first-of-type){margin-left: 5px;}
             .sticky{position: fixed; top:2;}
+            .note{box-shadow: 3px 6px black; border: 2px groove black;
+                margin-bottom: 20px;}
+            .note-title{padding:0px 10px 10px 10px;}
+            .note-body{padding:0px 10px 10px 10px;}
+            .counter{margin-bottom: 10px;}
+            .counter div {background: white; padding: 3px; border: 3px solid
+                black}
+            .flex{display: flex;}
+            .flex-row{flex-direction: row;}
+            .space-between{justify-content: space-between;}
+            .signature-right{
+                padding:0; margin:0; 
+                border-left: 2px groove black; 
+                border-bottom: 2px groove black
+            }
+            .signature-left{
+                padding:0; 
+                margin:0; 
+                border-right: 2px groove black; 
+                border-bottom: 2px groove black
+            }
+            #loading {
+                display: block;
+                position: absolute;
+                top: 0;left: 0;z-index: 100;
+                width: 100vw;
+                height: 100vh;
+            }
+            #page {
+                display: none;
+            }
+            #loading-image{
+                height: 100px;
+                width: 100px;
+            }
         </style>
+        <script>
+            function onReady(callback) {
+                var id = window.setInterval(c1, 1000);
+                function c1() {
+                    if (document.getElementsByTagName('body')[0] !== undefined) {
+                        window.clearInterval(id);
+                        callback.call(this);
+                    }
+                }
+            }
+
+            function s1(id, value) {
+                document
+                    .getElementById(id)
+                    .style
+                    .display = value ? 'block' : 'none';
+            }
+
+            onReady(function () {
+                s1('page', true);
+                s1('loading', false);
+            });
+        </script>
     </head>
-    <body>
+    <body id="page">
+        <div id="loading"></div>
         <header>
             <div class="main-nav">
                 <nav class="sticky">
-                    <a class="nav-link happy-style" id="dark-mode-trigger"/> Dark mOde</a>
+                    <a class="nav-link happy-style" id="dark-mode-trigger"/> 
+                        Dark mOde 
+                    </a>
                 </nav>
             </div>
         </header>
 
         <!-- notes -->
         <div class="notes">
-            <div class="counter">
-                <span> Total Rants - </span> 
-                <span id="total-counts" class="angry-style"> </span>
-            </div>
-                <div class="note" >
-                    <div class="note-title">
-                        <h3>
-                            A rant on implementing API's -- 
-                            from pure experience, not books or
-                            youtube tutorials.
-                        </h3>
-                    </div>
-                    <div class="note-body">
-                        In my opinion,
-                        <ol>
-                            <li>
-                                Monolithic small frameworks are good if the purpose is a micro
-                                service that can be written in less than 1000 lines of
-                                code, and can be reusable, and pluggable -- my personal opinion.
-                            </li>
-                            <li>
-                                Validation/Verification is always one of the first things to do,
-                                if you want to provide the end user of the system with a
-                                pleasant usage experience.
-                            </li>
-                            <li>
-                                Database relations, using foreign keys to create
-                                relational models, not text id's, otherwise, deletion of
-                                related models is a real pain, it is important to point
-                                this out to the entry level engineers.
-                            </li>
-                            <li>
-                                Document the endpoints, check know OpenApi, leverage
-                                tools like swagger -- for django or I recommend using
-                                drf-yasg, and applying <code style="background:
-                                                                    black; color: white;">@swagger_auto_schema</code>
-                                decorator with both request body, query parameter and
-                                response serializers to provide accurate
-                                description on what the endpoint needs for context
-                                negotiation, and what it returns. You can specify all
-                                status code of responses, good, leverage it, use it. Make
-                                frontend team happy to work with you, and gain good
-                                karma.
-                            </li>
-
-                            <li>
-                                Scaling up is fucking easy, scaling down, not so much.
-                            </li>
-                            <li>
-                                Sometimes threading is better than integrating an entire
-                                task management system, for fucks sake.
-                            </li>
-                            <li>
-                                Do not allow the entry level developer to refactor, just
-                                write detailed tasks, and make him/her follow them to the
-                                letter.
-                            </li>
-                            <li>
-                                Refactor comes after v1 is stable. End of discussion.
-                            </li>
-                            <li>
-                                Sometimes management will make the mistake of asking
-                                entry level developers on estimates for tasks, correct
-                                this mistake by making management understand, not all
-                                engineers have the same level of skill/experience.
-                                Situations like this fuck the so called 'Agile' bullshit
-                                planning.
-                            </li>
-                            <li>
-                                Work as a team, if you are a new engineer, do not be the egocentric developer,
-                                there is someone else who will come and make an example
-                                of you. No matter how good you are .. emm *claim to be**, 
-                                you will lack expereince. Need to be battle
-                                tested, that means, at leats, perhaps, going through a couple of
-                                erroneous managerial estimates for high profile, big
-                                investment clients. Enough suffering that will make
-                                you question your carrer choices. You need to overcome
-                                not having a social life, being assigned to contribute
-                                to an important system and suffer because of
-                                deadlines. Watching on the sidelines as losers
-                                interact with your crush, while you sit, pathetic at your
-                                workstation trying to make the deadline -- this is they
-                                way to pacify egocentric entry level developers.
-                            </li>
-                            <li>
-                                A good coffee machine will save you money in the long
-                                run.
-                            </li>
-                        <ol>
-                    </div>
+            <div class="note" >
+                <div class="note-title">
+                    <h3>
+                        A rant on implementing API's -- 
+                        from pure experience, not books or
+                        youtube tutorials.
+                    </h3>
                 </div>
-                <hr>
-                <div class="note" >
-                    <div class="note-title">
-                        <h3>Celery Flower and Worker</h3>
-                    </div>
-                    <div class="note-body">
-                        <p>
-                        Sometimes deploying systems with asynchronous tasks is
-                        required per client specifications.
-                        </p>
-                        <p>
-                        For these instances I tend to dockerize celery redis and
-                        monitor them with Flower, which provides visualization for
-                        the performance of system asychronous tasks.
-                    </div>
-                    <div class="pre-code"><code>
+                <div class="note-body">
+                    In my opinion,
+                    <ol>
+                        <li>
+                            Monolithic small frameworks are good if the purpose is a micro
+                            service that can be written in less than 1000 lines of
+                            code, and can be reusable, and pluggable -- my personal opinion.
+                        </li>
+                        <li>
+                            Validation/Verification is always one of the first things to do,
+                            if you want to provide the end user of the system with a
+                            pleasant usage experience.
+                        </li>
+                        <li>
+                            Database relations, using foreign keys to create
+                            relational models, not text id's, otherwise, deletion of
+                            related models is a real pain, it is important to point
+                            this out to the entry level engineers.
+                        </li>
+                        <li>
+                            Document the endpoints, check know OpenApi, leverage
+                            tools like swagger -- for django or I recommend using
+                            drf-yasg, and applying <code style="background:
+                                                                black; color: white;">@swagger_auto_schema</code>
+                            decorator with both request body, query parameter and
+                            response serializers to provide accurate
+                            description on what the endpoint needs for context
+                            negotiation, and what it returns. You can specify all
+                            status code of responses, good, leverage it, use it. Make
+                            frontend team happy to work with you, and gain good
+                            karma.
+                        </li>
+
+                        <li>
+                            Scaling up is fucking easy, scaling down, not so much.
+                        </li>
+                        <li>
+                            Sometimes threading is better than integrating an entire
+                            task management system, for fucks sake.
+                        </li>
+                        <li>
+                            Do not allow the entry level developer to refactor, just
+                            write detailed tasks, and make him/her follow them to the
+                            letter.
+                        </li>
+                        <li>
+                            Refactor comes after v1 is stable. End of discussion.
+                        </li>
+                        <li>
+                            Sometimes management will make the mistake of asking
+                            entry level developers on estimates for tasks, correct
+                            this mistake by making management understand, not all
+                            engineers have the same level of skill/experience.
+                            Situations like this fuck the so called 'Agile' bullshit
+                            planning.
+                        </li>
+                        <li>
+                            Work as a team, if you are a new engineer, do not be the egocentric developer,
+                            there is someone else who will come and make an example
+                            of you. No matter how good you are .. emm *claim to be**, 
+                            you will lack expereince. Need to be battle
+                            tested, that means, at leats, perhaps, going through a couple of
+                            erroneous managerial estimates for high profile, big
+                            investment clients. Enough suffering that will make
+                            you question your carrer choices. You need to overcome
+                            not having a social life, being assigned to contribute
+                            to an important system and suffer because of
+                            deadlines. Watching on the sidelines as losers
+                            interact with your crush, while you sit, pathetic at your
+                            workstation trying to make the deadline -- this is they
+                            way to pacify egocentric entry level developers.
+                        </li>
+                        <li>
+                            A good coffee machine will save you money in the long
+                            run.
+                        </li>
+                    <ol>
+                </div>
+            </div>
+            <div class="note" >
+                <div class="note-title">
+                    <h3>Celery Flower and Worker</h3>
+                </div>
+                <div class="note-body">
+                    <p>
+                    Sometimes deploying systems with asynchronous tasks is
+                    required per client specifications.
+                    </p>
+                    <p>
+                    For these instances I tend to dockerize celery redis and
+                    monitor them with Flower, which provides visualization for
+                    the performance of system asychronous tasks.
+                </div>
+                <div class="pre-code"><code>
 version: '3.9'
 
 services:
@@ -174,33 +230,32 @@ services:
 
 networks:
   ... network config</code>
-                    </div>
-                    <small>
-                        On the command: section of the dockerfile, putting flower
-                        on the background so the worker can operate normally, notice
-                        the ampersand <code> & </code> and the <code> ; </code> if
-                        the previous command fails, the container won't be marked as
-                        <code>exited</code> by the docker daemon.
-                    </small>
-                    <p>
-                        Usually setting up a shared task monitoring tool over public
-                        http is not the best idea.
-
-                        I pipe to my remote workstation machine all flower instances for all
-                        systems using ssh
-                    </p>
-                    <div class="pre-code"><code>
-~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP</code>
-                    </div>
-                    <p>
-                    Open browser at <code> 127.0.0.1:8001 </code> and monitor my
-                    systems shared tasks, configure rate limits, etc ....
-                    <br>
-                    You can fine tune flower, check out their documentation
-                    </p>
                 </div>
-                <hr>
-                <div class="note" >
+                <small>
+                    On the command: section of the dockerfile, putting flower
+                    on the background so the worker can operate normally, notice
+                    the ampersand <code> & </code> and the <code> ; </code> if
+                    the previous command fails, the container won't be marked as
+                    <code>exited</code> by the docker daemon.
+                </small>
+                <p>
+                    Usually setting up a shared task monitoring tool over public
+                    http is not the best idea.
+
+                    I pipe to my remote workstation machine all flower instances for all
+                    systems using ssh
+                </p>
+                <div class="pre-code"><code>
+~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP</code>
+                </div>
+                <p>
+                Open browser at <code> 127.0.0.1:8001 </code> and monitor my
+                systems shared tasks, configure rate limits, etc ....
+                <br>
+                You can fine tune flower, check out their documentation
+                </p>
+            </div>
+            <div class="note" >
                 <div class="note-title">
                     <h3> Decided to add some vendor libs </h3>
                 </div>
@@ -212,7 +267,6 @@ networks:
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3> Dicking Down IP's for good</p>
@@ -293,7 +347,6 @@ printf "%d\n" $binary_ip</code>
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>OCI Review<h3>
@@ -340,7 +393,6 @@ printf "%d\n" $binary_ip</code>
                     <small> Source: IBM TCP/IP Technical Overview, Sixth Edition</small>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3> % digits deployments</h3>
@@ -455,7 +507,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>
@@ -477,9 +528,8 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
-                <div>
+                <div class="note-title">
                     <h3>
                         <span class="happy-style">Infected 0 trust</span>
                     </h3>
@@ -492,7 +542,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>
@@ -507,7 +556,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3> It's not that I hate you.</h3>
@@ -523,7 +571,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3> Chronically Alive</h3>
@@ -534,7 +581,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3> Nonesense</h3>
@@ -546,7 +592,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </p>
                 </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>You bore me.</h3>
@@ -560,9 +605,8 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                         </span>
                         </code>
                     </p>
-                </div>
+            ; margin-bottom: 10px;    </div>
             </div>
-            <hr>
             <div class="note">
                 <div class="note-title">
                     <h3>  management, systems, django .. BORING </h3>
@@ -612,11 +656,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                         t.style.color = "white"
                     }
                 }
-
-                function generateScore() {
-                    var nt = document.getElementsByClassName("note").length;
-                    document.getElementById("total-counts").innerText=nt;
-                }
                 
                 function setHj() {
                     document.querySelectorAll('.pre-code code').forEach((el) => {
@@ -625,7 +664,39 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                 }
 
                 function i1() {
-                    return false
+                    var notes = document.getElementsByClassName("note");
+                    for (let i = 0; i < notes.length; i++) {
+                        var t1 = notes[i]
+                        var t2 = t1.children[0]
+                        var d1 = document.createElement("div")
+                        var sl = document.createElement("div")
+                        var sr = document.createElement("div")
+                        var g1 = document.createElement("img")
+                        var g2 = document.createElement("img")
+                        
+                        d1.classList.add("flex")
+                        d1.classList.add("flex-row")
+                        d1.classList.add("space-between")
+                        
+                        g1.height = 20; g1.width = 20;
+                        g2.height = 20; g2.width = 20;
+                        g1.src = "./static/images/gifs/me.gif"
+                        g2.src = "./static/images/gifs/me.gif"
+                        
+                        d1.appendChild(sl)
+                        d1.appendChild(sr)
+                        
+                        if (i % 2 == 0) {
+                            sl.classList.add("signature-left");
+                            sl.appendChild(g1)
+                        } else {
+
+                            sr.classList.add("signature-right");
+                            sr.appendChild(g2)
+                        }
+                        
+                        t1.insertBefore(d1, t2)
+                    }
                 }
                 
                 function i2() {
@@ -639,9 +710,8 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                 
                 function main() {
                     modeSwitch()
-                    generateScore()
                     setHj()
-                    const si1 = window.setInterval(i1, 3000)
+                    i1()
                     const si2 = window.setInterval(i2, 4000)
                     window.onbeforeunload = ri;
                 }

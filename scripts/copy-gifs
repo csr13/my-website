@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ ! -d ../static/images/gifs ]; then
+    mkdir -p ../static/images/gifs;
+fi;
+
+echo "[!] copiando .."
+cp /home/$1/Pictures/gifs/*.gif ../static/images/gifs;
+echo "[!] listo"

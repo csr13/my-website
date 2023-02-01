@@ -12,8 +12,8 @@
         <style>
             body {font-family: monospace; background: crimson;}
             header{margin-bottom: 15px;}
-            .pre-code {white-space: pre; background: whitesmoke; border:
-                1px solid lightgrey; padding:5px; overflow: auto;}
+            .pre-code {white-space: pre;background: whitesmoke; border:
+                1px solid lightgrey; padding:5px; overflow: auto; line-height: 1.5}
             #title{color: white;background-color:rgba(0,0,255,.50);}
             .snake-style{color:limegreen;background:black;border:1px solid crimson;}
             .warning-style{color:yellow;background:black;border:1px solid yellow;}
@@ -102,6 +102,201 @@
         </header>
         <!-- notes -->
         <div class="notes">
+            <div class="note">
+                <div class="note-title">
+                    <h3>IDK how it's done .. just make something!</h3>
+                    <small>and make it reusable, and pluggable!</small>
+                </div>
+                <div class="note-body">
+                    <p>
+                        What are distributed applications? That's just a fancy word
+                        used by tech bros who want to appear fancy, and can't even
+                        get a proper python script running. Anyways, It means, a simple
+                        network of interconnected containerized systems ... wow, I
+                        sounded just like them, now I have to kill myself!
+                    </p>
+                    <p>
+                        Situation:
+                        My boss asks me to deploy several scanners, perhaps 10 open
+                        source scanners, and make each avialable via single endpoint,
+                        from a 'relayer' rest service.
+                        
+                        For all other scanners, I add them to a single container,
+                        write some wrapper code around it, and set the execution of
+                        the wrapper main call for each scanner as an asynchronous
+                        function call, using a task queue -- no I don't like hearing
+                        myself, the pattern it's just a convention, of sorts, the
+                        methods are 'under pressure' methods aka JUST HACK SOMETHING
+                        OUT!!!!!
+                        <br>
+                        <br>
+                        But fuck, there is this one .. the one that runs on ruby, and is a
+                        pain to configure on the build script for the shared task
+                        container; then, it hits well this could be a microservice.
+                        <hr>
+                    </p>
+                    <p>Dockerfile for webcanner container</p>
+                    <div class="pre-code"><code>
+#syntax=docker/dockerfile:1
+FROM ruby:3.0
+RUN apt-get update -y && \
+    apt-get install -y python3-pip
+RUN git clone --recursive https://github.com/urbanadventurer/WhatWeb.git /src
+WORKDIR /src
+RUN bundle config unset frozen && \
+    bundle lock --add-platform x86_64-linux && \
+    bundle update && \
+    bundle install
+# Wrapper api
+WORKDIR /
+RUN python3 -m pip install flask
+COPY ./scanner/api.py /api.py
+# Listen 5000 and run
+EXPOSE 5000/tcp
+CMD ["python3", "api.py"]</code>
+                    </div>
+                    </p>
+                    <p>
+                    Web Scanner container listener is just a single file application,
+                    with a Scanner object that interacts with WhatWeb (web scanner)
+                    and a Flask app that has two endpoints -- one to ping the microservice for dead or
+                    alive signal, and the other to scan a target with the web
+                    scanner. Hopefully the code is bug free, because I just wrote
+                    this as I was writting this note.
+                    </p>
+                    <div class="pre-code" /><code>
+#!/usr/bin/env python3
+import json
+import os
+import subprocess
+import uuid
+
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+app.secret_key = "fskjnfskd"
+
+class Scanner(object):
+    def __init__(self, ip_address):
+        self.ip_address = ip_address
+        self.output_file = f'{uuid.uuid4().hex}.json'
+
+    def t2(self):
+        if not os.path.exists("/scans"): 
+            os.mkdirs("/scans")
+        os.chdir("/src")
+        # step 1
+        t = subprocess.run([
+            './whatweb', 
+            f'{self.ip_address}', 
+            f'--log-json=/scans/{self.output_file}'
+        ])
+        if t.returncode == 0:
+            return False, t.stderr.decode("utf-8")
+        # step 2
+        t1 = subprocess.run(
+            ['python3', 
+            "-m", 
+            "json.tool" 
+            f'/scans/{self.output_file}'],
+            text=True, 
+            capture_output=True
+        )
+        t2 = False, None
+        if t1.returncode == 0:
+            t2 = True, t.stdout.decode("utf-8")
+        else:
+            t2 = False, t.stderr.decode("utf-8")
+        # step 3
+        if t1[0]:
+            os.system(f'rm -r /scans/{self.output_file}')
+        return t2
+
+    def t1(self):
+        t1 = self.t2()
+        if not t1[0]:
+            return False, t[1]
+        return True, json.loads(t1)
+
+
+@app.route("/api/v1/ping", methods=["GET"])
+def ping():
+    return jsonify(status=True), 200
+
+
+@app.route('/api/v1/scan', methods=["POST"])
+def scan():
+    target = request.form.get("target")
+    if target is None:
+        return jsonify(status=False), 400
+    t1 = Scanner(target).t1()
+    if not t1[0]:
+        return jsonify(data=t1[1]]), 400
+    return jsonify(data=t1[1]), 200
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)</code>
+                    </div>
+                    <p>
+                        Build image
+                    </p>
+                    <div class="pre-code"><code>
+docker build --tag=scanner:latest .</code>
+                    </div>
+                    <p>
+                        Run image
+                    </p>
+                    <div class="pre-code"><code>
+docker run -t -d --name=web-scanner scanner:latest</code>
+                    </div>
+                    <p>
+                    Now, this scanner is reusable container, can be added to a
+                    decentralized application as a node in the network, via
+                    docker-compose for example -- but first test with curl:
+                    </p>
+                    <div class="pre-code"><code>
+curl -X POST \
+    -d "target=my-test-target.org" \
+    [container url - run docker network inspect bridge]:5000/api/v1/scan</code>
+                </div>
+                <p> Ok now the docker-compose file</p>
+                    <div class="pre-code"><code>
+version: '3.9'
+
+services:
+   ... rest of service
+
+   web-scanner:
+     container_name: web_scanner
+     build:
+       context: .
+       dockerfile: ./services/web_scanner/Dockerfile
+     # no need for an entry command since the Dockerfile has CMD statement.
+     restart: unless-stopped
+     volumes:
+       - ./services/web_scanner/:/
+     networks:
+       main-network:
+         ipv4_address: 69.69.69.6
+
+   ... rest of services</code>
+                    </div>
+                    <p>
+                    Last step is to replace this on the webscanner Dockerfile
+                    </p>
+                    <div class="pre-code"><code>
+# replace this
+COPY ./scanner/api.py /api.py
+# with this since the build context of the
+# docker-compose is now a diferent location.
+COPY ./services/webscanner/api.py /api.py</code>
+                    </div>
+                    <p>
+                    Oh bro, we bareley made the deadline, now let's cash out and get
+                    pizza!
+                </div>
+            </div>
             <div class="note" >
                 <div class="note-title">
                     <h3>
@@ -253,7 +448,7 @@ networks:
                         systems using ssh
                     </p>
                     <div class="pre-code"><code>
-    ~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP</code>
+~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP</code>
                     </div>
                     <p>
                     Open browser at <code> 127.0.0.1:8001 </code> and monitor my

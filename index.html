@@ -208,7 +208,7 @@ class Scanner(object):
         else:
             t2 = False, t.stderr.decode("utf-8")
         # step 3
-        if t1[0]:
+        if t2[0]:
             os.system(f'rm -r /scans/{self.output_file}')
         return t2
 

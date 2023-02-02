@@ -299,7 +299,7 @@ services:
      # no need for an entry command since the Dockerfile has CMD statement.
      restart: unless-stopped
      volumes:
-       - ./services/web_scanner/:/
+       - ./services/web_scanner/api.py:/api.py
      networks:
        main-network:
          ipv4_address: 69.69.69.6

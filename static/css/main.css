@@ -1,0 +1,111 @@
+body {
+    font-family: monospace; 
+    background: crimson;
+}
+header {
+    margin-bottom: 15px;
+}
+#title{
+    color: white;
+    background-color:rgba(0,0,255,.50);
+}
+#loading {
+    display: block;
+    position: absolute;
+    top: 0;left: 0;z-index: 100;
+    width: 100vw;
+    height: 100vh;
+}
+#page {
+    display: none;
+}
+#loading-image{
+    height: 100px;
+    width: 100px;
+}
+#howdy-cowgirl span{
+    margin: 0;
+    padding:0;
+}
+.pre-code {
+    box-shadow: 2px 4px black;
+    border: 2px groove black;
+    white-space: pre;
+    background: whitesmoke; 
+    padding:5px; 
+    overflow: auto; 
+    line-height: 1.5
+}
+.snake-style{
+    color:limegreen;
+    background:black;
+    border:1px solid crimson;
+}
+.warning-style{
+    color:yellow;
+    background:black;
+    border:1px solid yellow;
+}
+.happy-style{
+    color:limegreen;
+    background:blue;
+    border:1px solid limegreen;
+}
+.trans-style{
+    color: white; 
+    background: pink; 
+    border: 3px solid lightblue;
+}
+.main-nav{
+    height: 20px; 
+    background: black;
+}
+.nav-link{
+    color: white; 
+    background: black; 
+    border: 1px dashed black;
+    margin-right: 18px;
+}
+.nav-link:not(:first-of-type){
+    margin-left: 0px;
+}
+.sticky{
+    width: 100%; 
+    position: fixed; top:2;
+}
+.note{
+    color: white; 
+    background-color: rgba(0,0,0,0.51); 
+    box-shadow: 3px
+    6px black; border: 2px solid black;
+    margin-bottom: 20px;
+}
+.note-title{
+    padding:0px 10px 10px 10px;
+}
+.note-body{
+    padding:0px 10px 10px 10px;
+}
+
+.flex{
+    display: flex;
+}
+.flex-row{
+    flex-direction: row;
+}
+.space-between{
+    justify-content: space-between;
+}
+.signature-right{
+    padding:0; margin:0; 
+    border-left: 2px solid black; 
+    border-bottom: 2px solid black;
+    background: black;
+}
+.signature-left{
+    padding:0; 
+    margin:0; 
+    border-right: 2px solid black; 
+    border-bottom: 2px solid black;
+    background: black;
+}

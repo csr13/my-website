@@ -9,98 +9,8 @@
         <meta name="description" content="My dump">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./static/vendors/css/highlight.min.css" />
-        <style>
-            body {font-family: monospace; background: crimson;}
-            header{margin-bottom: 15px;}
-            .pre-code {
-                box-shadow: 2px 4px black;
-                border: 2px groove black;
-                white-space: pre;
-                background: whitesmoke; 
-                padding:5px; 
-                overflow: auto; 
-                line-height: 1.5}
-            #title{color: white;background-color:rgba(0,0,255,.50);}
-            .snake-style{color:limegreen;background:black;border:1px solid crimson;}
-            .warning-style{color:yellow;background:black;border:1px solid yellow;}
-            .happy-style{color:limegreen;background:blue;border:1px solid limegreen;}
-            .trans-style{color: white; background: pink; border: 3px solid lightblue;}
-            .block-of-code{background: black; border 1px solid crimson; width: auto; overflow: auto;}
-            .block-of-code code {color: white; overflow: auto; width:auto; display: block;}
-            .main-nav{height: 20px; background: black;}
-            .nav-link{color: white; background: black; border: 1px dashed black;
-                margin-right: 18px;}
-            .nav-link:not(:first-of-type){margin-left: 0px;}
-            .sticky{ width: 100%; position: fixed; top:2;}
-            .note{color: white; background-color: rgba(0,0,0,0.51); box-shadow: 3px
-                6px black; border: 2px solid black;
-                margin-bottom: 20px;}
-            .note-title{padding:0px 10px 10px 10px;}
-            .note-body{padding:0px 10px 10px 10px;}
-            .note-dark{color: white; background-color: rgba(0,0,0,0.51); box-shadow: 3px
-                6px dark; border: 2px solid crimson;
-                margin-bottom: 20px;}
-            .counter{margin-bottom: 10px;}
-            .counter div {background: white; padding: 3px; border: 3px solid
-                black}
-            .flex{display: flex;}
-            .flex-row{flex-direction: row;}
-            .space-between{justify-content: space-between;}
-            .signature-right{
-                padding:0; margin:0; 
-                border-left: 2px solid black; 
-                border-bottom: 2px solid black;
-                background: black;
-            }
-            .signature-left{
-                padding:0; 
-                margin:0; 
-                border-right: 2px solid black; 
-                border-bottom: 2px solid black;
-                background: black;
-            }
-            #loading {
-                display: block;
-                position: absolute;
-                top: 0;left: 0;z-index: 100;
-                width: 100vw;
-                height: 100vh;
-            }
-            #page {
-                display: none;
-            }
-            #loading-image{
-                height: 100px;
-                width: 100px;
-            }
-            #howdy-cowgirl span{
-                margin: 0;
-                padding:0;
-            }
-        </style>
-        <script>
-            function onReady(callback) {
-                var id = window.setInterval(c1, 1000);
-                function c1() {
-                    if (document.getElementsByTagName('body')[0] !== undefined) {
-                        window.clearInterval(id);
-                        callback.call(this);
-                    }
-                }
-            }
-
-            function s1(id, value) {
-                document
-                    .getElementById(id)
-                    .style
-                    .display = value ? 'block' : 'none';
-            }
-
-            onReady(function () {
-                s1('page', true);
-                s1('loading', false);
-            });
-        </script>
+        <link rel="stylesheet" href="./static/css/main.css" />
+        <script src="./static/js/init.js"></script>
     </head>
     <body id="page">
         <div id="loading"></div>
@@ -120,7 +30,7 @@
         <div class="notes">
             <div class="note">
                 <div class="note-title">
-                    <h3>Deployiong automatic updates to production services.</h3>
+                    <h3>Deploying automatic updates to production services.</h3>
                 </div>
                 <div class="note-body">
                     <p>
@@ -132,55 +42,50 @@
                         <li>Staging/Development</li>
                         <li>Stable/Production</li>
                     </ol>
-                     <small>The naming may differ</small>
-                     <p> The purpose of the testing environment, server, is for the
-                     person who is working on pull request code reviews. To pull
-                     test, do QA, make suggestions, etc.
-                     </p>
-                     <p>
-                     Once these changes are approved, code review passed, unittest
-                     pass; on this environment -- perhaps also on a github action on the
-                     content integration content delivery workflow, or something
-                     similar, the changes are merged on version control into the
-                     staging branch, or development branch.
-                     </p>
-                     <p>
-                     Team of management, senior developers, and ocassionally CTO,
-                     uses staging environment to review the system before any real
-                     push to production, only after the higher ups approve this, then
-                     it is time for production updates.
-                     </p>
-                     <p>
-                     Being in charge of production deployments is for experienced
-                     individuals, here, the risk is higher, so if you are faint of
-                     heart, this is not for you. This is for sadomasochists, sadistic
-                     individuals, who enjoy this type of shit. Usually when engineers
-                     are told deploy to production, they shit, even, at times, they
-                     ghost -- it is during this time, that most show their true face,
-                     and others their value.
-                     </p>
-                     <p>
-                     Usually the person in charge wants to automate this process,
-                     deploying from a remote version control center like github, can
-                     be done in several ways. This is simple way.
-                     </p>
-                     <p>
-                     Assuming you have github action running on version control, that
-                     is only triggered when a change is merged into the stable
-                     branch, from staging/development branch.
-                     </p>
-                     <p>
-                     Well, a couple of things happen here, one, there is a build job,
-                     which tests the installation script, if that passes, there is a
-                     unittest job, and if it that passes, there may or may not be a
-                     browser automation testing, using tools like pupeeter, or
-                     selenium, or there could be tests with zapproxy as well, it
-                     really depends on the team.
-                     </p>
-                     <p>
-                        Here is an example of what a automated deployment with version control on github; with checking, looks like.
-                     </p>
-                     <div class="pre-code"><code>
+                    <small>The naming may differ</small>
+                    <p> 
+                        The purpose of the testing environment, is for the
+                        pull request code reviews, test, QA, perhaps make suggestions.
+                    </p>
+                    <p>
+                        Once changes are approved, code review good, unittest
+                        pass; on this environment, merge into staging environment.
+                    </p>
+                    <p>
+                        Team of management, senior developers, and ocassionally CTO,
+                        uses staging environment to review the system before any real
+                        update to production, only after higher ups approve this, then
+                        it is time for updates.
+                    </p>
+                    <p>
+                        Being in charge of production deployments is for experienced
+                        individuals. Here, the risk is higher, if you are faint of
+                        heart, this is not for you. This is for sadomasochists, sadistic
+                        individuals, who enjoy this type of pain. Usually, when engineers
+                        are told deploy to production, they shit, even, at times,
+                        ghost -- it is during these instances, most show their true face,
+                        and others their value.
+                    </p>
+                    <p>
+                        Usually want to automate this process deploying from a remote version control center like github, can
+                        be done in several ways. This is simple way.
+                    </p>
+                    <p>
+                        Assuming you have github action running on version control, triggered when a change is merged 
+                        into the stable branch, from staging/development branch.
+                    </p>
+                    <p>
+                        Some steps are taken. There is a build job,
+                        which tests the installation script, if passes, there is a
+                        unittest job, and if that passes, there may or may not be a
+                        browser automation testing, using tools like pupeeter, or
+                        selenium, or there could be tests with zapproxy as well, it
+                        really depends on the type of system.
+                    </p>
+                    <p>
+                        Here is example of what a automated deployment with version control on github; with checking, looks like.
+                    </p>
+                    <div class="pre-code"><code>
 name: Build Test Deploy
 
 on:
@@ -285,28 +190,28 @@ jobs:
           echo "$HOST_SSH_KEY" > ~/.ssh/id_rsa
           ssh-keyscan -H "$HOST_URL" > ~/.ssh/known_hosts
           ssh -i  ~/.ssh/id_rsa -l "$HOST_USER_NAME" "$HOST_URL" "cd ~/src/update-repo.sh";</code>
-                     </div>
-                     <p>
+                    </div>
+                    <p>
                         This job has three steps, build, test, deploy, simple. At the deploy stage, at the end of the script, the update-repo.sh 
                         script looks similar to this, which pulls the changes from the repository and restart services. it is important to notice update-repo.sh
                         script is located in the machine where the production environment is hosted, it is executed through ssh, so, secrets are needed to be configured 
                         on the repo settings.
-                     </p>
-                     <div class="pre-code"><code>
+                    </p>
+                    <div class="pre-code"><code>
 #!/bin/bash 
 cd ~/project-dir
 git pull origin stable
 # Run some other tasks pertaining to the application, like a custom version of the ./setup.sh script 
 # But one that runs migrations, cleanup scripts, etc.
 systemctl restart my-service.service
-                     </code></div>
-                     <p>
+                    </code></div>
+                    <p>
                         You may think, aha, idiot, bullshit, but git asks for a password, trick is is to configure the url origin on the local git repository 
                         config
-                     </p>
-                     <div class="pre-code"><code>
+                    </p>
+                    <div class="pre-code"><code>
 ~$ git remote set-url origin https://your-git-account-name:ghp_this_is_your_github_token@github.com/your-git-account-name/repo-name.git
-                     </code></div>
+                    </code></div>
                 </div>
             </div>
             <div class="note">
@@ -414,7 +319,7 @@ server {
 
     location / {
         root /var/www/html;
-        try_files $uri index.html;
+        try_files $uri /index.html;
     }
 
 }</code>
@@ -510,7 +415,7 @@ class Scanner(object):
             f'{self.ip_address}', 
             f'--log-json=/scans/{self.output_file}'
         ])
-        if t.returncode == 0:
+        if t.returncode == 1:
             return False, t.stderr.decode("utf-8")
         # step 2
         t1 = subprocess.run(
@@ -964,15 +869,55 @@ iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT</code>
                         <bold> 
                             A compose file for the host (install docker & docker-compose)
                         </bold>
-                        <script src="https://gist.github.com/xzan0x7c7/47c6d328ef4994ab9e763d6c67de51da.js"></script>
+<div class="pre-code"><code>
+version: '3.9'
+services:
+    web-server:
+    build:
+        context: .
+        dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    restart: unless-stopped
+    networks:
+      my-network:
+        ipv4_address: 10.10.10.7
+
+networks:
+    my-network:
+      ipam:
+        driver: default
+        config:
+          - subnet: 10.10.10.0/24
+</code></div>
                         <small> 
                         Enabling volumes to avoid rebuilding app, and editing directly on
                         host, not on container, saves the sysadmin time. 
                         </small>
                     <p> Dockerfile located on build context nginx/Dockerfile </p>
-                    <script src="https://gist.github.com/xzan0x7c7/d70df65dd94a475ef4b90c4c57ec5f8f.js"></script>
+ <div class="pre-code"><code>
+# syntax=docker/dockerfile:1
+FROM nginx
+RUN rm /etc/nginx/conf.d
+RUN mkdir -p /var/www/html
+COPY nginx/conf.d /etc/nginx/conf.d
+COPY website /var/www/html
+RUN ls /var/www/html; echo "[!] Build finished"    
+ </code></div>
                     <p> Nginx conf file </p>
-                    <script src="https://gist.github.com/xzan0x7c7/24060a789672b2f1a7d4a9cdb8a41df8.js"></script>
+<div class="pre-code"><code>
+server {
+    listen 80;
+    add_header X-Frame-Options SAMEORIGIN;
+    add_header X-Content-Type-Options nosniff;
+    root /var/www/html;
+    location / {
+        try_files $uri /index.html =404;
+    }
+}
+</code></div>
                     <p> 
                         <br>
                         However, I am now interested in monitoring visitors and
@@ -1046,89 +991,6 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
             </div>
             <div class="note">
                 <div class="note-title">
-                    <h3>
-                        <span class="trans-style">Big Diference </span>
-                    </h3>
-                </div>
-                <div class="note-body">
-                    <p>
-                        Big fucking difference in between a transexual and a transvestite you
-                        fucking ignorant piece of shit. A 
-                        <span class="trans-style">transexual</span> 
-                        is someone who medically transitions via cellular genetic hack through modifying
-                        protein synthesis via hormonal replacement therapy, developing
-                        goodies like tits and femenine fat redistribution as well as soft
-                        skin and cute face, female body smell, etc.. ........ and transvestite is
-                        someone who just dresses like a female for the thrill of it ... I
-                        can't make a single motherfucker out of 10 of you idiots -- If I was
-                        the dad of any of you I would be ASHAMED of you -- HAIL SATAN BITCH!!
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3>
-                        Infected 0 trust
-                    </h3>
-                </div>
-                <div class="note-body">
-                    <p>
-                        Assume everything is infected by applying a 0 trust policy, every component, switch, router is infected,
-                        the internet is infected with satanic methods designed to influence
-                        your choice of actions, BlaK Ops zecTS owns your shit.
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3>
-                        Pathetic
-                    </h3>
-                </div>
-                <div class="note-body">
-                    <p>
-                        Do you know how pathetic you are not trying to be something you are not?
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3> It's not that I hate you.</h3>
-                </div>
-                <div class="note-body">
-                    <p> 
-                        I don't hate you, it's only that you have proven to be a
-                        piece of crap to everyone you are/were close to. 
-                        <br>
-                        <br>
-                        How in the fuck will I ever consider any sort of relationship
-                        with you if all you do is hate on your own people?
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3> Chronically Alive</h3>
-                </div>
-                <div class="note-body">
-                    <p>
-                        GET FUCKING HELP YOU DEMENTED MANIPULATIVE SNAKE 
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3> Nonesense</h3>
-                </div>
-                <div class="note-body">
-                    <p>
-                        Do you have really bad autism, to the point were you screeeeeam!!!!
-                        fucking lound when the salad dressing touches the meat on a plate? 
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
                     <h3>You bore me.</h3>
                 </div>
                 <div class="note-body">
@@ -1155,150 +1017,36 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                         or 
                         <code> /etc/cron.hourly </code>
                     </p>
-                    <script src="https://gist.github.com/xzan0x7c7/3a065ca7bf0e93eed85e8757b97a968e.js"></script>
+<div class="pre-code"><code>
+#!/path/to/venv/bin/python
+# Django code maybe cron.hourly or 
+# cron.daily tasks that require r/w db ops.
+
+import os
+import random
+import sys
+
+# Used to import needed defined modules
+sys.path.append("/home/user/project/base_dir/") 
+
+# NeeDed By Django
+settings = "xxx.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = settings
+
+import django
+django.setup()
+
+# Defin3d crons
+from xxx.crons import rotate_proxy
+
+if __name__ == "__main__":
+    rotate_proxy()
+</code></div>
                 </div>
             </div>
         </div>
         <!-- end of notes -->
         <script src="./static/vendors/js/highlight.min.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-
-                var state = {
-                    "mode" : "red",
-                    "holder" : {}
-                }
-                
-                class Sucy {
-                    constructor(height, width) {
-                        this.height = height
-                        this.width = width
-                        this.imageSrc = './static/images/gifs/imp.gif'
-                        this.sucy = null
-                    }
-
-                    init() {
-                        var e1 = document.createElement("div")
-                        var e2 = document.createElement("img")
-                        e1.style.display = "none"
-                        e2.src = this.imageSrc
-                        e2.style.height = this.height
-                        e2.style.width = this.width
-                        this.sucy = e1
-                    }
-                    
-                    s1() {
-
-                    }
-
-                    main() {
-                        this.init()
-                        this.s1()
-                    }
-                }
-
-                function modeSwitch() {
-                    var t = document.getElementById("dark-mode-trigger")
-                    t.addEventListener("click", function(e) {
-                        if (state.mode == "red") {
-                            t.innerText = "Red mOde"
-                            state.mode = "dark"
-                            setMode()
-                        } else {
-                            t.innerText = "Dark mOde"
-                            state.mode = "red"
-                            setMode()
-                        }
-                    })
-                }
-                
-                function setMode() {
-                    var t = document.getElementsByTagName("body")[0];
-                    if (state.mode == "dark") {
-                        t.style.background = "black";
-                    } else {
-                        t.style.background = "crimson";
-                    }
-                }
-                
-                function setHj() {
-                    document.querySelectorAll('.pre-code code').forEach((el) => {
-                        hljs.highlightElement(el);
-                    });
-                }
-                
-                function i1() {
-                    var notes = document.getElementsByClassName("note");
-                    for (let i = 0; i < notes.length; i++) {
-                        var t1 = notes[i]
-                        var t2 = t1.children[0]
-                        var d1 = document.createElement("div")
-                        var sl = document.createElement("div")
-                        var sr = document.createElement("div")
-                        var g1 = document.createElement("img")
-                        var g2 = document.createElement("img")
-                        d1.classList.add("flex")
-                        d1.classList.add("flex-row")
-                        d1.classList.add("space-between")
-                        g1.height = 25; g1.width = 25;
-                        g2.height = 25; g2.width = 25;
-                        g1.src = "./static/images/gifs/me.gif"
-                        g2.src = "./static/images/gifs/me.gif"
-                        d1.appendChild(sl)
-                        d1.appendChild(sr)
-                        if (i % 2 == 0) {
-                            sl.classList.add("signature-left");
-                            sl.appendChild(g1)
-                        } else {
-                            sr.classList.add("signature-right");
-                            sr.appendChild(g2)
-                        }
-                        t1.insertBefore(d1, t2)
-                    }
-                }
-                
-                function i2() {
-                    var t1 = document.getElementById("g-1")
-                    var t2 = document.getElementById("g-2")
-                    var t3 = document.getElementById("g-9")
-                    if (t1.style.color == "black") {
-                        t1.style.color = "fuchsia"
-                    } else {
-                        t1.style.color = "black"
-                    }
-                    if (t2.style.color == "black") {
-                        t2.style.color = "fuchsia"
-                    } else {
-                        t2.style.color = "black"
-                    }
-                    if (t3.style.color == "black") {
-                        t3.style.color = "limegreen"
-                    } else {
-                        t3.style.color = "black"
-                    }
-                }
-                
-                function s1s() {
-                    // set intervals here
-                    window.setInterval(i2, 666)
-                }
-
-                function ri() {
-                    // remove intervals here
-                    window.clearInterval(i2);
-                }
-                
-                function main() {
-                    s1s()
-                    modeSwitch()
-                    setHj()
-                    i1()
-                    // remove intervals to avoid leaks
-                    window.onbeforeunload = ri;
-                }
-
-                main()
-            })
-        </script>
+        <script src="./static/js/main.js"></script>
     </body>
 </html>

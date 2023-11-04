@@ -58,15 +58,6 @@
                         it is time for updates.
                     </p>
                     <p>
-                        Being in charge of production deployments is for experienced
-                        individuals. Here, the risk is higher, if you are faint of
-                        heart, this is not for you. This is for sadomasochists, sadistic
-                        individuals, who enjoy this type of pain. Usually, when engineers
-                        are told deploy to production, they shit, even, at times,
-                        ghost -- it is during these instances, most show their true face,
-                        and others their value.
-                    </p>
-                    <p>
                         Usually want to automate this process deploying from a remote version control center like github, can
                         be done in several ways. This is simple way.
                     </p>
@@ -229,22 +220,15 @@ systemctl restart my-service.service
                         So, is time to deploy production. You ask frontend team
                         (always arrogant) lead: why deploy instructions dictate only how to run react
                         development build? Where production instructions?
-                        You obtain shrugged shoulders and updward palms facing you (IDK expression)
-                        
                         <span><img height=15 src="./static/images/gifs/confused.gif" /></span>
                     </p>
                     <p>
                         But when I deploy and see a source tree map of the entire
                         application on the browser development settings, with all the
-                        source code for the frontend, PANIC. At the least give the
-                        threat actor a bit of trouble by compiling and exposing a single file
-                        for the application, not a fucking source code tree map of
-                        the application; this, harder to reverse.
+                        source code for the frontend.
                     </p>
                     <p>
-                        Ask frontend for solution to do this, they said no idea,
-                        probably, because devs just want to turn in job and get paid.
-                        Fine.
+                        Ask frontend for solution to do this, they say "not sure".
                     </p>
                     <p>
                         When deploying for production react apps, react is nice
@@ -326,314 +310,6 @@ server {
                     </div>
                 </div>
             </div>
-             <div class="note">
-                <div class="note-title">
-                    <h3>IDK how it's done .. just make something!</h3>
-                    <small>and make it reusable, and pluggable!</small>
-                </div>
-                <div class="note-body">
-                    <p>
-                        What are distributed applications? That's just a fancy word
-                        used by tech bros who want to appear fancy, and can't even
-                        get a proper python script running. Anyways, It means, a simple
-                        network of interconnected containerized systems ... wow, I
-                        sounded just like them, now I have to kill myself!
-                    </p>
-                    <p>
-                        Situation:
-                        My boss asks me to deploy several scanners, perhaps 10 open
-                        source scanners, and make each avialable via single endpoint,
-                        from a 'relayer' rest service.
-                        
-                        For all other scanners, I add them to a single container,
-                        write some wrapper code around it, and set the execution of
-                        the wrapper main call for each scanner as an asynchronous
-                        function call, using a task queue -- no I don't like hearing
-                        myself, the pattern it's just a convention, of sorts, the
-                        methods are 'under pressure' methods aka JUST HACK SOMETHING
-                        OUT!!!!!
-                        <br>
-                        <br>
-                        But fuck, there is this one .. the one that runs on ruby, and is a
-                        pain to configure on the build script for the shared task
-                        container; then, it hits well this could be a microservice.
-                        <hr>
-                    </p>
-                    <p>Dockerfile for webcanner container</p>
-                    <div class="pre-code"><code>
-#syntax=docker/dockerfile:1
-FROM ruby:3.0
-RUN apt-get update -y && \
-    apt-get install -y python3-pip
-RUN git clone --recursive https://github.com/urbanadventurer/WhatWeb.git /src
-WORKDIR /src
-RUN bundle config unset frozen && \
-    bundle lock --add-platform x86_64-linux && \
-    bundle update && \
-    bundle install
-# Wrapper api
-WORKDIR /
-RUN python3 -m pip install flask
-COPY ./scanner/api.py /api.py
-# Listen 5000 and run
-EXPOSE 5000/tcp
-CMD ["python3", "api.py"]</code>
-                    </div>
-                    </p>
-                    <p>
-                    Web Scanner container listener is just a single file application,
-                    with a Scanner object that interacts with WhatWeb (web scanner)
-                    and a Flask app that has two endpoints -- one to ping the microservice for dead or
-                    alive signal, and the other to scan a target with the web
-                    scanner. Hopefully the code is bug free, because I just wrote
-                    this as I was writting this note.
-                    </p>
-                    <div class="pre-code" /><code>
-#!/usr/bin/env python3
-import json
-import os
-import subprocess
-import uuid
-
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-app.secret_key = "fskjnfskd"
-
-class Scanner(object):
-    def __init__(self, ip_address):
-        self.ip_address = ip_address
-        self.output_file = f'{uuid.uuid4().hex}.json'
-
-    def t2(self):
-        if not os.path.exists("/scans"): 
-            os.mkdirs("/scans")
-        os.chdir("/src")
-        # step 1
-        t = subprocess.run([
-            './whatweb', 
-            f'{self.ip_address}', 
-            f'--log-json=/scans/{self.output_file}'
-        ])
-        if t.returncode == 1:
-            return False, t.stderr.decode("utf-8")
-        # step 2
-        t1 = subprocess.run(
-            ['python3', 
-            "-m", 
-            "json.tool" 
-            f'/scans/{self.output_file}'],
-            text=True, 
-            capture_output=True
-        )
-        t2 = False, None
-        if t1.returncode == 0:
-            t2 = True, t.stdout.decode("utf-8").strip("\n")
-        else:
-            t2 = False, t.stderr.decode("utf-8")
-        # step 3
-        if t2[0]:
-            os.system(f'rm -r /scans/{self.output_file}')
-        return t2
-
-    def t1(self):
-        t1 = self.t2()
-        if not t1[0]:
-            return False, t1[1]
-        return True, json.loads(t1[1])
-
-
-@app.route("/api/v1/ping", methods=["GET"])
-def ping():
-    return jsonify(status=True), 200
-
-
-@app.route('/api/v1/scan', methods=["POST"])
-def scan():
-    target = request.form.get("target")
-    if target is None:
-        return jsonify(status=False), 400
-    t1 = Scanner(target).t1()
-    if not t1[0]:
-        return jsonify(data=t1[1]]), 400
-    return jsonify(data=t1[1]), 200
-
-
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)</code>
-                    </div>
-                    <p>
-                        Build image
-                    </p>
-                    <div class="pre-code"><code>
-docker build --tag=scanner:latest .</code>
-                    </div>
-                    <p>
-                        Run image
-                    </p>
-                    <div class="pre-code"><code>
-docker run -t -d --name=web-scanner scanner:latest</code>
-                    </div>
-
-                    <p>
-                    Now, this scanner is reusable container, can be added to a
-                    decentralized application as a node in the network, via
-                    docker-compose for example -- but first test with curl:
-                    </p>
-                    <div class="pre-code"><code>
-curl -X POST \
-    -d "target=my-test-target.org" \
-    [container url - run docker network inspect bridge]:5000/api/v1/scan</code>
-                    </div>
-                    <p>
-
-                        <div style="height: auto; width: auto; overflow: scroll;">
-                            <img src='./static/images/gifs/scanner.gif' width=auto class="console-div"/> 
-                        </div>
-                        <small>
-                        Test it, from up to down, screen one shows, container running,
-                        screen 2 follows the logs from the container; the api logs,
-                        screen 3 executes a request to that container, with a target of
-                        https://reddit.com, it takes about 10 seconds to scan, then, it
-                        returns a json output that be easily stored in a table row as
-                        json, and displayed on frontend application.
-                        </small>
-                    </p>
-                    <p> Ok now the docker-compose file</p>
-                    <div class="pre-code"><code>
-version: '3.9'
-
-services:
-   ... rest of service
-
-   web-scanner:
-     container_name: web_scanner
-     build:
-       context: .
-       dockerfile: ./services/web_scanner/Dockerfile
-     # no need for an entry command since the Dockerfile has CMD statement.
-     restart: unless-stopped
-     volumes:
-       - ./services/web_scanner/api.py:/api.py
-     networks:
-       main-network:
-         ipv4_address: 69.69.69.6
-
-   ... rest of services</code>
-                    </div>
-                    <p>
-                    Last step is to replace this on the webscanner Dockerfile
-                    </p>
-                    <div class="pre-code"><code>
-# replace this
-COPY ./scanner/api.py /api.py
-# with this since the build context of the
-# docker-compose is now a diferent location.
-COPY ./services/webscanner/api.py /api.py</code>
-                    </div>
-                    <p>
-                    Oh bro, we bareley made the deadline, now let's cash out and get
-                    pizza!
-                </div>
-            </div>
-            <div class="note" >
-                <div class="note-title">
-                    <h3>
-                        A rant on implementing API's -- 
-                        from pure experience, not books or
-                        youtube tutorials.
-                    </h3>
-                </div>
-                <div class="note-body">
-                    In my opinion,
-                    <ol>
-                        <li>
-                            Singleton applications are a good fit for a microservice.
-                            Take sanic, Flask, etc, as examples of a single
-                            application instance objects -- single files, single
-                            object, micro service.
-                        </li>
-                        <li>
-                            Monolithic applications are good if it's purpose is to be
-                            *a* single micro service in a system with a network of micro services,
-                            and it can be written in less than 1000 lines of
-                            code, and can be reusable, and pluggable. What? I said it is my personal
-                            opinion, you can call it a microservice and remove the
-                            monolithic if you want, but when u find yourself writting
-                            a *single file* rest api 'microservice' think about it
-                            for a second.
-                        </li>
-                        <li>
-                            Validation/Verification is always one of the first things to do,
-                            if you want to provide the end user of the system with a
-                            pleasant usage experience.
-                        </li>
-                        <li>
-                            Database relations, using foreign keys to create
-                            relational models, not text id's, otherwise, deletion of
-                            related models is a real pain, it is important to point
-                            this out to the entry level engineers.
-                        </li>
-                        <li>
-                            Document the endpoints, check know OpenApi, leverage
-                            tools like swagger -- for django or I recommend using
-                            drf-yasg, and applying <code style="background:
-                                                                black; color: white;">@swagger_auto_schema</code>
-                            decorator with both request body, query parameter and
-                            response serializers to provide accurate
-                            description on what the endpoint needs for context
-                            negotiation, and what it returns. You can specify all
-                            status code of responses, good, leverage it, use it. Make
-                            frontend team happy to work with you, and gain good
-                            karma.
-                        </li>
-
-                        <li>
-                            Scaling up is fucking easy, scaling down, not so much.
-                        </li>
-                        <li>
-                            Sometimes threading is better than integrating an entire
-                            task management system, for fucks sake.
-                        </li>
-                        <li>
-                            Do not allow the entry level developer to refactor, just
-                            write detailed tasks, and make him/her follow them to the
-                            letter.
-                        </li>
-                        <li>
-                            Refactor comes after v1 is stable. End of discussion.
-                        </li>
-                        <li>
-                            Sometimes management will make the mistake of asking
-                            entry level developers on estimates for tasks, correct
-                            this mistake by making management understand, not all
-                            engineers have the same level of skill/experience.
-                            Situations like this fuck the so called 'Agile' bullshit
-                            planning.
-                        </li>
-                        <li>
-                            Work as a team, if you are a new engineer, do not be the egocentric developer,
-                            there is someone else who will come and make an example
-                            of you. No matter how good you are .. emm *claim to be**, 
-                            you will lack expereince. Need to be battle
-                            tested, that means, at leats, perhaps, going through a couple of
-                            erroneous managerial estimates for high profile, big
-                            investment clients. Enough suffering that will make
-                            you question your carrer choices. You need to overcome
-                            not having a social life, being assigned to contribute
-                            to an important system and suffer because of
-                            deadlines. Watching on the sidelines as losers
-                            interact with your crush, while you sit, pathetic at your
-                            workstation trying to make the deadline -- this is they
-                            way to pacify egocentric entry level developers.
-                        </li>
-                        <li>
-                            A good coffee machine will save you money in the long
-                            run.
-                        </li>
-                    <ol>
-                </div>
-            </div>
             <div class="note" >
                 <div class="note-title">
                     <h3>Celery Flower and Worker</h3>
@@ -711,86 +387,6 @@ networks:
             </div>
             <div class="note">
                 <div class="note-title">
-                    <h3> Dicking Down IP's for good</p>
-                </div>
-                <div class="note-body">
-                    <p>
-                        IP is a standard protocol, STD 5 (Standard 5) meaning, it has
-                        been approved by the IAB (Internet Advisory Board) a sort of
-                        branch of the 
-                        IEFT (Internet Engeneering Task Force) the one who issues the
-                        standards,  as well as the IANA (Internet Assigned Board). IP is the Internet
-                        Protocol, and IP number, is just a number used to id stuff on that protocol.
-                    </p>
-                    <p>
-                        The Internet Protocol is an unreliable, connectionless packet
-                        delivery protocol, and it assumes that data can be lost
-                        during delivery, but since it is part of the OCI model
-                        (read below) it assumes higher protocols handle the loss of
-                        data during delivery aka catching errors.
-                    </p>
-                    <p>
-                        The usage of a connectionless packet delivery method
-                        tackles the issue of it depending on central computing
-                        centers that use other networks models. The DOD (Department of Defence of the United States) 
-                        decided to deploy a network that was best suitable to evade network distuption
-                        in an unforseen event that could compromise lines of
-                        communication in a certain geographical location, and so the
-                        network was deployed to counter any such event, and
-                        it has been proven true and works.
-                    </p>
-                    <p>
-                        <h4> IP numbers </h4>
-                        <p>
-                        IP numbers are 32-bit unsigned values, they are expressed
-                        like this 10.10.10.1 in a dotted decimal notation.
-                        </p>   
-                            IP address = {network number}-{host number}
-                            <br>
-                            192.2[network address].10.2[host number] 
-                        <p>
-                            In binary it looks like this.
-                            <br>
-                                11000000.00000010.00001010.00000010
-                        </p>
-                        <p>
-                            Shortcut to convert IP nums to binary
-                        </p>
-                        <div class="pre-code">
-<code>#!/bin/bash
-# This can go inside a loop after cating file of IP's
-
-ip=$1
-temp=$(echo $ip | sed 's/\./;/g');
-binary_ip=$(echo "obase=2;$temp" | bc | tr -d '\n');
-printf "%d\n" $binary_ip</code>
-                        </div>
-                        </p>
-                        <p>
-                            These addresses are used by the Internet Protocol to
-                            identify hosts on the internet
-                            <h4> Five classes of IP addresses and it's usages +
-                                brief properties </h4>
-                            <ol>
-                                <li>Class A - these use 7 bits of the network section
-                                and 24 bits for the host section -- suitable for
-                                networks with many hosts.</li>
-                                <li>Class B - these use 14 bits for the network
-                                    section and 16 for the host section -- suitable
-                                    for networks with a medium-large number of hosts.</li>
-                                <li>Class C - these use 21 bits for the network
-                                    section, and 8 bits for the host section --
-                                    suitable for a network with a small number of
-                                    hosts.</li>
-                                <li>Class D - these are used for multicasting.</li>
-                                <li>Class E - these are of experimental use.</li>
-                            </ol>
-                        </p>
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
                     <h3>OCI Review<h3>
                 </div>
                 <div class="note-body">
@@ -842,7 +438,7 @@ printf "%d\n" $binary_ip</code>
                 <div class="note-body">
                     <p>
                         Deploying stuff on servers, could be just relayer api's for remote
-                        RPC's on complex systems .. whatever .. 
+                        RPC's on complex system. 
                     </p>
                     <p>
                         If the server is not hosted on a cloud provider, then a simple
@@ -980,27 +576,7 @@ curl -d @/usr/share/data/monitoring/web-server-visitors.txt http://10.0.10.2/ana
                     </code>
                     </small>
                     <br>
-                    <br>
-                    Malicious people would then instead of doing APT analysis, would
-                    stupidly use a tool like nmap or greenbone to scan that IP for
-                    open ports, and do recoinassance on visitors, for further
-                    malicious activity.
                     </p>
-                    </p>
-                </div>
-            </div>
-            <div class="note">
-                <div class="note-title">
-                    <h3>You bore me.</h3>
-                </div>
-                <div class="note-body">
-                    <p> 
-                        You bore me with academic linguistics.
-                        <br>
-                        <span class="snake-style">
-                        ~$ systemctl disable your-ass.service && rm -v /etc/system/systemd/your-ass.service
-                        </span>
-                        </code>
                     </p>
                 </div>
             </div>

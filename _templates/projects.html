@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% for repo in repos %}
+        {% set repo_json = repo|tojson %}
+        {{ repo_json }}
+    {% endfor %}
+{% endblock %}
+

@@ -1,5 +1,7 @@
 *.swp
 *.swo
 *.env
+venv
+__pycache__
 templates.txt
 drafts.html

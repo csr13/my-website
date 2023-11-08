@@ -7,7 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./static/vendors/css/highlight.min.css" />
         <link rel="stylesheet" href="./static/css/main.css" />
-        <script src="./static/js/init.js"></script>
+        {% block head_scripts %}
+            <script src="./static/js/init.js"></script>
+        {% endblock %}
     </head>
     <body id="page">
         <div id="loading"></div>
@@ -25,7 +27,9 @@
         </header>
         {% block content %}
         {% endblock %}
-        <script src="./static/vendors/js/highlight.min.js"></script>
-        <script src="./static/js/main.js"></script>
+        {% block footer_scripts %}
+        <script src="../static/vendors/js/highlight.min.js"></script>
+        <script src="../static/js/main.js"></script>
+        {% endblock %}
     </body>
 </html>

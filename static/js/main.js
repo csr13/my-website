@@ -1,20 +1,20 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     var state = {
-        "mode" : "red",
+        "mode" : "light",
         "holder" : {}
     }
     
     function modeSwitch() {
         var t = document.getElementById("dark-mode-trigger")
         t.addEventListener("click", function(e) {
-            if (state.mode == "red") {
-                t.innerText = "Red mOde"
+            if (state.mode == "light") {
+                t.innerText = "Light mOde"
                 state.mode = "dark"
                 setMode()
             } else {
                 t.innerText = "Dark mOde"
-                state.mode = "red"
+                state.mode = "light"
                 setMode()
             }
         })
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (state.mode == "dark") {
             t.style.background = "black";
         } else {
-            t.style.background = "crimson";
+            t.style.background = "white";
         }
     }
     
@@ -50,8 +50,8 @@ document.addEventListener("DOMContentLoaded", function() {
             d1.classList.add("space-between")
             g1.height = 25; g1.width = 25;
             g2.height = 25; g2.width = 25;
-            g1.src = "./static/images/gifs/me.gif"
-            g2.src = "./static/images/gifs/me.gif"
+            g1.src = "/static/images/gifs/me.gif"
+            g2.src = "/static/images/gifs/me.gif"
             d1.appendChild(sl)
             d1.appendChild(sr)
             if (i % 2 == 0) {

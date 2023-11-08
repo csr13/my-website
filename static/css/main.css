@@ -1,6 +1,7 @@
 body {
     font-family: monospace; 
-    background: crimson;
+    background: white;
+    color: black;
 }
 header {
     margin-bottom: 15px;
@@ -35,26 +36,6 @@ header {
     padding:5px; 
     overflow: auto; 
     line-height: 1.5
-}
-.snake-style{
-    color:limegreen;
-    background:black;
-    border:1px solid crimson;
-}
-.warning-style{
-    color:yellow;
-    background:black;
-    border:1px solid yellow;
-}
-.happy-style{
-    color:limegreen;
-    background:blue;
-    border:1px solid limegreen;
-}
-.trans-style{
-    color: white; 
-    background: pink; 
-    border: 3px solid lightblue;
 }
 .main-nav{
     height: 20px; 

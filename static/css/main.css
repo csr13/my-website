@@ -24,18 +24,15 @@ header {
     height: 100px;
     width: 100px;
 }
-#howdy-cowgirl span{
-    margin: 0;
-    padding:0;
-}
-.pre-code {
+pre {
     box-shadow: 2px 4px black;
     border: 2px groove black;
     white-space: pre;
     background: whitesmoke; 
     padding:5px; 
     overflow: auto; 
-    line-height: 1.5
+    line-height: 1.5;
+    color: black;
 }
 .main-nav{
     height: 20px; 
@@ -55,10 +52,7 @@ header {
     position: fixed; top:2;
 }
 .note{
-    color: white; 
-    background-color: rgba(0,0,0,0.51); 
-    box-shadow: 3px
-    6px black; border: 2px solid black;
+    color: black; 
     margin-bottom: 20px;
 }
 .note-title{

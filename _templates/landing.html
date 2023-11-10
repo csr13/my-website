@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block title %}Notes{% endblock %}
+
+{% block content %}
+    {% for post in range(0, posts|length) %}
+        {% set counter = post + 1 %}
+        <p>
+            <a href='{{ posts[post].href }}'>
+                {{ counter }}) {{ posts[post].title }}
+            </a>
+        <p>
+    {% endfor %}
+{% endblock %}

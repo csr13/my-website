@@ -1,5 +1,7 @@
 {% include 'index.html' %}
 
+{% block title %}{{ note_title|safe }}{% endblock %}
+
 {% block content %}
     <div class="note">
         <div class="note-title">

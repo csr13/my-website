@@ -5,17 +5,14 @@ author: csr13
 
 Normally, in real life situations, services have several environments.
 
-Testing
-Staging/Development
-Stable/Production
+- Testing
+- Staging/Development
+- Stable/Production
 
-The naming may differ
+> The naming may differ
 
-The purpose of the testing environment, is for the
-pull request code reviews, test, QA, perhaps make suggestions.
-
-Once changes are approved, code review good, unittest
-pass; on this environment, merge into staging environment.
+The purpose of the testing environment, is for the pull request code reviews, test, QA, perhaps make suggestions. 
+Once changes are approved, code review good, unittest pass; on this environment, merge into staging environment.
 
 Team of management, senior developers, and ocassionally CTO,
 uses staging environment to review the system before any real

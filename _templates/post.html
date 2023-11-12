@@ -1,4 +1,4 @@
-{% include 'index.html' %}
+{% extends 'index.html' %}
 
 {% block title %}{{ note_title|safe }}{% endblock %}
 
@@ -6,6 +6,7 @@
     <div class="note">
         <div class="note-title">
             <h3>{{ note_title|safe }}</h3>
+            <p>Date: {{ note_date }}<br>By: {{ note_author }}</p>
         </div>
         <div class="note-body">
             {{ note_body|safe }}

@@ -1,6 +1,7 @@
 ---
 title: Deploying automatic updates to production services.
 author: csr13
+date: 2023-11-09
 ---
 
 Normally, in real life situations, services have several environments.

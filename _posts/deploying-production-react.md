@@ -1,5 +1,7 @@
 ---
 title: Deploying production React app.
+author: csr13
+date: 2023-11-10
 ---
 
 React is entrypoint for entry level frontend developers, it's a popular framework.

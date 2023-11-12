@@ -44,22 +44,34 @@ pre {
     border: 1px dashed black;
     margin-right: 18px;
 }
-.nav-link:not(:first-of-type){
-    margin-left: 0px;
-}
 .sticky{
     width: 100%; 
     position: fixed; top:2;
 }
+.about-site {
+    height: 250px;
+}
+.about-site-pic-div {
+    border: 2px groove white;
+    height: 200px;
+    width: px;
+}
+.about-site-pic {
+
+}
+.dies div {
+    font-size: 21px;
+}
+.about-site-few-words{
+    border-top: 1px solid lightgrey;
+    margin-top: 5px;
+}
+.few-words {
+    margin-top: 5px;
+}
 .note{
     color: black; 
     margin-bottom: 20px;
-}
-.note-title{
-    padding:0px 10px 10px 10px;
-}
-.note-body{
-    padding:0px 10px 10px 10px;
 }
 
 .flex{
@@ -67,6 +79,9 @@ pre {
 }
 .flex-row{
     flex-direction: row;
+}
+.flex-col {
+    flex-direction: column;
 }
 .space-between{
     justify-content: space-between;

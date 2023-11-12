@@ -1,9 +1,15 @@
+import datetime
 import json
 import os
 
 import requests
 import markdown
 from jinja2 import Environment, PackageLoader, select_autoescape
+
+from _logger import get_logger
+
+
+logger = get_logger(__name__)
 
 
 env = Environment(
@@ -25,16 +31,25 @@ def generate_index():
             html = mkdown.convert(txt)
             meta = mkdown.Meta
             name = post.replace(".md", ".html")
+            title = meta.get("title")[0]
+            date = meta.get("date")[0]
+            year, month, day = [int(x) for x in date.split("-")]
+            date = datetime.datetime(year=year, month=month, day=day)
             posts.append({
-                "title" : meta.get("title")[0],
+                "title" : title,
+                "date" : date,
+                "timestamp" : date.timestamp(),
                 "href" : "/pages/posts/%s" % name 
             })
-
+        
+        posts = sorted(posts, key=lambda x: x["timestamp"], reverse=True)
         template = env.get_template("landing.html")
         index_html = template.render(posts=posts)
         with open("index.html", "w") as ts: 
             ts.write(index_html)
     except Exception as e:
+        if os.getenv("DEBUG") is not None:
+            raise e
         return False
 
     return True
@@ -72,6 +87,8 @@ def generate_projects_page():
         with open("pages/projects.html", "w") as fs:
             fs.write(projects_template)
     except Exception as e:
+        if os.getenv("DEBUG") is not None:
+            raise e
         return False
 
     return True
@@ -93,13 +110,20 @@ def generate_posts():
             meta = mkdown.Meta
             name = post.replace(".md", ".html")
             template = env.get_template("post.html")
+            date = meta.get("date")[0]
+            title = meta.get("title")[0]
+            author = meta.get("author")[0]
             post_html = template.render(
                 note_title=meta["title"][0], 
-                note_body=html
+                note_body=html,
+                note_date=date,
+                note_author=author
             )
             with open("pages/posts/%s" % name, "w") as ts: 
                 ts.write(post_html)
     except Exception as e:
+        if os.getenv("DEBUG") is not None:
+            raise e
         return False
 
     return True
@@ -111,8 +135,8 @@ def main():
         errors.append("Unable to generate index")
     if not generate_posts():
         errors.append("Unable to generate posts")
-    if not generate_projects_page():
-        errors.append("Unable to generate projects page")
+    #if not generate_projects_page():
+    #    errors.append("Unable to generate projects page")
 
     if len(errors) > 0:
         for error in errors:

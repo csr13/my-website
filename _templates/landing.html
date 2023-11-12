@@ -3,6 +3,8 @@
 {% block title %}Notes{% endblock %}
 
 {% block content %}
+    {% include 'about-site.html' %}
+    <h4>Archive</h4>
     {% for post in range(0, posts|length) %}
         {% set counter = post + 1 %}
         <p>

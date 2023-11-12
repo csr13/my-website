@@ -18,7 +18,7 @@ class ReloadHandler(PatternMatchingEventHandler):
     """
     def __init__(self):
       super(ReloadHandler, self).__init__(
-        ignore_patterns=["__pycache__/*", "__pycache__"],
+        ignore_patterns=["__pycache__/*", "__pycache__", "*.swp"],
         patterns=["_templates/*", "_posts/*"]
     )
 
@@ -28,6 +28,7 @@ class ReloadHandler(PatternMatchingEventHandler):
         if run.returncode == 0:
             logger.info("Site regenerated")
             return True
+        print(run.stderr.decode("utf-8"))
         logger.info("Unable to regenerate site")
         return False
 

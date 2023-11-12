@@ -42,50 +42,25 @@ def generate_index():
                 "href" : "/pages/posts/%s" % name 
             })
         
+        with open("_data/_projects.json", "r") as fs:
+            projects = json.load(fs)
+
         posts = sorted(posts, key=lambda x: x["timestamp"], reverse=True)
         template = env.get_template("landing.html")
-        index_html = template.render(posts=posts)
+        index_html = template.render(
+            projects=projects, 
+            posts=posts
+        )
+
         with open("index.html", "w") as ts: 
             ts.write(index_html)
-    except Exception as e:
-        if os.getenv("DEBUG") is not None:
-            raise e
-        return False
-
-    return True
-
-
-def generate_projects_page():
-    try:
-        url = "https://api.github.com/users/csr13/repos"
-        resp = requests.get(url)
-        if not resp.status_code in [200]:
-            raise Exception("Unable to get repos") from None
-        else:
-            repos = resp.json()
-
-        clean_repos = []
-        for repo in repos:
-            name = repo["name"]
-            language = repo["language"]
-            licence = repo["license"]
-            owner = repo["owner"]
-            url = repo["url"]
-            clean_repos.append(dict(
-                name=name, 
-                language=language, 
-                licence=licence, 
-                owner=owner,
-                url=url
-            ))
         
-        template = env.get_template("projects.html")
-        projects_template = template.render(
-            repos=clean_repos
-        )
-        
-        with open("pages/projects.html", "w") as fs:
-            fs.write(projects_template)
+        template = env.get_template("notes-archive.html")
+        archive_html = template.render(posts=posts)
+
+        with open("pages/notes-archive.html", "w") as ts:
+            ts.write(archive_html)
+
     except Exception as e:
         if os.getenv("DEBUG") is not None:
             raise e
@@ -135,8 +110,6 @@ def main():
         errors.append("Unable to generate index")
     if not generate_posts():
         errors.append("Unable to generate posts")
-    #if not generate_projects_page():
-    #    errors.append("Unable to generate projects page")
 
     if len(errors) > 0:
         for error in errors:

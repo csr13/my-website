@@ -58,24 +58,21 @@ pre {
 .about-site-pic {
 
 }
-.dies {
-    justify-content: space-evenly;
-}
-.dies div {
-    font-size: 19px;
-}
 .about-site-few-words{
-    border-top: 1px solid lightgrey;
     margin-top: 5px;
 }
 .few-words {
     margin-top: 5px;
 }
+.latest-archives {
+}
 .note{
     color: black; 
     margin-bottom: 20px;
 }
-
+.projects-div {
+    margin-top: 25px;
+}
 .flex{
     display: flex;
 }

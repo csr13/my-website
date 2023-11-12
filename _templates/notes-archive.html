@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block title %} Notes Archive {% endblock %}
+
+{% block content %}
+    <h4>Archive</h4>
+    {% for post in range(0, posts|length) %}
+        {% set counter = post + 1 %}
+        <p>
+            <a href='{{ posts[post].href }}'>
+                {{ counter }}) {{ posts[post].title }}
+            </a>
+            <br>
+            <small>
+                {{ posts[post].date|replace("00:00:00", "") }}
+            </small>
+        <p>
+    {% endfor %}
+{% endblock %}

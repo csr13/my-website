@@ -1,9 +1,13 @@
-{% extends 'index.html' %}
-
-{% block content %}
-    {% for repo in repos %}
-        {% set repo_json = repo|tojson %}
-        {{ repo_json }}
+<div class="projects-div">
+    <h4> Projects </h4>
+    {% for project in projects %}
+        {% set repo_json = project|tojson %}
+        <pre><code id="projs-code-{{loop.index}}">
+        </code></pre>
+        <script>
+            var projs = JSON.stringify({{repo_json}}, null, 2)
+            document.getElementById("projs-code-"+"{{loop.index}}").innerText = projs
+        </script>
     {% endfor %}
-{% endblock %}
+</div>
 

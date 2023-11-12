@@ -4,13 +4,22 @@
 
 {% block content %}
     {% include 'about-site.html' %}
-    <h4>Archive</h4>
-    {% for post in range(0, posts|length) %}
-        {% set counter = post + 1 %}
-        <p>
-            <a href='{{ posts[post].href }}'>
-                {{ counter }}) {{ posts[post].title }}
-            </a>
-        <p>
-    {% endfor %}
+    <div class="latest-archives">
+        <h4>Archive</h4>
+        <small> Latest notes </small>
+        {% for post in range(0, posts|length) %}
+            {% set counter = post + 1 %}
+            <p>
+                <a href='{{ posts[post].href }}'>
+                    {{ counter }}) {{ posts[post].title }}
+                </a>
+                <br>
+                <small>
+                    {{ posts[post].date|replace("00:00:00", "") }}
+                </small>
+            <p>
+        {% endfor %}
+        <small> <a href="/pages/notes-archive.html">See all</a></small>
+    </div>
+    {% include 'projects.html' %}
 {% endblock %}

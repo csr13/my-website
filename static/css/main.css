@@ -49,15 +49,17 @@ pre {
     position: fixed; top:2;
 }
 .about-site {
-    height: 250px;
+    margin-bottom: 30px;
 }
 .about-site-pic-div {
     border: 2px groove white;
     height: 200px;
-    width: px;
 }
 .about-site-pic {
 
+}
+.dies {
+    justify-content: space-evenly;
 }
 .dies div {
     font-size: 19px;

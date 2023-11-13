@@ -1,10 +1,14 @@
 body {
     font-family: monospace; 
-    background: white;
-    color: black;
+    background: black;
+    color: white;
 }
 header {
     margin-bottom: 15px;
+}
+a {
+    color: limegreen;
+    text-decoration: none;
 }
 #title{
     color: white;
@@ -28,7 +32,7 @@ pre {
     box-shadow: 2px 4px black;
     border: 2px groove black;
     white-space: pre;
-    background: whitesmoke; 
+    background: lightyellow; 
     padding:5px; 
     overflow: auto; 
     line-height: 1.5;
@@ -74,7 +78,6 @@ pre {
 .latest-archives {
 }
 .note{
-    color: black; 
     margin-bottom: 20px;
 }
 .projects-div {

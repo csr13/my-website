@@ -49,7 +49,11 @@ pre {
     position: fixed; top:2;
 }
 .about-site {
-    margin-bottom: 30px;
+    background-image: url("/static/images/images/playa-grafitty.png");
+    background-size: cover;
+    margin-bottom: 15px;
+    border: 5px solid black;
+    height: 300px;
 }
 .about-site-pic-div {
     border: 2px groove white;
@@ -58,11 +62,14 @@ pre {
 .about-site-pic {
 
 }
-.about-site-few-words{
-    margin-top: 5px;
+.penta{
+    height: 300px;
+    background-image: url("/static/images/images/inverted_pentagram.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .few-words {
-    margin-top: 5px;
 }
 .latest-archives {
 }

@@ -1,13 +1,31 @@
 <div class="projects-div">
     <h4> Projects </h4>
     {% for project in projects %}
-        {% set repo_json = project|tojson %}
-        <pre><code id="projs-code-{{loop.index}}">
-        </code></pre>
-        <script>
-            var projs = JSON.stringify({{repo_json}}, null, 2)
-            document.getElementById("projs-code-"+"{{loop.index}}").innerText = projs
-        </script>
+        <p>
+            Name: 
+            <a href="{{ project.html_url }}" target="_blank">
+                {{ project.name }}
+            </a>
+            <br>
+            Description: {{ project.description }}
+            <br>
+            Owner: {{ project.owner }}
+            <br>
+            Dominant Language: {{ project.language }}
+            <br>
+            Default branch: {{ project.default_branch }}
+            <br>
+            Licence: </code>{{ project.licence.name }} - {{ project.licence.spdx_id }} </code>
+            <br>
+            Size: {{ project.size }}
+            <br>
+            Topics: {% for t in project.topics %}{{t}}, {% endfor %}
+            <br>
+            Download ZIP: 
+            <a href="{{ project.zipped_repo}}">
+                <button>Download</button>
+            </a>
+        </p>
     {% endfor %}
 </div>
 

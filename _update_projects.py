@@ -24,16 +24,34 @@ if __name__ == "__main__":
             language = repo["language"]
             licence = repo["license"]
             url = repo["url"]
-            clean_repos.append(dict(
-                name=name, 
-                language=language, 
-                licence=licence, 
-                url=url
-            ))
-        
+            default_branch = repo["default_branch"]
+            description = repo["description"]
+            html_url = repo["html_url"]
+            owner = repo["owner"]["login"]
+            size = repo["size"]
+            topics = repo["topics"]
+            zipped_repo = "https://github.com/%s/%s/archive/refs/heads/%s.zip" % (
+                owner, name, default_branch
+            )
+            clean_repos.append(
+                dict(
+                    name=name, 
+                    language=language, 
+                    licence=licence, 
+                    url=url,
+                    default_branch=default_branch,
+                    description=description,
+                    html_url=html_url,
+                    owner=owner,
+                    size=size,
+                    topics=topics,
+                    zipped_repo=zipped_repo
+                )
+            )
+                    
         logger.info("Writing to  ./_data/_projects.json") 
         with open("_data/_projects.json", "w") as fs:
-            json.dump(repos, fs)
+            json.dump(clean_repos, fs)
 
     except Exception as e:
         if os.getenv("DEBUG") is not None:

@@ -45,22 +45,31 @@ def generate_index():
         with open("_data/_projects.json", "r") as fs:
             projects = json.load(fs)
 
+        with open("keybase.txt", "r") as ts: 
+            proof_lines = ts.readlines()
+            proof_lines = proof_lines[4:-2]
+            proof = ''
+            for each in proof_lines:
+                proof += each
+
         posts = sorted(posts, key=lambda x: x["timestamp"], reverse=True)
         template = env.get_template("landing.html")
         index_html = template.render(
             projects=projects, 
-            posts=posts
+            posts=posts,
+            proof=proof
         )
 
         with open("index.html", "w") as ts: 
             ts.write(index_html)
-        
+
+       
         template = env.get_template("notes-archive.html")
         archive_html = template.render(posts=posts)
 
         with open("pages/notes-archive.html", "w") as ts:
             ts.write(archive_html)
-
+        
     except Exception as e:
         if os.getenv("DEBUG") is not None:
             raise e

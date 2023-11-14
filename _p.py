@@ -42,6 +42,21 @@ def generate_index():
                 "href" : "/pages/posts/%s" % name 
             })
         
+        pdfs = []
+        for pdf in os.listdir("media/documentation/pdfs"):
+            if not pdf.endswith(".pdf"): 
+                continue
+            pdfs.append({
+                "href": os.path.join(
+                    "/", 
+                    "media", 
+                    "documentation", 
+                    "pdfs", 
+                    pdf
+                ),
+                "title" : " ".join([ x.capitalize() for x in pdf.split("_")])
+            })
+
         with open("_data/_projects.json", "r") as fs:
             projects = json.load(fs)
 
@@ -57,12 +72,12 @@ def generate_index():
         index_html = template.render(
             projects=projects, 
             posts=posts,
+            pdfs=pdfs,
             proof=proof
         )
 
         with open("index.html", "w") as ts: 
             ts.write(index_html)
-
        
         template = env.get_template("notes-archive.html")
         archive_html = template.render(posts=posts)

@@ -1,0 +1,22 @@
+<div class="docs-researchs">
+    <h4>Documentation and Research.</h4>
+    <small> Latest uploads </small>
+    {% for doc in range(0, pdfs|length) %}
+        {% set counter = doc + 1 %}
+        <p>
+            <a href='{{ pdfs[doc].href }}' target="_blank">
+                {{ counter }}) 
+                <span style="padding: 3px; background-color: lightblue; color: black;">PDF</span>
+                {{ pdfs[doc].title }}
+            </a>
+            <br>
+        <p>
+    {% endfor %}
+    <small> <a 
+        href="/pages/documentation-research-archive.html"
+        onclick="alert('In progress.')">
+            See all
+        </a>
+    </small>
+</div>
+

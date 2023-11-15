@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -25,28 +28,29 @@ required per client specifications.</p>
 monitor them with Flower, which provides visualization for
 the performance of system asychronous tasks.
 version: '3.9'</p>
-<pre><code>services:
-  .... rest of services (redis, etc)
-  tasks:
-    build:
-      context: .
-      dockerfile: ./docker/tasks/Dockerfile
-    command: &gt;
-      sh -c &quot;python3 -m celery -A my_system flower --address=0.0.0.0 --port=5566 &amp;; python3 -m celery -A my_system worker -l INFO -E&quot;
-    env_file:
-      - ./docker/tasks/.env
-    depends_on:
-      - redis
-    restart: unless-stopped
-    network:
-    my-network:
-        ipv4_address: 10.10.10.2
-    expose:
-      - &quot;5566&quot;
+<div class="codehilite"><pre><span></span><code><span class="nx">services</span><span class="p">:</span>
+<span class="w">  </span><span class="o">...</span><span class="p">.</span><span class="w"> </span><span class="nx">rest</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">services</span><span class="w"> </span><span class="p">(</span><span class="nx">redis</span><span class="p">,</span><span class="w"> </span><span class="nx">etc</span><span class="p">)</span>
+<span class="w">  </span><span class="nx">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nx">context</span><span class="p">:</span><span class="w"> </span><span class="p">.</span>
+<span class="w">      </span><span class="nx">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="nx">docker</span><span class="o">/</span><span class="nx">tasks</span><span class="o">/</span><span class="nx">Dockerfile</span>
+<span class="w">    </span><span class="nx">command</span><span class="p">:</span><span class="w"> </span><span class="p">&gt;</span>
+<span class="w">      </span><span class="nx">sh</span><span class="w"> </span><span class="o">-</span><span class="nx">c</span><span class="w"> </span><span class="s">&quot;python3 -m celery -A my_system flower --address=0.0.0.0 --port=5566 &amp;; python3 -m celery -A my_system worker -l INFO -E&quot;</span>
+<span class="w">    </span><span class="nx">env_file</span><span class="p">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="p">.</span><span class="o">/</span><span class="nx">docker</span><span class="o">/</span><span class="nx">tasks</span><span class="o">/</span><span class="p">.</span><span class="nx">env</span>
+<span class="w">    </span><span class="nx">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">redis</span>
+<span class="w">    </span><span class="nx">restart</span><span class="p">:</span><span class="w"> </span><span class="nx">unless</span><span class="o">-</span><span class="nx">stopped</span>
+<span class="w">    </span><span class="nx">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nx">my</span><span class="o">-</span><span class="nx">network</span><span class="p">:</span>
+<span class="w">        </span><span class="nx">ipv4_address</span><span class="p">:</span><span class="w"> </span><span class="m m-Double">10.10.10.2</span>
+<span class="w">    </span><span class="nx">expose</span><span class="p">:</span>
+<span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="s">&quot;5566&quot;</span>
 
-networks:
-  ... network config
-</code></pre>
+<span class="nx">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="o">...</span><span class="w"> </span><span class="nx">network</span><span class="w"> </span><span class="nx">config</span>
+</code></pre></div>
+
 <p><small>
 On the command: section of the dockerfile, putting flower
 on the background so the worker can operate normally, notice
@@ -58,8 +62,9 @@ the previous command fails, the container won't be marked as
 http is not the best idea.</p>
 <p>I pipe to my remote workstation machine all flower instances for all
 systems using ssh</p>
-<pre><code>~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP
-</code></pre>
+<div class="codehilite"><pre><span></span><code>~$ ssh -L 10.10.10.2:5566:127.0.0.1:8001 -i my_system.pem user@$MY_SYSTEM_IP
+</code></pre></div>
+
 <p>Open browser at <code>127.0.0.1:8001</code> and monitor my
 systems shared tasks, configure rate limits, etc ....
 You can fine tune flower, check out their documentation</p>

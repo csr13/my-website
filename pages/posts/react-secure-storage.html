@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -24,58 +27,59 @@ do it, but one that I use a lot when working on mobile applications uses
 <code>AsyncStorage</code> from react-native-async-storage and <code>SecureStore</code> from
 expo-secure-store.</p>
 <p>Here is the component I use for handling for example, authentication tokens to allow the user to fetch data from authorized endpoints</p>
-<pre><code class="language-javascript">import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as SecureStore from 'expo-secure-store';
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">AsyncStorage</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@react-native-async-storage/async-storage&#39;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">SecureStore</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;expo-secure-store&#39;</span><span class="p">;</span>
 
-class StorageService {
-  storeData = async (keyName, value) =&gt; {
-    try {
-      await SecureStore.setItemAsync(`${keyName}`, value);
-    } catch (e) {
-      return null;
-    }
-  };
+<span class="kd">class</span><span class="w"> </span><span class="nx">StorageService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">storeData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">keyName</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">setItemAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">keyName</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
 
-  storeObjectData = async (keyName, value) =&gt; {
-    try {
-      const jsonValue = JSON.stringify(value);
-      await SecureStore.setItemAsync(`${keyName}`, jsonValue);
-    } catch (e) {
-      return null;
-    }
-  };
+<span class="w">  </span><span class="nx">storeObjectData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">keyName</span><span class="p">,</span><span class="w"> </span><span class="nx">value</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">jsonValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">setItemAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">keyName</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="nx">jsonValue</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
 
-  getData = async (keyName) =&gt; {
-    try {
-      const value = await SecureStore.getItemAsync(`${keyName}`);
-      if (value !== null) {
-        return value;
-      }
-      return null;
-    } catch (e) {
-      return null;
-    }
-  };
+<span class="w">  </span><span class="nx">getData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">keyName</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">getItemAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">keyName</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">value</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">};</span>
 
-  getObjectData = async (keyName) =&gt; {
-    var value;
-    try {
-      const jsonValue = await SecureStore.getItemAsync(`${keyName}`).succ;
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      value = null;
-    }
-    return value;
-  };
+<span class="w">  </span><span class="nx">getObjectData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">(</span><span class="nx">keyName</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">jsonValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">getItemAsync</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">keyName</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="nx">succ</span><span class="p">;</span>
+<span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="nx">jsonValue</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">jsonValue</span><span class="p">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">value</span><span class="p">;</span>
+<span class="w">  </span><span class="p">};</span>
 
-  clearData = async () =&gt; {
-    await SecureStore.deleteItemAsync('access_token');
-    await SecureStore.deleteItemAsync('user');
-  };
-}
+<span class="w">  </span><span class="nx">clearData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">deleteItemAsync</span><span class="p">(</span><span class="s1">&#39;access_token&#39;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="nx">SecureStore</span><span class="p">.</span><span class="nx">deleteItemAsync</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span>
+<span class="w">  </span><span class="p">};</span>
+<span class="p">}</span>
 
-export default StorageService;
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">StorageService</span><span class="p">;</span>
+</code></pre></div>
+
 <p>It is very useful for storing things for the current user in session, use cases
 depends on how the current application works, but the most important use case is to
 be able to store auth token, and load it to headers to make axios requests to the

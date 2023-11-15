@@ -8,7 +8,7 @@ For setting graylog a docker-compose.yml file is enough to do the job; check doc
 Create docker-compose.yml file and copy paste this then run: $ docker-compose up
 
 
-```
+```yaml
 version: '3'
 
 services:

@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+
+{% block title %} Documentation and Research {% endblock %}
+
+{% block content %}
+    <h4> Documentation and Research Archive </h4>
+    {% for each in objects %}
+        <p>
+            <a href="{{ each.href }}">
+                {{ loop.index }})
+                <span style="padding: 3px; background-color: lightblue; color: black;">PDF</span>
+                {{ each.title }}
+            </a>
+        </p>
+    {% endfor %}
+{% endblock %}

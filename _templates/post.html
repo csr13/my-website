@@ -1,5 +1,9 @@
 {% extends 'index.html' %}
 
+{% block extra_styles %}
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+{% endblock %}
+
 {% block title %}{{ note_title|safe }}{% endblock %}
 
 {% block content %}

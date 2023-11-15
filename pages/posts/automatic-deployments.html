@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -45,126 +48,128 @@ browser automation testing, using tools like pupeeter, or
 selenium, or there could be tests with zapproxy as well, it
 really depends on the type of system.
 Here is example of what a automated deployment with version control on github; with checking, looks like.</p>
-<pre><code>name: Build Test Deploy
+<div class="codehilite"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Build Test Deploy</span>
 
-on:
-pull_request:
-branches:
-    - main
-workflow_dispatch:
+<span class="nt">on</span><span class="p">:</span>
+<span class="nt">pull_request</span><span class="p">:</span>
+<span class="nt">branches</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+<span class="nt">workflow_dispatch</span><span class="p">:</span>
 
-env:
-GITHUB_ACTION: yes
-TEST_BUILD: yes
-TEST_UBUNTU_AGENT: yes
-TEST_CENTOS_AGENT: yes
-TEST_DEPLOY: yes
+<span class="nt">env</span><span class="p">:</span>
+<span class="nt">GITHUB_ACTION</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="nt">TEST_BUILD</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="nt">TEST_UBUNTU_AGENT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="nt">TEST_CENTOS_AGENT</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
+<span class="nt">TEST_DEPLOY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes</span>
 
-jobs:
-build:
-runs-on: ubuntu-20.04
-steps:
-    - uses: actions/checkout@v2
-    - name: Python Setup
-    uses: actions/setup-python@v2
-    with:
-        python-version: '3.8.7'
-    - name: System Build
-    run: |
-        if [[ $TEST_BUILD = no ]]; then
-        exit 0
-        fi;
-        cat &lt;&lt; EOF &gt; .env
-        SECRET_KEY=238754627jhfsdb
-        DB_NAME=production-db
-        DB_USER=tubebesita
-        DB_PASSWORD=LaMasPerra666
-        DB_HOST=172.20.0.11
-        DB_PORT=5432
-        EMAIL_HOST=
-        EMAIL_PORT=4523
-        EMAIL_USE_TLS=
-        EMAIL_HOST_USER=
-        EMAIL_HOST_PASSWORD=
-        EOF
-        # Setup makes migrations and ensures no migration errors.
-        /bin/bash ./setup.sh
-test_agents:
-runs-on: ubuntu-20.04
-needs: [build]
-steps:
-    - uses: actions/checkout@v2
-    # For using selenium
-    - uses: nanasess/setup-chromedriver@v1
-    - name: Python Installation
-    uses: actions/setup-python@v2
-    with:
-        python-version: '3.8.7'
-    - name: Download Agents
-    run: |
-        cp tests/ci_cd/scripts/register_download_agents.sh register_download_agents.sh &amp;&amp; \
-        chmod +x register_download_agents.sh &amp;&amp; \
-        /bin/bash register_download_agents.sh
-    - name: Run Agents
-    run: |
-        cp tests/ci_cd/scripts/run_linux_agents.sh run_linux_agents.sh &amp;&amp; \
-        chmod +x run_linux_agents.sh &amp;&amp; \
-        /bin/bash run_linux_agents.sh
-    - name: Agents Step Failure
-    if: ${{ failure() }}
-    run: |
-        echo &quot;yes&quot; &gt;&gt; failure.txt
-    - uses: actions/upload-artifact@v3
-    with:
-        name: linux-agent-tests-job-status-check
-        path: |
-        failure.txt
-deploy:
-runs-on: ubuntu-20.04
-needs: [build, test_agents]
-steps:
-    - uses: actions/checkout@v2
-    - name: Python Installation
-    uses: actions/setup-python@v2
-    with:
-        python-version: '3.8.7'
-    - uses: actions/download-artifact@v3
-    with:
-        name: linux-agent-tests-job-status-check
-    - name: Deploy
-    env:
-        HOST_SSH_URL: ${{ secrets.HOST_URL }}
-        HOST_USER_NAME: ${{ secrets.HOST_USER_NAME }}
-        HOST_SSH_KEY: ${{ secrets.HOST_SSH_KEY }}
-    run: |
-        if [[ $TEST_DEPLOY = no ]]; then
-        exit 0;
-        fi
-        linux_agents_failures=$(cat failure.txt)
-        if [[ linux_agents_failures = yes ]]; then
-        echo &quot;[INFO] $(date) Errors on linux agents run&quot;;
-        exit 1;
-        fi
-        install -m 600 -D /dev/null ~/.ssh/id_rsa
-        echo &quot;$HOST_SSH_KEY&quot; &gt; ~/.ssh/id_rsa
-        ssh-keyscan -H &quot;$HOST_URL&quot; &gt; ~/.ssh/known_hosts
-        ssh -i  ~/.ssh/id_rsa -l &quot;$HOST_USER_NAME&quot; &quot;$HOST_URL&quot; &quot;cd ~/src/update-repo.sh&quot;;
-</code></pre>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="nt">build</span><span class="p">:</span>
+<span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-20.04</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Python Setup</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8.7&#39;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">System Build</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">if [[ $TEST_BUILD = no ]]; then</span>
+<span class="w">        </span><span class="no">exit 0</span>
+<span class="w">        </span><span class="no">fi;</span>
+<span class="w">        </span><span class="no">cat &lt;&lt; EOF &gt; .env</span>
+<span class="w">        </span><span class="no">SECRET_KEY=238754627jhfsdb</span>
+<span class="w">        </span><span class="no">DB_NAME=production-db</span>
+<span class="w">        </span><span class="no">DB_USER=tubebesita</span>
+<span class="w">        </span><span class="no">DB_PASSWORD=LaMasPerra666</span>
+<span class="w">        </span><span class="no">DB_HOST=172.20.0.11</span>
+<span class="w">        </span><span class="no">DB_PORT=5432</span>
+<span class="w">        </span><span class="no">EMAIL_HOST=</span>
+<span class="w">        </span><span class="no">EMAIL_PORT=4523</span>
+<span class="w">        </span><span class="no">EMAIL_USE_TLS=</span>
+<span class="w">        </span><span class="no">EMAIL_HOST_USER=</span>
+<span class="w">        </span><span class="no">EMAIL_HOST_PASSWORD=</span>
+<span class="w">        </span><span class="no">EOF</span>
+<span class="w">        </span><span class="no"># Setup makes migrations and ensures no migration errors.</span>
+<span class="w">        </span><span class="no">/bin/bash ./setup.sh</span>
+<span class="nt">test_agents</span><span class="p">:</span>
+<span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-20.04</span>
+<span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">build</span><span class="p p-Indicator">]</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">    </span><span class="c1"># For using selenium</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nanasess/setup-chromedriver@v1</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Python Installation</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8.7&#39;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Download Agents</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">cp tests/ci_cd/scripts/register_download_agents.sh register_download_agents.sh &amp;&amp; \</span>
+<span class="w">        </span><span class="no">chmod +x register_download_agents.sh &amp;&amp; \</span>
+<span class="w">        </span><span class="no">/bin/bash register_download_agents.sh</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Agents</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">cp tests/ci_cd/scripts/run_linux_agents.sh run_linux_agents.sh &amp;&amp; \</span>
+<span class="w">        </span><span class="no">chmod +x run_linux_agents.sh &amp;&amp; \</span>
+<span class="w">        </span><span class="no">/bin/bash run_linux_agents.sh</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Agents Step Failure</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ failure() }}</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">echo &quot;yes&quot; &gt;&gt; failure.txt</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v3</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux-agent-tests-job-status-check</span>
+<span class="w">        </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="l l-Scalar l-Scalar-Plain">failure.txt</span>
+<span class="nt">deploy</span><span class="p">:</span>
+<span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-20.04</span>
+<span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">build</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">test_agents</span><span class="p p-Indicator">]</span>
+<span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Python Installation</span>
+<span class="w">    </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v2</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.8.7&#39;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/download-artifact@v3</span>
+<span class="w">    </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linux-agent-tests-job-status-check</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy</span>
+<span class="w">    </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">HOST_SSH_URL</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.HOST_URL }}</span>
+<span class="w">        </span><span class="nt">HOST_USER_NAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.HOST_USER_NAME }}</span>
+<span class="w">        </span><span class="nt">HOST_SSH_KEY</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.HOST_SSH_KEY }}</span>
+<span class="w">    </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">        </span><span class="no">if [[ $TEST_DEPLOY = no ]]; then</span>
+<span class="w">        </span><span class="no">exit 0;</span>
+<span class="w">        </span><span class="no">fi</span>
+<span class="w">        </span><span class="no">linux_agents_failures=$(cat failure.txt)</span>
+<span class="w">        </span><span class="no">if [[ linux_agents_failures = yes ]]; then</span>
+<span class="w">        </span><span class="no">echo &quot;[INFO] $(date) Errors on linux agents run&quot;;</span>
+<span class="w">        </span><span class="no">exit 1;</span>
+<span class="w">        </span><span class="no">fi</span>
+<span class="w">        </span><span class="no">install -m 600 -D /dev/null ~/.ssh/id_rsa</span>
+<span class="w">        </span><span class="no">echo &quot;$HOST_SSH_KEY&quot; &gt; ~/.ssh/id_rsa</span>
+<span class="w">        </span><span class="no">ssh-keyscan -H &quot;$HOST_URL&quot; &gt; ~/.ssh/known_hosts</span>
+<span class="w">        </span><span class="no">ssh -i  ~/.ssh/id_rsa -l &quot;$HOST_USER_NAME&quot; &quot;$HOST_URL&quot; &quot;cd ~/src/update-repo.sh&quot;;</span>
+</code></pre></div>
+
 <p>This job has three steps, build, test, deploy, simple. At the deploy stage, at the end of the script, the update-repo.sh 
 script looks similar to this, which pulls the changes from the repository and restart services. it is important to notice update-repo.sh
 script is located in the machine where the production environment is hosted, it is executed through ssh, so, secrets are needed to be configured 
 on the repo settings.</p>
-<pre><code>#!/bin/bash 
-cd ~/project-dir
-git pull origin stable
-# Run some other tasks pertaining to the application, like a custom version of the ./setup.sh script 
-# But one that runs migrations, cleanup scripts, etc.
-systemctl restart my-service.service
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash </span>
+<span class="nb">cd</span><span class="w"> </span>~/project-dir
+git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>stable
+<span class="c1"># Run some other tasks pertaining to the application, like a custom version of the ./setup.sh script </span>
+<span class="c1"># But one that runs migrations, cleanup scripts, etc.</span>
+systemctl<span class="w"> </span>restart<span class="w"> </span>my-service.service
+</code></pre></div>
+
 <p>You may think, aha, idiot, bullshit, but git asks for a password, trick is is to configure the url origin on the local git repository 
 config</p>
-<pre><code>~$ git remote set-url origin https://your-git-account-name:ghp_this_is_your_github_token@github.com/your-git-account-name/repo-name.git
-</code></pre>
+<div class="codehilite"><pre><span></span><code>~$<span class="w"> </span>git<span class="w"> </span>remote<span class="w"> </span>set-url<span class="w"> </span>origin<span class="w"> </span>https://your-git-account-name:ghp_this_is_your_github_token@github.com/your-git-account-name/repo-name.git
+</code></pre></div>
         </div>
     </div>
 

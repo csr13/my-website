@@ -33,7 +33,7 @@ selenium, or there could be tests with zapproxy as well, it
 really depends on the type of system.
 Here is example of what a automated deployment with version control on github; with checking, looks like.
 
-```
+```yaml
 name: Build Test Deploy
 
 on:
@@ -157,6 +157,6 @@ systemctl restart my-service.service
 You may think, aha, idiot, bullshit, but git asks for a password, trick is is to configure the url origin on the local git repository 
 config
 
-```
+```bash
 ~$ git remote set-url origin https://your-git-account-name:ghp_this_is_your_github_token@github.com/your-git-account-name/repo-name.git
 ```

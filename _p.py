@@ -54,8 +54,16 @@ def generate_index():
                     "pdfs", 
                     pdf
                 ),
-                "title" : " ".join([ x.capitalize() for x in pdf.split("_")])
+                "title" : " ".join(
+                    [x.capitalize() for x in pdf.split("_")]
+                ).strip(".pdf")
             })
+            
+            rd_template = env.get_template("documentation-research-archive.html")
+            rd_html = rd_template.render(objects=pdfs)
+
+        with open("pages/documentation-research-archive.html", "w") as ts:
+            ts.write(rd_html)
 
         with open("_data/_projects.json", "r") as fs:
             projects = json.load(fs)
@@ -71,7 +79,7 @@ def generate_index():
         template = env.get_template("landing.html")
         index_html = template.render(
             projects=projects, 
-            posts=posts,
+            posts=posts[:5], # latest
             pdfs=pdfs,
             proof=proof
         )
@@ -80,7 +88,7 @@ def generate_index():
             ts.write(index_html)
        
         template = env.get_template("notes-archive.html")
-        archive_html = template.render(posts=posts)
+        archive_html = template.render(posts=posts) # all posts
 
         with open("pages/notes-archive.html", "w") as ts:
             ts.write(archive_html)
@@ -103,6 +111,7 @@ def generate_posts():
                 txt = ts.read()
             mkdown = markdown.Markdown(extensions=[
                 "meta", 
+                "codehilite",
                 "fenced_code" # enable code snippets ``` ```
             ])
             html = mkdown.convert(txt)

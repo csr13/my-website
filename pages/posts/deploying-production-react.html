@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -32,23 +35,24 @@ enough to let you compile the app in a single build/
 directory. For not generating source map, a small but <em>very</em>
 important step.</p>
 <p>Dockerfile for nginx/frontend</p>
-<pre><code>#syntax=docker/dockerfile:1
-FROM node AS frontend
-WORKDIR /frontend
-COPY frontend .
-RUN yarn install
-RUN GENERATE_SOURCEMAP=false npm run build
+<div class="codehilite"><pre><span></span><code><span class="c1">#syntax=docker/dockerfile:1</span>
+<span class="n">FROM</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="n">AS</span><span class="w"> </span><span class="n">frontend</span>
+<span class="n">WORKDIR</span><span class="w"> </span><span class="o">/</span><span class="n">frontend</span>
+<span class="n">COPY</span><span class="w"> </span><span class="n">frontend</span><span class="w"> </span><span class="o">.</span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">yarn</span><span class="w"> </span><span class="n">install</span>
+<span class="n">RUN</span><span class="w"> </span><span class="n">GENERATE_SOURCEMAP</span><span class="o">=</span><span class="bp">false</span><span class="w"> </span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">build</span>
 
-FROM nginx
+<span class="n">FROM</span><span class="w"> </span><span class="n">nginx</span>
 
-RUN rm -rfvd /etc/nginx/conf.d &amp;&amp; \
-    mkdir -p /usr/share/nginx/html/static &amp;&amp; \
-    mkdir -p /var/www/html &amp;&amp; \
-    mkdir -p /etc/nginx/conf.d
+<span class="n">RUN</span><span class="w"> </span><span class="n">rm</span><span class="w"> </span><span class="o">-</span><span class="n">rfvd</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>\
+<span class="w">    </span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="k">static</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>\
+<span class="w">    </span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>\
+<span class="w">    </span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span>
 
-COPY --from=frontend /frontend/build /var/www/html
-COPY ./docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-</code></pre>
+<span class="n">COPY</span><span class="w"> </span><span class="o">--</span><span class="n">from</span><span class="o">=</span><span class="n">frontend</span><span class="w"> </span><span class="o">/</span><span class="n">frontend</span><span class="o">/</span><span class="n">build</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span>
+<span class="n">COPY</span><span class="w"> </span><span class="o">./</span><span class="n">docker</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">conf</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">conf</span>
+</code></pre></div>
+
 <p>The main thing to look at is the RUN step for npm run build;
 passing environment variable behind it,
 GENERATE_SOURCEMAP=false does the trick. Multi-stage builds used
@@ -71,27 +75,27 @@ better.</p>
 <p>Last thing to do is modify nginx config file so that it can
 search for that directory, which was copied to /var/www/html
 inside nginx container (see nginx build stage on Dockerfile)</p>
-<pre><code>upstream backend {
-    server api:6969 weight=2;
-}
+<div class="codehilite"><pre><span></span><code><span class="n">upstream</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">server</span><span class="w"> </span><span class="n">api</span><span class="p">:</span><span class="mi">6969</span><span class="w"> </span><span class="n">weight</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
 
-server {
-    ...
-    ...
+<span class="n">server</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="w">    </span><span class="o">...</span>
 
-    location /api/ {
-        ...
-        ...
-        proxy_pass http://backend;
-    }
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="o">...</span>
+<span class="w">        </span><span class="o">...</span>
+<span class="w">        </span><span class="n">proxy_pass</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">backend</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    location / {
-        root /var/www/html;
-        try_files $uri /index.html;
-    }
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">root</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="p">;</span>
+<span class="w">        </span><span class="n">try_files</span><span class="w"> </span><span class="o">$</span><span class="n">uri</span><span class="w"> </span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-}
-</code></pre>
+<span class="p">}</span>
+</code></pre></div>
         </div>
     </div>
 

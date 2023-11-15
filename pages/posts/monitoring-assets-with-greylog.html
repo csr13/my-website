@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -21,85 +24,86 @@
         <div class="note-body">
             <p>For setting graylog a docker-compose.yml file is enough to do the job; check docker and docker compose are installed on the system and then change to the root user, create a folder on /root/graylog</p>
 <p>Create docker-compose.yml file and copy paste this then run: $ docker-compose up</p>
-<pre><code>version: '3'
+<div class="codehilite"><pre><span></span><code><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3&#39;</span>
 
-services:
-  mongo:
-    image: mongo:5.0.13
-    networks:
-      - graylog
-    volumes:
-      - mongo_data:/data/db
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mongo</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mongo:5.0.13</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">graylog</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mongo_data:/data/db</span>
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
-    environment:
-    - http.host=0.0.0.0
-    - transport.host=localhost
-    - network.host=0.0.0.0
-    - &quot;ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true -Xms512m -Xmx512m&quot;
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-      deploy:
-    resources:
-          limits:
-            memory: 1g
-      networks:
-        - graylog
-      volumes:
-    - es_data:/usr/share/elasticsearch/data
+<span class="w">  </span><span class="nt">elasticsearch</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http.host=0.0.0.0</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">transport.host=localhost</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">network.host=0.0.0.0</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;ES_JAVA_OPTS=-Dlog4j2.formatMsgNoLookups=true</span><span class="nv"> </span><span class="s">-Xms512m</span><span class="nv"> </span><span class="s">-Xmx512m&quot;</span>
+<span class="w">    </span><span class="nt">ulimits</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">memlock</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">soft</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
+<span class="w">        </span><span class="nt">hard</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span>
+<span class="w">      </span><span class="nt">deploy</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">resources</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1g</span>
+<span class="w">    </span><span class="w w-Error">  </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">graylog</span>
+<span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">es_data:/usr/share/elasticsearch/data</span>
 
-  graylog:
-    image: graylog/graylog:5.0
-    environment:
-      - GRAYLOG_PASSWORD_SECRET=logginglogger123
-      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
-      - GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/
-    entrypoint: /usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh
-    networks:
-      - graylog
-    restart: always
-    depends_on:
-      - mongo
-      - elasticsearch
-    ports:
-  # Graylog web interface and REST API
-      - 9000:9000
-  # Syslog TCP
-      - 1514:1514
-  # Syslog UDP
-      - 1514:1514/udp
-  # GELF TCP
-      - 12201:12201
-  # GELF UDP
-      - 12201:12201/udp
-  # TST TCP
-      - 5555:5555
-    volumes:
-      - graylog_data:/usr/share/graylog/data
+<span class="w">  </span><span class="nt">graylog</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">graylog/graylog:5.0</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GRAYLOG_PASSWORD_SECRET=logginglogger123</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GRAYLOG_HTTP_EXTERNAL_URI=http://127.0.0.1:9000/</span>
+<span class="w">    </span><span class="nt">entrypoint</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/bin/tini -- wait-for-it elasticsearch:9200 --  /docker-entrypoint.sh</span>
+<span class="w">    </span><span class="nt">networks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">graylog</span>
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always</span>
+<span class="w">    </span><span class="nt">depends_on</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mongo</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">elasticsearch</span>
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Graylog web interface and REST API</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9000:9000</span>
+<span class="w">  </span><span class="c1"># Syslog TCP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1514:1514</span>
+<span class="w">  </span><span class="c1"># Syslog UDP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1514:1514/udp</span>
+<span class="w">  </span><span class="c1"># GELF TCP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12201:12201</span>
+<span class="w">  </span><span class="c1"># GELF UDP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12201:12201/udp</span>
+<span class="w">  </span><span class="c1"># TST TCP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5555:5555</span>
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">graylog_data:/usr/share/graylog/data</span>
 
-volumes:
-  mongo_data:
-    driver: local
-  es_data:
-    driver: local
-  graylog_data:
-    driver: local
+<span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">mongo_data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">  </span><span class="nt">es_data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">  </span><span class="nt">graylog_data</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
 
-networks:
-  graylog:
-    driver: bridge
+<span class="nt">networks</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">graylog</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">driver</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bridge</span>
+</code></pre></div>
 
-</code></pre>
 <p>This will expose the application on port 9000, redirect with nginx to port 80 or establish a piped connection to graylog via ssh to your localhost:5000 :</p>
-<pre><code>ssh -i &lt;pem file&gt; -L 127.0.0.1:5000:127.0.0.1:9000 &lt;user&gt;@&lt;log-server-ip&gt;
-</code></pre>
+<div class="codehilite"><pre><span></span><code>ssh -i &lt;pem file&gt; -L 127.0.0.1:5000:127.0.0.1:9000 &lt;user&gt;@&lt;log-server-ip&gt;
+</code></pre></div>
+
 <p>Default credentials:</p>
-<pre><code>Username: admin
-Password: admin
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">Username</span><span class="o">:</span><span class="w"> </span><span class="n">admin</span>
+<span class="n">Password</span><span class="o">:</span><span class="w"> </span><span class="n">admin</span>
+</code></pre></div>
         </div>
     </div>
 

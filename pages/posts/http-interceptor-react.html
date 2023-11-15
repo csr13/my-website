@@ -7,6 +7,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/static/css/main.css" />
         
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
     </head>
     <body>
         <header>
@@ -26,52 +29,52 @@ expiration action e.g: session token expires user needs to log in again.</p>
 <p>This is a simple http interceptior that can be used when developing Mobile
 Applications and Web Applications that handle user actions e.g: social media.</p>
 <p><code>AuthService</code> has some helper methods, self explanatory.</p>
-<pre><code class="language-javascript">import axios from &quot;axios&quot;;
-import AuthService from &quot;./auth.service&quot;;
+<div class="codehilite"><pre><span></span><code><span class="k">import</span><span class="w"> </span><span class="nx">axios</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;axios&quot;</span><span class="p">;</span>
+<span class="k">import</span><span class="w"> </span><span class="nx">AuthService</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./auth.service&quot;</span><span class="p">;</span>
 
-const redirect = (url, clear = false) =&gt; {
-  if (clear) {
-    window.localStorage.clear();
-  }
-  window.location.href = url;
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">redirect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">clear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">clear</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">clear</span><span class="p">();</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">url</span><span class="p">;</span>
+<span class="p">};</span>
 
-const token_expired = () =&gt; {
-  var user = AuthService.decode_user();
-  if (!user.exp) {
-    redirect(&quot;/login&quot;, false);
-  }
-  if (new Date(user.exp * 1000) &lt; new Date()) {
-    return true;
-  }
-  return false;
-};
+<span class="kd">const</span><span class="w"> </span><span class="nx">token_expired</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">AuthService</span><span class="p">.</span><span class="nx">decode_user</span><span class="p">();</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">user</span><span class="p">.</span><span class="nx">exp</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">(</span><span class="nx">user</span><span class="p">.</span><span class="nx">exp</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1000</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nb">Date</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<span class="p">};</span>
 
-const Interceptor = axios.interceptors.response.use(
-  (response) =&gt; {
-    if (token_expired()) {
-      redirect(&quot;/login&quot;, true);
-    }
+<span class="kd">const</span><span class="w"> </span><span class="nx">Interceptor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">axios</span><span class="p">.</span><span class="nx">interceptors</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span>
+<span class="w">  </span><span class="p">(</span><span class="nx">response</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">token_expired</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
 
-    if (response.status === 401) {
-      redirect(&quot;/login&quot;, true);
-    } else if (response.status === 403) {
-      redirect(&quot;/login&quot;, true);
-    }
-    return response;
-  },
-  (error) =&gt; {
-    if (error.response &amp;&amp; error.response.status === 401) {
-      redirect(&quot;/login&quot;, true);
-    } else if (error.response &amp;&amp; error.response.status === 403) {
-      redirect(&quot;/login&quot;, true);
-    }
-    return error;
-  }
-);
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">401</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">403</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">response</span><span class="p">;</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">401</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="mf">403</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">redirect</span><span class="p">(</span><span class="s2">&quot;/login&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">error</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">);</span>
 
-export default Interceptor;
-</code></pre>
+<span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">Interceptor</span><span class="p">;</span>
+</code></pre></div>
         </div>
     </div>
 

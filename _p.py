@@ -11,11 +11,18 @@ from _logger import get_logger
 
 logger = get_logger(__name__)
 
-
 env = Environment(
     loader=PackageLoader("_p", "_templates"),
     autoescape=select_autoescape()
 )
+
+###################################################
+# Set global variables for templates
+###################################################
+
+env.globals["https_site"] = "https://www.csr13.me"
+env.globals["http_site"] = "http://www.csr13.me"
+env.globals["github_site"] = "https://csr13.github.io"
 
 
 def generate_index():
@@ -33,8 +40,6 @@ def generate_index():
             name = post.replace(".md", ".html")
             title = meta.get("title")[0]
             date = meta.get("date")[0]
-            description = meta.get("description")[0]
-            permalink = meta.get("permalink")[0]
             year, month, day = [int(x) for x in date.split("-")]
             date = datetime.datetime(year=year, month=month, day=day)
             posts.append({
@@ -42,32 +47,61 @@ def generate_index():
                 "date" : date,
                 "timestamp" : date.timestamp(),
                 "href" : "/pages/posts/%s" % name,
-                "note_permalink" : permalink,
-                "note_description" : description,
             })
         
+        #############################################################
+        # Generate pdfs and research
+        ############################################################
+
         pdfs = []
+        research = []
         for pdf in os.listdir("media/documentation/pdfs"):
             if not pdf.endswith(".pdf"): 
                 continue
-            pdfs.append({
-                "href": os.path.join(
-                    "/", 
-                    "media", 
-                    "documentation", 
-                    "pdfs", 
-                    pdf
-                ),
-                "title" : " ".join(
-                    [x.capitalize() for x in pdf.split("_")]
-                ).strip(".pdf")
-            })
-            
-            rd_template = env.get_template("documentation-research-archive.html")
-            rd_html = rd_template.render(objects=pdfs)
+            if pdf.endswith("research.pdf"):
+                research.append({
+                    "href": os.path.join(
+                        "/", 
+                        "media", 
+                        "documentation", 
+                        "pdfs", 
+                        pdf
+                    ),
+                    "title" : " ".join(
+                        [x.capitalize() for x in pdf.split("_")]
+                    ).strip(".pdf"),
+                    "type" : "research"
+                })
+            else:
+                pdfs.append({
+                    "href": os.path.join(
+                        "/", 
+                        "media", 
+                        "documentation", 
+                        "pdfs", 
+                        pdf
+                    ),
+                    "title" : " ".join(
+                        [x.capitalize() for x in pdf.split("_")]
+                    ).strip(".pdf"),
+                    "type" : "documentation"
+                })
+
+        pdfs = {
+            "research" : research, 
+            "pdfs" : pdfs
+        }
+        
+        rd_template = env.get_template("documentation-research-archive.html")
+        objects = pdfs["research"] + pdfs["pdfs"]
+        rd_html = rd_template.render(objects=objects)
 
         with open("pages/documentation-research-archive.html", "w") as ts:
             ts.write(rd_html)
+            
+        #############################################################
+        # Generate proof of ownershio
+        ############################################################
 
         with open("_data/_projects.json", "r") as fs:
             projects = json.load(fs)

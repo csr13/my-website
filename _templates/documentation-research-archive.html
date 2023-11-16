@@ -9,7 +9,11 @@
         <p>
             <a href="{{ each.href }}">
                 {{ loop.index }})
-                <span style="padding: 3px; background-color: lightblue; color: black;">PDF</span>
+                <span style="padding: 3px; margin-right: 5px; background-color: lightblue; color: black;">
+                    PDF 
+                </span>
+                <span style="padding: 3px; margin-right: 5px; background-color: lightyellow; color: black;"> 
+                    {% if each.type == 'documentation' %} DOCUMENTATION {% else %} RESEARCH {% endif %} </span> 
                 {{ each.title }}
             </a>
         </p>

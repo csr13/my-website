@@ -1,6 +1,9 @@
 <div class="docs-researchs">
     <h4>Documentation and Research.</h4>
     <small> Latest uploads </small>
+    {% set research = pdfs.research %}
+    {% set pdfs = pdfs.pdfs %}
+    <h4> Documentation </h4>
     {% for doc in range(0, pdfs|length) %}
         {% set counter = doc + 1 %}
         <p>
@@ -12,6 +15,19 @@
             <br>
         <p>
     {% endfor %}
+    <h4> Research </h4>
+    {% for doc in range(0, research|length) %}
+        {% set counter = doc + 1 %}
+        <p>
+            <a href='{{ research[doc].href }}' target="_blank">
+                {{ counter }}) 
+                <span style="padding: 3px; background-color: lightblue; color: black;">PDF</span>
+                {{ research[doc].title }}
+            </a>
+            <br>
+        <p>
+    {% endfor %}
+    <br>
     <small> 
         <a href="/pages/documentation-research-archive.html">
             See all

@@ -10,6 +10,11 @@ a {
     color: lightgreen;
     text-decoration: none;
 }
+a:hover {
+    transition: .2s;
+    background-color: lightblue;
+    color: black;
+}
 #title{
     color: white;
     background-color:rgba(0,0,255,.50);
@@ -53,7 +58,7 @@ pre {
     position: fixed; top:2;
 }
 .about-site {
-    background-image: url("/static/images/images/playa-grafitty-bw.png");
+    background-image: url("/static/images/images/playa-grafitty.png");
     background-size: cover;
     margin-bottom: 15px;
     border: 5px solid black;
@@ -95,16 +100,14 @@ pre {
 .space-between{
     justify-content: space-between;
 }
-.signature-right{
-    padding:0; margin:0; 
-    border-left: 2px solid black; 
-    border-bottom: 2px solid black;
-    background: black;
+.console {
+    background-color: rgba(255, 255, 255, 0.20);
+    border: 2px solid rgba(255, 255, 255, 0.20);
+    height: 545px;
 }
-.signature-left{
-    padding:0; 
-    margin:0; 
-    border-right: 2px solid black; 
-    border-bottom: 2px solid black;
-    background: black;
+.console-menu {
+    padding: 5px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    color: white;
 }

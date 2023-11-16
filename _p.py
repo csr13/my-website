@@ -20,6 +20,7 @@ env = Environment(
 # Set global variables for templates
 ###################################################
 
+env.globals["site_repo"] = "https://github.com/csr13/csr13.github.io"
 env.globals["https_site"] = "https://www.csr13.me"
 env.globals["http_site"] = "http://www.csr13.me"
 env.globals["github_site"] = "https://csr13.github.io"

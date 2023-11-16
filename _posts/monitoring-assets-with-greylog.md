@@ -1,7 +1,9 @@
 ---
 title: Setting up greylog to monitor server assets in your networks.
 author: csr13
+description: How to setup a greylog monitoring server to monitor server assets in your network.
 date: 2023-11-12
+permalink: /pages/posts/monitoring-assets-with-greylog.html
 ---
 For setting graylog a docker-compose.yml file is enough to do the job; check docker and docker compose are installed on the system and then change to the root user, create a folder on /root/graylog
 

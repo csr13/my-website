@@ -33,13 +33,17 @@ def generate_index():
             name = post.replace(".md", ".html")
             title = meta.get("title")[0]
             date = meta.get("date")[0]
+            description = meta.get("description")[0]
+            permalink = meta.get("permalink")[0]
             year, month, day = [int(x) for x in date.split("-")]
             date = datetime.datetime(year=year, month=month, day=day)
             posts.append({
                 "title" : title,
                 "date" : date,
                 "timestamp" : date.timestamp(),
-                "href" : "/pages/posts/%s" % name 
+                "href" : "/pages/posts/%s" % name,
+                "note_permalink" : permalink,
+                "note_description" : description,
             })
         
         pdfs = []
@@ -121,11 +125,15 @@ def generate_posts():
             date = meta.get("date")[0]
             title = meta.get("title")[0]
             author = meta.get("author")[0]
+            permalink = meta.get("permalink")[0]
+            description = meta.get("description")[0]
             post_html = template.render(
                 note_title=meta["title"][0], 
                 note_body=html,
                 note_date=date,
-                note_author=author
+                note_author=author,
+                note_permalink=permalink,
+                note_description=description
             )
             with open("pages/posts/%s" % name, "w") as ts: 
                 ts.write(post_html)

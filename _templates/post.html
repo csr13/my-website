@@ -1,5 +1,21 @@
 {% extends 'index.html' %}
 
+{% block meta %}
+    {% block canonical_link %} 
+        <link rel='canonical' href='https://csr13.github.io{{ note_permalink }}' /> 
+    {% endblock %}
+    <meta property='og:type' content='article' />
+    <meta property='article:author' content='https://csr13.github.io' />
+    <meta property='article:publisher' content='https://csr13.github.io' />
+    <meta property='og:site_name' content='https://csr13.github.io' />
+    <meta property='og:title' content='{{ note_title }}' />
+    <meta property='og:description' content='{{ note_description }}' />
+    {% if note_image %}
+        <meta property='og:image' content='{{ note_image }}' />
+    {% endif %}
+    <meta property='og:url' content='https://csr13.github.io{{ note_permalink }}' />
+{% endblock %}
+
 {% block extra_styles %}
     <link rel="stylesheet" href="/static/css/code-styles.css" />
 {% endblock %}

@@ -1,0 +1,200 @@
+<html>
+    <head>
+        <title>Whatsapp chatbot with Python and Twilio</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+         
+        <link rel='canonical' href='https://csr13.github.io/pages/posts/whatsapp-chatbot-python.html' /> 
+    
+        <meta name='robots' content='index, follow'> 
+        <meta name="description" content="My dump">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+     
+        <link rel='canonical' href='https://csr13.github.io/pages/posts/whatsapp-chatbot-python.html' /> 
+    
+    <meta property='og:type' content='article' />
+    <meta property='article:author' content='https://csr13.github.io' />
+    <meta property='article:publisher' content='https://csr13.github.io' />
+    <meta property='og:site_name' content='https://csr13.github.io' />
+    <meta property='og:title' content='Whatsapp chatbot with Python and Twilio' />
+    <meta property='og:description' content='Making a chatbot with Python and Twilio for your business.' />
+    
+    <meta property='og:url' content='https://csr13.github.io/pages/posts/whatsapp-chatbot-python.html' />
+
+        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.ico"> 
+        
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
+    </head>
+    <body>
+        <header>
+            <h2> <a style="text-decoration: none;"href="/">Notes</a></h2>
+        </header>
+        
+    <div class="note">
+        <div class="note-title">
+            <h3>Whatsapp chatbot with Python and Twilio</h3>
+            <p>Date: 2023-11-15<br>By: csr13</p>
+        </div>
+        <div class="note-body">
+            <p>Chatbots are everywhere, but sometimes a more custom chatbot can be built for your
+business needs, more so if your business takes orders, books rooms, sends reminders,
+etc. Many services already do this, but you can't customize them, they are generic, and
+cost a lot.</p>
+<p>They key, is make bot as cheap as possible with little as possible, cut down on operational costs, this makes programmable whatsapp bots good. Even better if you have an api that your business depends on with endpoints to check your database of products for availability, rooms, promotions, etc.</p>
+<p>Enough chit chat, let's get to the code.</p>
+<p>You need.</p>
+<ul>
+<li>Twilio account.</li>
+<li>Twilio phone number (us numbers free)</li>
+<li>Some place to host the code, as it needs to be exposed via http server, as twilio
+  acts as a middleman message broker.</li>
+</ul>
+<p>Twilio number cost is very cheap once free trial is over, perhaps 5 usd per month on a very
+very busy bot, add an ec2 instance (hosting code) maybe 3.00 usd per month, or custom on prem machine, let's
+say tops $ 8.00 usd per month per bot that is very busy.</p>
+<p>Here is the code for a simple chatbot, it's written in python.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">jsonify</span>
+
+<span class="kn">from</span> <span class="nn">twilio.twiml.messaging_response</span> <span class="kn">import</span> <span class="n">MessagingResponse</span>
+<span class="kn">from</span> <span class="nn">twilio.rest</span> <span class="kn">import</span> <span class="n">Client</span>
+
+<span class="c1"># You need to get these from twilio, and you need to </span>
+<span class="c1"># register this url on twilio sandbox settings.</span>
+
+<span class="n">TWILIO_ACCOUNT_SID</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
+    <span class="s2">&quot;TWILIO_ACCOUNT_SID&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;twilio account sid&quot;</span>
+<span class="p">)</span>
+<span class="n">TWILIO_AUTH_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
+    <span class="s2">&quot;TWILIO_AUTH_TOKEN&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Twilio auth token&quot;</span>
+<span class="p">)</span>
+<span class="n">TWILIO_TEST_AUTH_TOKEN</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
+    <span class="s2">&quot;TWILIO_TEST_AUTH_TOKEN&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;Twilio test auth token&quot;</span>
+<span class="p">)</span>
+
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span>
+    <span class="n">TWILIO_ACCOUNT_SID</span><span class="p">,</span> 
+    <span class="n">TWILIO_TEST_AUTH_TOKEN</span>
+<span class="p">)</span>
+
+<span class="n">greeting</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Hola 😀</span>
+
+<span class="s2">1) Para disponibilidad y horarios.</span>
+<span class="s2">2) Para nuestros horarios.</span>
+<span class="s2">3) Para ver este menu.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="n">menu</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+
+<span class="s2">MENU:</span>
+
+<span class="s2">Ingresa el numbero de opcion que quieras.</span>
+
+<span class="s2">1) Para disponibilidad y horarios.</span>
+<span class="s2">2) Para nuestros horarios.</span>
+<span class="s2">3) Para ver este menu.</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">respond</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">MessagingResponse</span><span class="p">()</span>
+    <span class="n">response</span><span class="o">.</span><span class="n">message</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/message&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,))</span>
+<span class="k">def</span> <span class="nf">message</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    THis is the webook twilio will send messages to, and it will respond according to </span>
+<span class="sd">    user input options, the response is actually xml response to twilio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Body&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s2">&quot;Missing message&quot;</span><span class="p">),</span> <span class="mi">400</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Handle the options that the customer selected.</span>
+        <span class="c1"># a more elaborate bot, has submenus of main menus</span>
+        <span class="c1"># and so on, this is for example purposes.</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span>
+                <span class="s2">&quot;Visitanos aqui para reservar </span><span class="se">\n\n</span><span class="s2"> www.tu sitio.com&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="s2">&quot;12:00pm - 6:00pm estamos disponibles.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="n">greeting</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+    <span class="k">return</span>  <span class="n">respond</span><span class="p">(</span><span class="n">greeting</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8888</span><span class="p">)</span>
+</code></pre></div>
+
+<p>You could add another option that makes a request to your custom bookings API server,
+to check for rooms available, send options, and redirect them with a link to your website so they
+can book that specific room if they decide they want it, or something else.</p>
+<p>The message webhook would look like this if option 3 would send back availabilities,
+for tables, rooms, or seats (for example)</p>
+<div class="codehilite"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s2">&quot;/message&quot;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,))</span>
+<span class="k">def</span> <span class="nf">message</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    THis is the webook twilio will send messages to, and it will respond according to </span>
+<span class="sd">    user input options, the response is actually xml response to twilio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Body&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">message</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">error</span><span class="o">=</span><span class="s2">&quot;Missing message&quot;</span><span class="p">),</span> <span class="mi">400</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Handle the options that the customer selected.</span>
+        <span class="c1"># a more elaborate bot, has submenus of main menus</span>
+        <span class="c1"># and so on, this is for example purposes.</span>
+        <span class="k">if</span> <span class="n">message</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span>
+                <span class="s2">&quot;Visitanos aqui para reservar </span><span class="se">\n\n</span><span class="s2"> www.tu sitio.com&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="s2">&quot;12:00pm - 6:00pm estamos disponibles.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="s2">&quot;http://my-biz/api/v1/availabilities&quot;</span><span class="p">,</span> 
+                    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;API_KEY&quot;</span> <span class="p">:</span> <span class="s2">&quot;&lt;auth key&gt;&quot;</span><span class="p">}</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="s2">&quot;No puedo conseguir las disponibilidades.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;disponibilidades_con_links&quot;</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="n">message</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="n">menu</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="n">greeting</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">respond</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+    <span class="k">return</span>  <span class="n">respond</span><span class="p">(</span><span class="n">greeting</span><span class="p">)</span>
+</code></pre></div>
+
+<p>It is up to your client what he/she wants make available through their whatsapp bot,
+with Twilio the posibilities to build interactive chatbots are very large and one can
+get very creative.</p>
+<p>Contact me if this is something you would want for you or your business.</p>
+        </div>
+    </div>
+
+        
+        <script src="/static/js/main.js"></script>
+    </body>
+</html>

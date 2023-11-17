@@ -54,7 +54,7 @@ skills.</p>
 
 <h3>Diagram Breakdown</h3>
 <ul>
-<li>1 Represents the caller, for this instance, the caller speaks chinese, and the agent speaks English.</li>
+<li>1 Represents the caller, for this instance, the caller speaks chinese, and the agent speaks Arabic.</li>
 <li>2 Represents the middle broker, Twilio which replaces any VOIP system like Asterisk,
 so you don't have to program your own PBX.</li>
 <li>3 Represents the first component of the system which is the relayer component, it's
@@ -300,7 +300,7 @@ won't.</p>
     <span class="p">)</span>
 </code></pre></div>
 
-<p>This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
+<p>Next, This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
 <code>Gather(action=&lt;action&gt;, ...)</code>  action parameter of Gather object. One thing that
 complicates, is if the agents takes more than 10 seconds to answer, the call dies,
 this is solved by a 'duct tape hack' using the request session object, which allows
@@ -673,7 +673,7 @@ in step 3 component on the above part.</p>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">status</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 </code></pre></div>
 
-<p>As far as frontend, I wonn't get into it, but the way it was done, is a simple
+<p>As far as frontend, I won't get into it, but the way it was done, is a simple
 dashboard with login for agents, agents can pick up calls, have intervals of requests
 made to these API endpoints every second (normal traffic in http) and when in a call,
 having another interval to check for the latest caller message, and answering back

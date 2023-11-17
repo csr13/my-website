@@ -24,7 +24,7 @@ skills.
 
 ### Diagram Breakdown
 
-- 1 Represents the caller, for this instance, the caller speaks chinese, and the agent speaks English.
+- 1 Represents the caller, for this instance, the caller speaks chinese, and the agent speaks Arabic.
 - 2 Represents the middle broker, Twilio which replaces any VOIP system like Asterisk,
 so you don't have to program your own PBX.
 - 3 Represents the first component of the system which is the relayer component, it's
@@ -283,7 +283,7 @@ def determine_language(request):
 ```
 
 
-This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
+Next, This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
 `Gather(action=<action>, ...)`  action parameter of Gather object. One thing that
 complicates, is if the agents takes more than 10 seconds to answer, the call dies,
 this is solved by a 'duct tape hack' using the request session object, which allows
@@ -679,7 +679,7 @@ class GetCallDetails(APIView):
 ```
 
 
-As far as frontend, I wonn't get into it, but the way it was done, is a simple
+As far as frontend, I won't get into it, but the way it was done, is a simple
 dashboard with login for agents, agents can pick up calls, have intervals of requests
 made to these API endpoints every second (normal traffic in http) and when in a call,
 having another interval to check for the latest caller message, and answering back

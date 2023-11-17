@@ -22,7 +22,9 @@ skills.
 <img src="/static/images/posts/live-speech-to-text-diagram.png" width=400 height=500/>
 </div>
 
+
 ### Diagram Breakdown
+
 
 - 1 Represents the caller, for this instance, the caller speaks chinese, and the agent speaks Arabic.
 - 2 Represents the middle broker, Twilio which replaces any VOIP system like Asterisk,

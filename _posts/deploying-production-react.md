@@ -4,6 +4,9 @@ author: csr13
 description: How to deploy a production React build without source map of the application.
 date: 2023-11-10
 permalink: /pages/posts/deploying-production-react.html
+categories: devops
+            react
+            docker
 ---
 
 React is entrypoint for entry level frontend developers, it's a popular framework.

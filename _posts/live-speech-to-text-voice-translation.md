@@ -4,14 +4,24 @@ author: csr13
 description: Real time language translation agent system for call centers.
 permalink: /pages/posts/live-speech-to-text-voice-translation.html
 date: 2023-11-16
+categories: voip
+            telephony
+            python
+            systems
 ---
 
-Building a system for translating caller origin language to call center agent origin
+Example use case. There is a call center that receives calls from foreign nationals
+from all over the world, the call center does not have agents that speak 10
+languages, how do you make it so that the operational cost of hiring call center
+agents that speak 10 languages is not an budget killer?
+
+On solution is to build a system for translating caller origin language to call center agent origin
 language, and translating call center agent to caller origin language real time,
 supporting multiple languages.
 
 Building VOIP based systems without a need for something like asterisk can also be
-built with Python.
+built with Python and replacing software PBX systems like Asterisk with Twilio for
+custom dialplans.
 
 ### Diagram and Schematics of the System.
 
@@ -30,9 +40,9 @@ skills.
 - 2 Represents the middle broker, Twilio which replaces any VOIP system like Asterisk,
 so you don't have to program your own PBX.
 - 3 Represents the first component of the system which is the relayer component, it's
-purposes is to pass text converted from speech from the caller to the agent, and back
+purposes is to pass text converted from speech  and translate it from the callers origin language to the agents origin language, back
 and forward.
-- 4 Represents the web application the agent is using to type in messages in english
+- 4 Represents the web application backend the agent is using to type in messages in english
 and read messages from the caller, in his native language, English in this case, the
 messages from the caller are translated in the relayer using AWS translation
 services.
@@ -285,9 +295,9 @@ def determine_language(request):
 ```
 
 
-Next, This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
+Next, this is the webhook to translate the message from the caller language, to the agents language, the webhooks url are hardcoded in the
 `Gather(action=<action>, ...)`  action parameter of Gather object. One thing that
-complicates, is if the agents takes more than 10 seconds to answer, the call dies,
+complicates the situation is if the agents takes more than 10 seconds to answer, the call dies,
 this is solved by a 'duct tape hack' using the request session object, which allows
 me to store if the agent reponded in time or not, and instead of ending the call on
 error, this key is used as a boolean flag. This is possible due to the http protocol
@@ -540,7 +550,7 @@ def error_status(request):
 
 So far, the relayer takes care of message translation and storing in memory (redis)
 for the agent panel to be able to query, this message only if the call is active and
-via redis key 'call-sid'.
+via redis storage.
 
 
 ### Agent Panel Logic
@@ -689,8 +699,6 @@ and forth, the agent sees the translated text from the caller on this chat windo
 and answers in his language of origin, the relayer converts back to caller language.
 
 
-Thanks for reading.
-
 If you are interested in VOIP custom call centers contact me, or
 simple business call logic checks, like bank menus, or hotel menus, also contact me
 for consulting and implementation.
@@ -698,4 +706,4 @@ for consulting and implementation.
 As always the source code for this project is on my github, will add the link later
 in the week.
 
-
+Thanks for reading.

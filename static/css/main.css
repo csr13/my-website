@@ -85,8 +85,17 @@ pre {
 .note{
     margin-bottom: 20px;
 }
+.archive-div {
+    margin: 10px;
+}
 .projects-div {
     margin-top: 25px;
+}
+.project-div {
+    width: 300px;
+    background: rgba(255,255,255,0.10);
+    margin: 5px;
+    padding: 10px;
 }
 .flex{
     display: flex;
@@ -97,8 +106,14 @@ pre {
 .flex-col {
     flex-direction: column;
 }
+.flex-wrap {
+    flex-wrap: wrap;
+}
 .space-between{
     justify-content: space-between;
+}
+.space-even {
+    justify-content: space-evenly;
 }
 .console {
     background-color: rgba(255, 255, 255, 0.20);
@@ -110,4 +125,14 @@ pre {
     padding-bottom: 0;
     margin-bottom: 0;
     color: white;
+}
+.category-span {
+    margin:2px 4px 10px 0px;
+    background: lightblue;
+    color: black;
+}
+.post-list-item {
+    background: rgba(255,255,255, 0.10);
+    padding: 1px;
+    margin: 2px;
 }

@@ -4,6 +4,8 @@ author: csr13
 description: How to deploy automatic updates via github to production server.
 date: 2023-11-09
 permalink: /pages/posts/automatic-deployments.html
+categories: devops
+            github
 ---
 
 Normally, in real life situations, services have several environments.

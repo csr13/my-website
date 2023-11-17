@@ -4,6 +4,9 @@ author: csr13
 description: Monitor celery tasks via Flower dashboard for Django applications.
 date: 2023-10-29
 permalink: /pages/posts/backend-task-manager-visual.html
+categories: backend
+            tasks
+            python
 ---
 
 Sometimes deploying systems with asynchronous tasks is

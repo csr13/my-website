@@ -4,6 +4,10 @@ author: csr13
 description: Making a chatbot with Python and Twilio for your business.
 date: 2023-11-15
 permalink: /pages/posts/whatsapp-chatbot-python.html
+categories: bots
+            python
+            whatsapp
+            business
 ---
 
 Chatbots are everywhere, but sometimes a more custom chatbot can be built for your

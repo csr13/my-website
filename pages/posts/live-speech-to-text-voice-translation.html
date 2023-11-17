@@ -40,11 +40,16 @@
             <p>Date: 2023-11-16<br>By: csr13</p>
         </div>
         <div class="note-body">
-            <p>Building a system for translating caller origin language to call center agent origin
+            <p>Example use case. There is a call center that receives calls from foreign nationals
+from all over the world, the call center does not have agents that speak 10
+languages, how do you make it so that the operational cost of hiring call center
+agents that speak 10 languages is not an budget killer?</p>
+<p>On solution is to build a system for translating caller origin language to call center agent origin
 language, and translating call center agent to caller origin language real time,
 supporting multiple languages.</p>
 <p>Building VOIP based systems without a need for something like asterisk can also be
-built with Python.</p>
+built with Python and replacing software PBX systems like Asterisk with Twilio for
+custom dialplans.</p>
 <h3>Diagram and Schematics of the System.</h3>
 <p>For example, the following schematics for this system, please excuse my design
 skills.</p>
@@ -58,9 +63,9 @@ skills.</p>
 <li>2 Represents the middle broker, Twilio which replaces any VOIP system like Asterisk,
 so you don't have to program your own PBX.</li>
 <li>3 Represents the first component of the system which is the relayer component, it's
-purposes is to pass text converted from speech from the caller to the agent, and back
+purposes is to pass text converted from speech  and translate it from the callers origin language to the agents origin language, back
 and forward.</li>
-<li>4 Represents the web application the agent is using to type in messages in english
+<li>4 Represents the web application backend the agent is using to type in messages in english
 and read messages from the caller, in his native language, English in this case, the
 messages from the caller are translated in the relayer using AWS translation
 services.</li>
@@ -300,9 +305,9 @@ won't.</p>
     <span class="p">)</span>
 </code></pre></div>
 
-<p>Next, This is the webhook to translate the message from the caller to the agent language, the webhooks url are hardcoded in the
+<p>Next, this is the webhook to translate the message from the caller language, to the agents language, the webhooks url are hardcoded in the
 <code>Gather(action=&lt;action&gt;, ...)</code>  action parameter of Gather object. One thing that
-complicates, is if the agents takes more than 10 seconds to answer, the call dies,
+complicates the situation is if the agents takes more than 10 seconds to answer, the call dies,
 this is solved by a 'duct tape hack' using the request session object, which allows
 me to store if the agent reponded in time or not, and instead of ending the call on
 error, this key is used as a boolean flag. This is possible due to the http protocol
@@ -541,7 +546,7 @@ active, so call center agents are not able to see this call as active.</p>
 
 <p>So far, the relayer takes care of message translation and storing in memory (redis)
 for the agent panel to be able to query, this message only if the call is active and
-via redis key 'call-sid'.</p>
+via redis storage.</p>
 <h3>Agent Panel Logic</h3>
 <p>The following API endpoints are from the agent panel, it has only a few endpoints,
 needed to code a frontend capable of having call sessions via chat for available
@@ -679,15 +684,22 @@ made to these API endpoints every second (normal traffic in http) and when in a 
 having another interval to check for the latest caller message, and answering back
 and forth, the agent sees the translated text from the caller on this chat window,
 and answers in his language of origin, the relayer converts back to caller language.</p>
-<p>Thanks for reading.</p>
 <p>If you are interested in VOIP custom call centers contact me, or
 simple business call logic checks, like bank menus, or hotel menus, also contact me
 for consulting and implementation.</p>
 <p>As always the source code for this project is on my github, will add the link later
 in the week.</p>
+<p>Thanks for reading.</p>
         </div>
     </div>
 
+        <footer>
+            <div>
+                <div>
+                &copy; csr13 2023
+                </div>
+            </div>
+        </footer>
         
         <script src="/static/js/main.js"></script>
     </body>

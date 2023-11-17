@@ -1,0 +1,28 @@
+<div class="latest-archives">
+    <h4>Archive</h4>
+    <small> Latest notes </small>
+    {% for post in range(0, posts|length) %}
+        {% set counter = post + 1 %}
+        <div class="post-list-item">
+            <p>
+                <a href='{{ posts[post].href }}'>
+                    {{ counter }}) {{ posts[post].title }}
+                </a>
+                <br>
+                <small>
+                    Date published: {{ posts[post].date|replace("00:00:00", "") }}
+                </small>
+                <br>
+                {% for cat in posts[post].categories %}
+                <small> 
+                    <span class="category-span">
+                        {{ cat }}
+                    </span>
+                </small>
+                {% endfor %}
+            </p>
+        </div>
+    {% endfor %}
+    <small> <a href="/pages/notes-archive.html">See all</a></small>
+</div>
+

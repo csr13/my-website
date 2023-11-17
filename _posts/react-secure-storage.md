@@ -4,6 +4,10 @@ author: csr13
 description: A simple Secure Storage for Mobile Applications that use React Native.
 date: 2023-11-13
 permalink: /pages/posts/http-interceptor-react.html
+categories: frontend
+            storage
+            mobile
+            react-native
 ---
 
 When storing sensitive information with mobile applications, there are many ways to

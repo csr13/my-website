@@ -1,31 +1,35 @@
 <div class="projects-div">
     <h4> Projects </h4>
+    <div class="flex flex-row flex-wrap" />
     {% for project in projects %}
-        <p>
-            Name: 
-            <a href="{{ project.html_url }}" target="_blank">
-                {{ project.name }}
-            </a>
-            <br>
-            Description: {{ project.description }}
-            <br>
-            Owner: {{ project.owner }}
-            <br>
-            Dominant Language: {{ project.language }}
-            <br>
-            Default branch: {{ project.default_branch }}
-            <br>
-            Licence: </code>{{ project.licence.name }} - {{ project.licence.spdx_id }} </code>
-            <br>
-            Size: {{ project.size }}
-            <br>
-            Topics: {% for t in project.topics %}{{t}}, {% endfor %}
-            <br>
-            Download ZIP: 
-            <a href="{{ project.zipped_repo}}">
-                <button>Download</button>
-            </a>
-        </p>
+        <div class="project-div">
+            <p>
+                Name: 
+                <a href="{{ project.html_url }}" target="_blank">
+                    {{ project.name }}
+                </a>
+                <br>
+                Description: {{ project.description }}
+                <br>
+                Owner: {{ project.owner }}
+                <br>
+                Dominant Language: {{ project.language }}
+                <br>
+                Default branch: {{ project.default_branch }}
+                <br>
+                Licence: </code>{{ project.licence.name }} - {{ project.licence.spdx_id }} </code>
+                <br>
+                Size: {{ project.size }}
+                <br>
+                Topics: {% for t in project.topics %}{{t}}, {% endfor %}
+                <br>
+                Download ZIP: 
+                <a href="{{ project.zipped_repo}}">
+                    <button>Download</button>
+                </a>
+            </p>
+        </div>
     {% endfor %}
+    </div>
 </div>
 

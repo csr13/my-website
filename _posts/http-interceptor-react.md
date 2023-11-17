@@ -4,6 +4,9 @@ author: csr13
 description: Http Interceptor for React Native applications.
 date: 2023-11-13
 permalink: /pages/posts/http-interceptor-react.html
+categories: react
+            http
+            best-practice
 ---
 
 When developing user based mobile application or web applications and using JWTokens

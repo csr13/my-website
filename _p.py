@@ -41,6 +41,7 @@ def generate_index():
             name = post.replace(".md", ".html")
             title = meta.get("title")[0]
             date = meta.get("date")[0]
+            categories = meta.get("categories")
             year, month, day = [int(x) for x in date.split("-")]
             date = datetime.datetime(year=year, month=month, day=day)
             posts.append({
@@ -48,6 +49,7 @@ def generate_index():
                 "date" : date,
                 "timestamp" : date.timestamp(),
                 "href" : "/pages/posts/%s" % name,
+                "categories" : categories
             })
         
         #############################################################

@@ -171,7 +171,7 @@ def start(request):
     # Generate response this should go to determine language view
     ###############################################################
 
-    message = "Thanks for calling tarjuman call center "
+    message = "Thanks for calling the call center "
     message += "Please say your native language in english"
     response = VoiceResponse()
     gather = Gather(input='speech', action='/call/determine-language?rc=2&rp=rt')

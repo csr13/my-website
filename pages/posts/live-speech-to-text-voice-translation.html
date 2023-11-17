@@ -190,7 +190,7 @@ won't.</p>
     <span class="c1"># Generate response this should go to determine language view</span>
     <span class="c1">###############################################################</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Thanks for calling tarjuman call center &quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Thanks for calling the call center &quot;</span>
     <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;Please say your native language in english&quot;</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">VoiceResponse</span><span class="p">()</span>
     <span class="n">gather</span> <span class="o">=</span> <span class="n">Gather</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="s1">&#39;speech&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;/call/determine-language?rc=2&amp;rp=rt&#39;</span><span class="p">)</span>

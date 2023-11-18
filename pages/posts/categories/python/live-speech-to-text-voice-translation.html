@@ -70,10 +70,8 @@ so you don't have to program your own PBX.</li>
 <li>3 Represents the first component of the system which is the relayer component, it's
 purposes is to pass text converted from speech  and translate it from the callers origin language to the agents origin language, back
 and forward.</li>
-<li>4 Represents the web application backend the agent is using to type in messages in english
-and read messages from the caller, in his native language, English in this case, the
-messages from the caller are translated in the relayer using AWS translation
-services.</li>
+<li>4 Represents the web application backend the agent is using to type in messages in Arabic
+and read messages from the caller in Arabic as well, because it was translated from Chinese to Arabic using AWS translation in component 3.</li>
 <li>5 Is the agent from the call center, that is writing his/her responses in text, and
 sending them from the web application (4) to the relayer (3) the relayer converts
 text to the origin caller text, sends to middle broker (2) and finally the caller

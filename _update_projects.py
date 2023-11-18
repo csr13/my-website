@@ -21,6 +21,8 @@ if __name__ == "__main__":
         clean_repos = []
         for repo in repos:
             name = repo["name"]
+            if name == "csr13.github.io":
+                continue
             language = repo["language"]
             licence = repo["license"]
             url = repo["url"]

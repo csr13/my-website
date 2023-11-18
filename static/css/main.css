@@ -1,13 +1,13 @@
 body {
     font-family: monospace; 
-    background: black;
-    color: white;
+    background: whitesmoke;
+    color: black;
 }
 header {
     margin-bottom: 15px;
 }
 a {
-    color: lightgreen;
+    color: blue;
     text-decoration: none;
 }
 a:hover {
@@ -15,29 +15,10 @@ a:hover {
     background-color: lightblue;
     color: black;
 }
-#title{
-    color: white;
-    background-color:rgba(0,0,255,.50);
-}
-#loading {
-    display: block;
-    position: absolute;
-    top: 0;left: 0;z-index: 100;
-    width: 100vw;
-    height: 100vh;
-}
-#page {
-    display: none;
-}
-#loading-image{
-    height: 100px;
-    width: 100px;
-}
 pre {
-    box-shadow: 2px 4px black;
     border: 2px groove black;
     white-space: pre;
-    background: lightyellow; 
+    background: rgba(0,255,0, 0.05); 
     padding:5px; 
     overflow: auto; 
     line-height: 1.5;
@@ -61,7 +42,6 @@ pre {
     background-image: url("/static/images/images/playa-grafitty.png");
     background-size: cover;
     margin-bottom: 15px;
-    border: 5px solid black;
     height: 300px;
 }
 .about-site-pic-div {
@@ -85,8 +65,12 @@ pre {
 .note{
     margin-bottom: 20px;
 }
+.note-body {
+    border-top: 1px solid black;
+    margin-top: 10px;
+    padding-top: 10px;
+}
 .archive-div {
-    margin: 10px;
 }
 .projects-div {
     margin-top: 25px;
@@ -116,15 +100,15 @@ pre {
     justify-content: space-evenly;
 }
 .console {
-    background-color: rgba(255, 255, 255, 0.20);
-    border: 2px solid rgba(255, 255, 255, 0.20);
+    background-color: rgba(0, 0, 0, 0.20);
+    border: 2px solid rgba(0, 0, 0, 0.69);
     height: 545px;
 }
 .console-menu {
     padding: 5px;
     padding-bottom: 0;
     margin-bottom: 0;
-    color: white;
+    color: black;
 }
 .category-span {
     margin:2px 4px 10px 0px;
@@ -132,7 +116,10 @@ pre {
     color: black;
 }
 .post-list-item {
-    background: rgba(255,255,255, 0.10);
+    background: rgba(0,0,0, 0.10);
     padding: 1px;
     margin: 2px;
+}
+footer {
+margin-top: 50px;
 }

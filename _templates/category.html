@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+{% block title %}Category {{ cat }}{% endblock %}
+
+{% block content %}
+    <h3>Posts tagged with {{ cat|capitalize }}</h3>
+    {% for post in range(0, posts|length) %}
+        {% set counter = post + 1 %}
+        <div class="post-list-item">
+            <p>
+                <a href='{{ posts[post].href }}'>
+                    {{ counter }}) {{ posts[post].title }}
+                </a>
+                <br>
+                <small>
+                    Date published: {{ posts[post].date|replace("00:00:00", "") }}
+                </small>
+                <br>
+                {% for cat in posts[post].categories %}
+                <small> 
+                    <span class="category-span">
+                        {{ cat }}
+                    </span>
+                </small>
+                {% endfor %}
+            </p>
+        </div>
+    {% endfor %}
+{% endblock %}

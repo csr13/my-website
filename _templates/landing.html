@@ -3,8 +3,10 @@
 {% block title %}Notes{% endblock %}
 
 {% block content %}
-    {% include 'about-site.html' %}
     <div class="archives">
+        <div class="archive-div">
+            {% include 'about-site.html' %}
+        </div>
         <div class="archive-div">
             {% include 'latest-notes.html' %}
         </div>

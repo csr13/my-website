@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import pprint
 
 import requests
 import markdown
@@ -8,6 +9,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 
 from _logger import get_logger
 
+THIS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
 logger = get_logger(__name__)
 
@@ -24,37 +26,41 @@ env.globals["site_repo"] = "https://github.com/csr13/csr13.github.io"
 env.globals["https_site"] = "https://www.csr13.me"
 env.globals["http_site"] = "http://www.csr13.me"
 env.globals["github_site"] = "https://csr13.github.io"
+env.globals["media_posts_pdf_root"] = "/media/documentation/pdfs/posts/"
+env.globals["categories_path"] = "/pages/posts/categories"
+
+
+def get_posts():
+    posts_dir = "_posts"
+    posts = []
+    for post in os.listdir(posts_dir):
+        if not post.endswith(".md"): continue
+        txt = None
+        with open(os.path.join(posts_dir, post), "r") as ts: 
+            txt = ts.read()
+        mkdown = markdown.Markdown(extensions=["meta"])
+        html = mkdown.convert(txt)
+        meta = mkdown.Meta
+        name = post.replace(".md", ".html")
+        title = meta.get("title")[0]
+        date = meta.get("date")[0]
+        categories = meta.get("categories")
+        year, month, day = [int(x) for x in date.split("-")]
+        date = datetime.datetime(year=year, month=month, day=day)
+        posts.append({
+            "title" : title,
+            "date" : date,
+            "timestamp" : date.timestamp(),
+            "href" : "/pages/posts/%s" % name,
+            "post_name" : post, 
+            "categories" : categories
+        })
+    return posts
 
 
 def generate_index():
     try:
-        posts_dir = "_posts"
-        posts = []
-        for post in os.listdir(posts_dir):
-            if not post.endswith(".md"): continue
-            txt = None
-            with open(os.path.join(posts_dir, post), "r") as ts: 
-                txt = ts.read()
-            mkdown = markdown.Markdown(extensions=["meta"])
-            html = mkdown.convert(txt)
-            meta = mkdown.Meta
-            name = post.replace(".md", ".html")
-            title = meta.get("title")[0]
-            date = meta.get("date")[0]
-            categories = meta.get("categories")
-            year, month, day = [int(x) for x in date.split("-")]
-            date = datetime.datetime(year=year, month=month, day=day)
-            posts.append({
-                "title" : title,
-                "date" : date,
-                "timestamp" : date.timestamp(),
-                "href" : "/pages/posts/%s" % name,
-                "categories" : categories
-            })
-        
-        #############################################################
-        # Generate pdfs and research
-        ############################################################
+        posts = get_posts()
 
         pdfs = []
         research = []
@@ -101,10 +107,6 @@ def generate_index():
 
         with open("pages/documentation-research-archive.html", "w") as ts:
             ts.write(rd_html)
-            
-        #############################################################
-        # Generate proof of ownershio
-        ############################################################
 
         with open("_data/_projects.json", "r") as fs:
             projects = json.load(fs)
@@ -144,7 +146,11 @@ def generate_index():
 
 def generate_posts():
     try:
-        posts_dir = "_posts"
+        posts_dir = os.path.join(THIS_DIR, "_posts")
+        cats_path = os.path.join(THIS_DIR, "pages", "posts", "categories")
+        if not os.path.exists(cats_path):
+            os.makedirs(cats_path)
+
         for post in os.listdir(posts_dir):
             if not post.endswith(".md"): continue
             txt = None
@@ -164,16 +170,47 @@ def generate_posts():
             author = meta.get("author")[0]
             permalink = meta.get("permalink")[0]
             description = meta.get("description")[0]
+            categories = meta.get("categories")
             post_html = template.render(
                 note_title=meta["title"][0], 
                 note_body=html,
                 note_date=date,
                 note_author=author,
                 note_permalink=permalink,
-                note_description=description
+                note_description=description,
+                note_categories=categories,
+                name=post
             )
             with open("pages/posts/%s" % name, "w") as ts: 
                 ts.write(post_html)
+
+            for cat in categories:
+                cat = cat.replace(" ", "-")
+                cat = "-".join([c.lower() for c in cat.split("-")])
+                if not os.path.exists(os.path.join(cats_path, cat)):
+                    os.makedirs(os.path.join(cats_path, cat))
+                with open(os.path.join(cats_path, cat, name), "w") as ts:
+                    ts.write(post_html)
+
+        posts = get_posts()
+        cat_posts = {cat: [] for cat in os.listdir(cats_path)}
+        for cat in cat_posts.keys():
+            for post in posts:
+                post_categories = post["categories"]
+                post_categories = [c.replace(" ", "-").lower() for c in post_categories]
+                if cat in post_categories:
+                    cat_posts[cat].append(post)
+
+        for cat, posts in cat_posts.items():
+            abs_path = os.path.join(cats_path, cat)
+            if not os.path.isdir(abs_path):
+                continue
+            template = env.get_template("category.html")
+            cat_html = template.render(cat=cat, posts=posts)
+            cat_index = os.path.join(abs_path, "list.html")
+            with open(cat_index, "w") as ts:
+                ts.write(cat_html)
+            
     except Exception as e:
         if os.getenv("DEBUG") is not None:
             raise e
@@ -188,12 +225,10 @@ def main():
         errors.append("Unable to generate index")
     if not generate_posts():
         errors.append("Unable to generate posts")
-
     if len(errors) > 0:
         for error in errors:
             print("[ERROR] %s" % error)
         exit(1)
-
     exit(0)
 
 

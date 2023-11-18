@@ -27,6 +27,11 @@
         <div class="note-title">
             <h3>{{ note_title|safe }}</h3>
             <p>Date: {{ note_date }}<br>By: {{ note_author }}</p>
+            <a 
+                href="{{ media_posts_pdf_root}}{{ name|replace('.md', '.pdf') }}" 
+                target="_blank">
+                <button> <small>Download as PDF </small></button>
+            </a>
         </div>
         <div class="note-body">
             {{ note_body|safe }}

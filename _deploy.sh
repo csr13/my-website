@@ -13,15 +13,15 @@ cp keybase.txt /var/www/html/keybase.txt
 
 echo "Copying pages dir to $root_loc"
 
-cp -r pages /var/www/html/pages
+cp -r pages /var/www/html/
 
 echo "Copying static dir to $root_loc"
 
-cp -r static /var/www/html/static
+cp -r static /var/www/html/
 
 echo "Coping media dir to $root_loc"
 
-cp -r media /var/www/html/media
+cp -r media /var/www/html/
 
 is_active=$(systemctl is-active nginx)
 

@@ -29,7 +29,7 @@ For example, the following schematics for this system, please excuse my design
 skills.
 
 <div class="flex flex-column">
-<img src="/static/images/posts/live-speech-to-text-diagram.png" width=400 height=500/>
+<img src="/static/images/posts/live-speech-to-text-diagram.png" width=400 height=400 />
 </div>
 
 

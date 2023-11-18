@@ -16,7 +16,9 @@
                 {% for cat in posts[post].categories %}
                 <small> 
                     <span class="category-span">
-                        {{ cat }}
+                        <a href="{{categories_path }}/{{ cat }}/list.html">
+                            {{ cat }}
+                        </a>
                     </span>
                 </small>
                 {% endfor %}

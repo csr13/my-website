@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+
+{% block title %} Notes Categories {% endblock %}
+
+{% block content %}
+    {% with cat_rows = False %}
+        {% include 'includes/category-list.html' %}
+    {% endwith %}
+{% endblock %}

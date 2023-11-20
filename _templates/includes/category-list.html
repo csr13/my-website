@@ -1,0 +1,17 @@
+<h4> Archive Categories</h4>
+{% if landing_page %}
+    <div style="background: rgba(255,255,255, .10);" />
+{% endif %}
+<div class="flex {% if cat_rows %}flex-row flex-wrap{% else %}flex flex-col{% endif %}">
+{% for cat in categories %}
+<div class="{% if landing_page %}post-list-item-landing{% else %}post-list-item{% endif %}">
+        <a href="{{ categories_path }}/{{ cat[0] }}/list.html" />
+            &#10022; {{ cat[0] }} 
+        </a>
+        <small> {{ cat[1] }} </small>
+    </div>
+{% endfor %}
+</div>
+{% if landing_page %}
+    </div>
+{% endif %}

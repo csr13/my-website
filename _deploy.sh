@@ -11,6 +11,14 @@ echo "Copying keybase.txt to $root_loc"
 
 cp keybase.txt /var/www/html/keybase.txt
 
+echo  "Copying robots.txt to $root_loc";
+
+cp robots.txt /var/www/html/robots.txt
+
+echo "Copying sitemap.xml to $root_loc";
+
+cp sitemap.xml /var/www/html/sitemap.xml
+
 echo "Copying pages dir to $root_loc"
 
 cp -r pages /var/www/html/

@@ -8,13 +8,14 @@
             {% include 'about-site.html' %}
         </div>
         <div class="archive-div">
-            {% include 'latest-notes.html' %}
-        </div>
-        <div class="archive-div">
-            {% include 'projects.html' %}
-        </div>
-        <div class="archive-div">
-            {% include 'documentation-research.html' %}
+            <div>
+                {% with cat_rows = True, landing_page = True %}
+                    {% include 'includes/category-list.html' %}
+                {% endwith %}
+            </div>
+            <div>
+                {% include 'latest-notes.html' %}
+            </div>
         </div>
     </div>
 {% endblock %}

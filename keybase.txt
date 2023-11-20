@@ -4,7 +4,7 @@ https://keybase.io/csr13
 
 I hereby claim:
 
-  * I am an admin of https://csr13.github.io
+  * I am an admin of https://www.csr13.me
   * I am csr13 (https://keybase.io/csr13) on keybase.
   * I have a public key ASCFNp8wkezsMp0YFbRH8twVqUN-CNPh6G-gmY_39dDQwQo
 
@@ -20,14 +20,14 @@ To do so, I am signing this object:
       "username": "csr13"
     },
     "merkle_root": {
-      "ctime": 1699931492,
-      "hash": "af2774be0b389e2b7c1e491b863da797444a4d2b85b76a1d03a87e7e7ba200591ebc92874ab05f67e3a599fdcd3d25e805723dbd720cfc3c99f38899b610c841",
-      "hash_meta": "870b8d44c5d135ab5c49e1042b720b1a2b884f46e73fcb855b83f749123e3046",
-      "seqno": 25142593
+      "ctime": 1700333509,
+      "hash": "1b45ae630ad34c1c60a470790066126865274fc1cdd718c0009ddbd0fc7b07b697ffd8c92ea8dec0983f113238aa10900c3721202344082f58b44054c48ed561",
+      "hash_meta": "de6d268f275ecf7ac817cd1075e15876f7b442572ae3b1db9f7bd5bd0d375901",
+      "seqno": 25158731
     },
     "service": {
-      "entropy": "YGREEGFC50bBqsJ2PYGhg3/G",
-      "hostname": "csr13.github.io",
+      "entropy": "qxiSmOmGOgphF+DW31y6/PCP",
+      "hostname": "www.csr13.me",
       "protocol": "https:"
     },
     "type": "web_service_binding",
@@ -37,16 +37,16 @@ To do so, I am signing this object:
     "name": "keybase.io go client",
     "version": "6.2.3"
   },
-  "ctime": 1699931538,
+  "ctime": 1700333538,
   "expire_in": 504576000,
-  "prev": "624eb1442e56f26a98fa646b8c8f3f8ccb814edb47d560827486d59d39b3b747",
-  "seqno": 4,
+  "prev": "b2a616508502be8d41447d7d4f6c95afb792d996954acbd2824174c26283a119",
+  "seqno": 5,
   "tag": "signature"
 }
 
 which yields the signature:
 
-hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEghTafMJHs7DKdGBW0R/LcFalDfgjT4ehvoJmP9/XQ0MEKp3BheWxvYWTESpcCBMQgYk6xRC5W8mqY+mRrjI8/jMuBTttH1WCCdIbVnTmzt0fEINvJSea6ySeAnhxqz9GVWoyGF7NUUVUWjsmSk7VGr1ifAgHCo3NpZ8RAfQYmD0JWi+1wgpymSkYnFO8Jbi54DXIYleiDLFhU9am/hw3FSARorY7+ZknzimoK4u3WXorD7EXbD6QRaKsxA6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEICy1S77TjdtVn1h9bHDAFcr6NIx3oPjWEtKezkSRq7pUo3RhZ80CAqd2ZXJzaW9uAQ==
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEghTafMJHs7DKdGBW0R/LcFalDfgjT4ehvoJmP9/XQ0MEKp3BheWxvYWTESpcCBcQgsqYWUIUCvo1BRH19T2yVr7eS2ZaVSsvSgkF0wmKDoRnEIDu8t1DdHRD55Uo1D3/FOPFDSThbKitCXT5iYi8cY5FuAgHCo3NpZ8RAHXdNMzQC+3d+qN6RA4HyI/pz8jxU9peeovc2Opq1uk64ifNLe3lxUTebfzD4mrnXhVzyC7iyjsUvPUpgc2xPCKhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIAPkuf3cZQGAYoy6sXqgAqv4pwsthc6xwYWxbubteLy4o3RhZ80CAqd2ZXJzaW9uAQ==
 
 And finally, I am proving ownership of this host by posting or
 appending to this document.

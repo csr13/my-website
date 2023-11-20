@@ -1,13 +1,27 @@
 body {
     font-family: monospace; 
-    background: whitesmoke;
-    color: black;
+    background: black;
+    color: white;
 }
 header {
-    margin-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 17px;
+    padding-bottom: 8px;
+    background: black;
+}
+header nav {
+    padding-top: 6px;
+}
+header nav a:hover {
+    background-color: inherit;
+}
+header nav a img {
+    background: rgba(255,255,255,.10);
+    border-radius: 5px;
 }
 a {
-    color: blue;
+    color: crimson;
     text-decoration: none;
 }
 a:hover {
@@ -16,13 +30,28 @@ a:hover {
     color: black;
 }
 pre {
+    font-size: 10px;
     border: 2px groove black;
     white-space: pre;
     background: rgba(0,255,0, 0.05); 
     padding:5px; 
     overflow: auto; 
     line-height: 1.5;
+    color: white;
+    background: black;
+}
+
+.note-body p code {
+    font-size: 10px;  
+    background: lightyellow;
+    border: 2px solid white;
+    border-radius: 2px;
     color: black;
+    padding: 1px;
+}
+.main-div {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .main-nav{
     height: 20px; 
@@ -66,8 +95,7 @@ pre {
     margin-bottom: 20px;
 }
 .note-body {
-    border-top: 1px solid black;
-    margin-top: 10px;
+    margin-top: 20px;
     padding-top: 10px;
 }
 .archive-div {
@@ -100,26 +128,66 @@ pre {
     justify-content: space-evenly;
 }
 .console {
-    background-color: rgba(0, 0, 0, 0.20);
-    border: 2px solid rgba(0, 0, 0, 0.69);
+    background: rgba(255,255,255, .10);
+    border: 1px solid rgba(255,255,255, .10);
+    border-radius: 3px;
     height: 545px;
 }
 .console-menu {
     padding: 5px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    color: black;
+    margin-top:0;
+    padding-bottom:0;
+    color: grey;
+}
+.console-button {
+    padding: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-radius: 3px;
+}
+.console-panel {
+    background-image: url("/static/images/images/biohazard3.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top:0;
+}
+.console-panel pre {
+    background-color: rgba(0,0,0, 0.69);
+    font-size: 11px;
+    border: none;
+}
+.console-panel pre code {
+    color: crimson;
 }
 .category-span {
     margin:2px 4px 10px 0px;
-    background: lightblue;
-    color: black;
+    background: black;
+    color: white;
+}
+.category-span a {
+    color: white;
 }
 .post-list-item {
-    background: rgba(0,0,0, 0.10);
+    background:  rgba(255,255,255, .10);;
     padding: 1px;
     margin: 2px;
 }
-footer {
-margin-top: 50px;
+.post-list-item-landing{
+    background: black;
+    padding: 1px;
+    margin: 2px;
 }
+.post-list-item-landing a {
+    color: white;
+}
+.related-posts {
+    border-top: 1px solid lightgray;
+}
+footer {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-top: 50px;
+}
+
+

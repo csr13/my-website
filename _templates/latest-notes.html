@@ -1,6 +1,8 @@
 <div class="latest-archives">
-    <h4>Archive</h4>
-    <small> Latest notes </small>
+    <h4>Latest notes in archive</h4>
+    <nav class="flex flex-row">
+        <a href="/pages/notes-archive.html" class="horizontal-nav-item">See all notes.</a>
+    </nav>
     {% for post in range(0, posts|length) %}
         {% set counter = post + 1 %}
         <div class="post-list-item">
@@ -25,6 +27,5 @@
             </p>
         </div>
     {% endfor %}
-    <small> <a href="/pages/notes-archive.html">See all</a></small>
 </div>
 

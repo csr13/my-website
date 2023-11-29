@@ -12,17 +12,18 @@ series_name: sneaker-bot
 ---
 
 
-Part two includes:
+Part two consists of the following:
 
 - Creating the endpoints for biding and handling payment directly with Stripe.
 - Storing useful datas on the appropriate database tables, for which product this bid is on, size of the shoe, color, and other datas.
 - Creating the ec2/t2.micro instances raising them, obtaining their ip, and then putting them in an off state (so they don't generate expenses)
 
-First the frontend for any stripe integrated site will require an endpoint to fetch stripe public key, to use on the frontend code in order to verify account origins and esure that your stripe account is valid and only then you can start processing
-payments, if the fetched key is incorrect or outdated nothing will work.
+First the frontend for any stripe integrated site will require an endpoint to fetch stripe public key -- to use on the frontend code, in order to verify account origins and esure that your stripe account is valid. Only then you can start processing
+payments; if the fetched key is incorrect or outdated nothing will work.
 
 API Endpoint for fetching public and for generating a checkout session for stripe payment
-> I will include imports only on this snippet -- added comments for readablity.
+
+I will include imports only on this snippet -- added comments for readablity.
 
 ```python
 import datetime
@@ -181,7 +182,7 @@ class CreateStripeCheckoutSession(APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 ```
 
-For context I will add some database table models for ProductBid model, the name is self explanatory, this is for keeping track of bids made by certian users for certain products (Nike Sneakers)
+For context I will add some database table models for ProductBid model, the name is self explanatory; this is for keeping track of bids made by certian users for certain products (Nike Sneakers)
 
 
 Here are the models used on the checkout session for keeping track of things.
@@ -241,14 +242,14 @@ Preety simple relational models, one model Bid, that handles the information for
 
 `ProductBid`
 
-- A foreign key relation to a `Bid` object.
-- `Product` which the bid is taking pair with.
+- A foreign key relation to a Bid object.
+- Product which the bid is taking pair with.
 - A boolean flag to know if the bid is active or not, for usage all around.
 
 `UserProductBid`
 
-- `User`, the user that placed this product bid.
-- `ProductBid`, the product bid object is related here with the user.
+- User, the user that placed this product bid.
+- ProductBid, the product bid object is related here with the user.
 - Bid Amount that this used placed.
 - Timestamp of the bid.
 
@@ -293,9 +294,9 @@ class Product(models.Model):
 These models are self explanatory, same goes as the field names for the columns on this database table, posting them here to better explain what is happening.
 
 
-Ok, the last part is the post payment action for creating the ec2/t2.micro instances that the user just paid for, in addition to the cost of the sneaker that the user placed a bid on, and all the fees for this service.
+The last part is the post payment action for creating the ec2/t2.micro instances that the user just paid for, in addition to the cost of the sneaker that the user placed a bid on, and all the fees for this service.
 
-Again, I took some time to comment the code, this is a refactored version of the tests done on part 1 of this series, this code is executed when Stripe process the payment, and the payment is a success, it triggers this listener webhook.
+I took some time to comment the code, this is a refactored version of the tests done on part 1 of this series, this code is executed when Stripe process the payment, and the payment is a success, it triggers this listener webhook.
 
 This code then handles the creation of the t2/ec2 instances for the bots to execute this job of trying to get the new Sneaker before it sells out, replicating parellel processes executing the same action, with more probabilities of getting one pair of sneakers.
 
@@ -383,6 +384,7 @@ class SBListener(APIView):
             ############################################################################
 
             if bid_amount < 25:
+
                 ############################################################################
                 # Here on production it handles refund, this is actually handled on checkout.
                 # So its rare it actually hits this condition.
@@ -562,7 +564,7 @@ class SBListener(APIView):
         return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 ```
 
-Lastly, here is an example replica of how a task would be sent to any ec2/t2 instance running purchase on behalf of the user using static data, the public IP would be obtained from a  `UserAwsCheckoutResource` and replaced to be dynamically called. For
+Lastly, here is an example replica of how a task would be sent to any ec2/t2 instance running purchase on behalf of the user using static data. The public IP would be obtained from a  `UserAwsCheckoutResource` and replaced to be dynamically called. For
 example, call this endpoint for each Checkout resource for a UserProductBid with the ProductBid and Product data as functional arguments, or in this case as request body data.
 
 
@@ -755,9 +757,11 @@ class UserAwsCheckoutResource(models.Model):
             return bool(0)
         return bool(1)
 ```
-Ok, so for part two, everything is making sense, it does not make sense for me to post entire solutions because I am just being nice here and providing a more than what you see on the web how to, because we made money out of this already around 2 years ago .... If you want full solution or custom one, contact me directly, but bring a good budget.
+
+Part two includes key components of the program, it does not make sense for me to post entire solutions because I am just being nice here and providing a "more than what you see on the web how tos", because we made money out of this already around -- 2 years ago.
+
+If you want full solution or custom one, contact me directly, but bring a good budget.
 
 
-For part 3 I will write about how to secure users cc info to comply with pci, and how to store your key to encrypt secureley, or as secure as possible. Also, going to write about how to scrape nike products, since nike.com uses React, Nike uses a local
-store "storage" which often wont allow scrappers to scrape, because it dinamically loads, and selenium usage because of bot detection frontend libraries, will fuck you up.However, React is shitty, and there's lots of flaws makes it okay way to scrape React
-sites if you know how to wait and get local storage store object and just traverse it.
+For part three I will write about how to secure users credit card information in order to comply with PCI standards, how to store your key to encrypt users credit cards as secure as possible. In addition I am going to write about how to scrape nike products, since nike.com uses React and Nike uses a local
+store "storage" which often wont allow scrappers to scrape, because it dinamically loads, and selenium usage because of bot detection frontend libraries, will fuck you up.However, React is shit, and there's lots of flaws, and this makes it okay way to scrape React sites if you know how to get local storage store object and just traverse the 'store;.

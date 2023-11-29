@@ -151,6 +151,10 @@ pre {
     background-position: center;
     margin-top:0;
 }
+.console-panel {
+    margin-top:10px;
+}
+
 .console-panel pre {
     background-color: rgba(0,0,0, 0.69);
     font-size: 11px;
@@ -188,5 +192,29 @@ footer {
     padding-right: 15px;
     margin-top: 50px;
 }
-
-
+.series-list {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.series-list div a {
+    margin-left: 5px;
+}
+.mi-musica {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: black;
+}
+.mi-musica .console .console-menu {
+    margin-bottom: 8px;
+}
+.rola {
+    margin: 8px;
+    border-radius: 10px;
+    height: 160px;
+    padding: 8px;
+}
+.console-panel-musica{
+    background: black;
+    height: 513px;
+    overflow: scroll;
+}

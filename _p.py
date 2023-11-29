@@ -54,7 +54,7 @@ def get_posts():
             "href" : "/pages/posts/%s" % name,
             "post_name" : post, 
             "categories" : categories,
-            "type_post": type_post,
+            "type": type_post,
             "series_name" : series_name
         })
     return posts
@@ -285,7 +285,7 @@ def generate_projects():
 
 
 def set_template_globals(env: Environment):
-    env.globals["site_repo"] = "https://github.com/csr13/csr13.github.io"
+    env.globals["site_repo"] = "https://github.com/csr13/my-website"
     env.globals["https_site"] = "https://www.csr13.me"
     env.globals["http_site"] = "http://www.csr13.me"
     env.globals["github_site"] = "https://csr13.github.io"

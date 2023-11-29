@@ -49,44 +49,17 @@
                 <button> <small>Download as PDF </small></button>
             </a>
         </div>
-            
-            <div class="flex flex-row">                    
-                <div class="series-list">
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                        
-                    
-                </div>
-                <div class="note-body">
-                    <p>Part two includes:</p>
+        <div class="note-body">
+            <p>Part two consists of the following:</p>
 <ul>
 <li>Creating the endpoints for biding and handling payment directly with Stripe.</li>
 <li>Storing useful datas on the appropriate database tables, for which product this bid is on, size of the shoe, color, and other datas.</li>
 <li>Creating the ec2/t2.micro instances raising them, obtaining their ip, and then putting them in an off state (so they don't generate expenses)</li>
 </ul>
-<p>First the frontend for any stripe integrated site will require an endpoint to fetch stripe public key, to use on the frontend code in order to verify account origins and esure that your stripe account is valid and only then you can start processing
-payments, if the fetched key is incorrect or outdated nothing will work.</p>
+<p>First the frontend for any stripe integrated site will require an endpoint to fetch stripe public key -- to use on the frontend code, in order to verify account origins and esure that your stripe account is valid. Only then you can start processing
+payments; if the fetched key is incorrect or outdated nothing will work.</p>
 <p>API Endpoint for fetching public and for generating a checkout session for stripe payment</p>
-<blockquote>
 <p>I will include imports only on this snippet -- added comments for readablity.</p>
-</blockquote>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">logging</span>
@@ -243,7 +216,7 @@ payments, if the fetched key is incorrect or outdated nothing will work.</p>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_200_OK</span><span class="p">)</span>
 </code></pre></div>
 
-<p>For context I will add some database table models for ProductBid model, the name is self explanatory, this is for keeping track of bids made by certian users for certain products (Nike Sneakers)</p>
+<p>For context I will add some database table models for ProductBid model, the name is self explanatory; this is for keeping track of bids made by certian users for certain products (Nike Sneakers)</p>
 <p>Here are the models used on the checkout session for keeping track of things.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
 <span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
@@ -298,14 +271,14 @@ payments, if the fetched key is incorrect or outdated nothing will work.</p>
 </ul>
 <p><code>ProductBid</code></p>
 <ul>
-<li>A foreign key relation to a <code>Bid</code> object.</li>
-<li><code>Product</code> which the bid is taking pair with.</li>
+<li>A foreign key relation to a Bid object.</li>
+<li>Product which the bid is taking pair with.</li>
 <li>A boolean flag to know if the bid is active or not, for usage all around.</li>
 </ul>
 <p><code>UserProductBid</code></p>
 <ul>
-<li><code>User</code>, the user that placed this product bid.</li>
-<li><code>ProductBid</code>, the product bid object is related here with the user.</li>
+<li>User, the user that placed this product bid.</li>
+<li>ProductBid, the product bid object is related here with the user.</li>
 <li>Bid Amount that this used placed.</li>
 <li>Timestamp of the bid.</li>
 </ul>
@@ -343,8 +316,8 @@ payments, if the fetched key is incorrect or outdated nothing will work.</p>
 </code></pre></div>
 
 <p>These models are self explanatory, same goes as the field names for the columns on this database table, posting them here to better explain what is happening.</p>
-<p>Ok, the last part is the post payment action for creating the ec2/t2.micro instances that the user just paid for, in addition to the cost of the sneaker that the user placed a bid on, and all the fees for this service.</p>
-<p>Again, I took some time to comment the code, this is a refactored version of the tests done on part 1 of this series, this code is executed when Stripe process the payment, and the payment is a success, it triggers this listener webhook.</p>
+<p>The last part is the post payment action for creating the ec2/t2.micro instances that the user just paid for, in addition to the cost of the sneaker that the user placed a bid on, and all the fees for this service.</p>
+<p>I took some time to comment the code, this is a refactored version of the tests done on part 1 of this series, this code is executed when Stripe process the payment, and the payment is a success, it triggers this listener webhook.</p>
 <p>This code then handles the creation of the t2/ec2 instances for the bots to execute this job of trying to get the new Sneaker before it sells out, replicating parellel processes executing the same action, with more probabilities of getting one pair of sneakers.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SBListener</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
 
@@ -428,6 +401,7 @@ payments, if the fetched key is incorrect or outdated nothing will work.</p>
             <span class="c1">############################################################################</span>
 
             <span class="k">if</span> <span class="n">bid_amount</span> <span class="o">&lt;</span> <span class="mi">25</span><span class="p">:</span>
+
                 <span class="c1">############################################################################</span>
                 <span class="c1"># Here on production it handles refund, this is actually handled on checkout.</span>
                 <span class="c1"># So its rare it actually hits this condition.</span>
@@ -607,7 +581,7 @@ payments, if the fetched key is incorrect or outdated nothing will work.</p>
         <span class="k">return</span> <span class="n">Response</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">HTTP_400_BAD_REQUEST</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Lastly, here is an example replica of how a task would be sent to any ec2/t2 instance running purchase on behalf of the user using static data, the public IP would be obtained from a  <code>UserAwsCheckoutResource</code> and replaced to be dynamically called. For
+<p>Lastly, here is an example replica of how a task would be sent to any ec2/t2 instance running purchase on behalf of the user using static data. The public IP would be obtained from a  <code>UserAwsCheckoutResource</code> and replaced to be dynamically called. For
 example, call this endpoint for each Checkout resource for a UserProductBid with the ProductBid and Product data as functional arguments, or in this case as request body data.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">DemoCheckout</span><span class="p">(</span><span class="n">APIView</span><span class="p">):</span>
     <span class="n">permission_classes</span> <span class="o">=</span> <span class="p">[</span><span class="n">IsAdmin</span><span class="p">,</span> <span class="n">IsCronjobRunner</span><span class="p">]</span>
@@ -794,14 +768,45 @@ example, call this endpoint for each Checkout resource for a UserProductBid with
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div>
 
-<p>Ok, so for part two, everything is making sense, it does not make sense for me to post entire solutions because I am just being nice here and providing a more than what you see on the web how to, because we made money out of this already around 2 years ago .... If you want full solution or custom one, contact me directly, but bring a good budget.</p>
-<p>For part 3 I will write about how to secure users cc info to comply with pci, and how to store your key to encrypt secureley, or as secure as possible. Also, going to write about how to scrape nike products, since nike.com uses React, Nike uses a local
-store "storage" which often wont allow scrappers to scrape, because it dinamically loads, and selenium usage because of bot detection frontend libraries, will fuck you up.However, React is shitty, and there's lots of flaws makes it okay way to scrape React
-sites if you know how to wait and get local storage store object and just traverse it.</p>
-                </div>
-            </div>
-            
+<p>Part two includes key components of the program, it does not make sense for me to post entire solutions because I am just being nice here and providing a "more than what you see on the web how tos", because we made money out of this already around -- 2 years ago.</p>
+<p>If you want full solution or custom one, contact me directly, but bring a good budget.</p>
+<p>For part three I will write about how to secure users credit card information in order to comply with PCI standards, how to store your key to encrypt users credit cards as secure as possible. In addition I am going to write about how to scrape nike products, since nike.com uses React and Nike uses a local
+store "storage" which often wont allow scrappers to scrape, because it dinamically loads, and selenium usage because of bot detection frontend libraries, will fuck you up.However, React is shit, and there's lots of flaws, and this makes it okay way to scrape React sites if you know how to get local storage store object and just traverse the 'store;.</p>
+        </div>
     </div>
+    
+    <div class="series-list">
+        <h3> This post is part of a series, check out the other parts of this series of notes </h3>
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html'> Using ec2 instances as sneaker bid bots pt 1. </a>
+                    </a>
+                </div>
+            
+        
+    
+    </div>
+
     <div class="related-posts">
         <h3> Related Notes </h3>
         

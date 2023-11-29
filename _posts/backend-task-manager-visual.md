@@ -1,4 +1,5 @@
 ---
+type: note
 title: Backend Celery task manager dashboard via Flower
 author: csr13
 description: Monitor celery tasks via Flower dashboard for Django applications.

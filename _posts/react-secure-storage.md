@@ -1,4 +1,5 @@
 ---
+type: note
 title: Secure Storage for Mobile Applications using React Native.
 author: csr13
 description: A simple Secure Storage for Mobile Applications that use React Native.

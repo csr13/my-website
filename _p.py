@@ -42,15 +42,38 @@ def get_posts():
         categories = meta.get("categories")
         year, month, day = [int(x) for x in date.split("-")]
         date = datetime.datetime(year=year, month=month, day=day)
+        type_post = meta.get("type")[0]
+        if type_post == "series":
+            series_name = meta.get("series_name")[0]
+        else:
+            series_name = None
         posts.append({
             "title" : title,
             "date" : date,
             "timestamp" : date.timestamp(),
             "href" : "/pages/posts/%s" % name,
             "post_name" : post, 
-            "categories" : categories
+            "categories" : categories,
+            "type_post": type_post,
+            "series_name" : series_name
         })
     return posts
+
+
+def build_site_fs():
+    logger.info("[!] Creating post categories file system.")
+    posts = get_posts()
+    for post in posts:
+        categories = post.get("categories")
+        for cat in categories:
+            cat = cat.replace(" ", "-")
+            cat = "-".join([c.lower() for c in cat.split("-")])
+            cat_path = os.path.join(CATEGORIES_DIR, cat)
+            if os.path.exists(cat_path):
+                logger.info("[!] Removing category %s" % cat_path)
+                os.system("rm -rfvd %s" % cat_path)
+            logger.info("[!] Creating category folder %s" % cat_path)
+            os.makedirs(cat_path)
 
 
 def get_categories():
@@ -61,6 +84,7 @@ def get_categories():
             continue
         posts_num = len([x for x in os.listdir(abs_path) if x != 'list.html'])
         categories.append([cat, posts_num])
+    print(categories)
     return sorted(categories, key=lambda x: x[0].lower())
 
 
@@ -174,6 +198,11 @@ def generate_posts():
             permalink = meta.get("permalink")[0]
             description = meta.get("description")[0]
             categories = meta.get("categories")
+            type_post = meta.get("type")[0]
+            if type_post == "series":
+                series_name = meta.get("series_name")[0]
+            else:
+                series_name = None
             post_html = template.render(
                 note_title=meta["title"][0], 
                 note_body=html,
@@ -182,7 +211,9 @@ def generate_posts():
                 note_permalink=permalink,
                 note_description=description,
                 note_categories=categories,
-                name=post
+                name=post,
+                type=type_post,
+                series=series_name
             )
             with open("pages/posts/%s" % name, "w") as ts: 
                 ts.write(post_html)
@@ -219,6 +250,13 @@ def generate_posts():
 
         with open(os.path.join(PAGES_DIR, "categories.html"), "w") as ts:
             ts.write(cats_html)
+        
+        #####################################################
+        # This needs to stay here otherwise it breaks build.
+        #
+        env.globals["categories"] = get_categories()
+        #
+        #####################################################
 
     except Exception as e:
         if os.getenv("DEBUG") is not None:
@@ -254,12 +292,14 @@ def set_template_globals(env: Environment):
     env.globals["media_posts_pdf_root"] = "/media/documentation/pdfs/posts/"
     env.globals["categories_path"] = "/pages/posts/categories"
     env.globals["all_posts"] = get_posts()
-    env.globals["categories"] = get_categories()
     env.globals["system_status"] = "In progress - online"
     return True
 
 
 def generate_sitemap():
+    """
+    Regenerate sitemap on every build, for new pages.
+    """
     try:
         url = "https://www.csr13.me"
         home = "https://www.csr13.me/"
@@ -311,12 +351,16 @@ def generate_sitemap():
 
         
 def main():
+    # Build site file system because first thing to be done.
+    build_site_fs()
+    # Set template globals for usage in rendering templates.
     set_template_globals(env)
+    # Begin main work
     errors = []
-    if not generate_index():
-        errors.append("Unable to generate index")
     if not generate_posts():
         errors.append("Unable to generate posts")
+    if not generate_index():
+        errors.append("Unable to generate index")
     if not generate_projects():
         errors.append("Unable to generate projects")
     if not generate_sitemap():

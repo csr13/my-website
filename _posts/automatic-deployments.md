@@ -1,4 +1,5 @@
 ---
+type: note
 title: Deploying automatic updates to production services.
 author: csr13
 description: How to deploy automatic updates via github to production server.

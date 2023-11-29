@@ -1,0 +1,865 @@
+<html>
+    <head>
+        <title>Using ec2 instances as sneaker bid bots pt 1.</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="google-site-verification" content="2-n524qe11JQDqWEr-bTEf5zILWMTB27nmruGud5C1c" />
+         
+    <link rel='canonical' href='https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html' /> 
+    
+        <meta name='robots' content='index, follow'> 
+        <meta name="description" content="My dump">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+     
+    <link rel='canonical' href='https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html' /> 
+    
+    <meta property='og:type' content='article' />
+    <meta property='article:author' content='https://www.csr13.me' />
+    <meta property='article:publisher' content='https://www.csr13.me' />
+    <meta property='og:site_name' content='https://www.csr13.me' />
+    <meta property='og:title' content='Using ec2 instances as sneaker bid bots pt 1.' />
+    <meta property='og:description' content='How to spawn AWS instances from django app to configure system bots to perform custom actions with predefined init scripts.' />
+    
+    <meta property='og:url' content='https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html' />
+
+        <link rel="stylesheet" href="/static/css/normalize.css" />
+        <link rel="stylesheet" href="/static/css/main.css" />
+        <link rel="icon" type="image/x-icon" href="/static/images/favicon/favicon.ico"> 
+        
+    <link rel="stylesheet" href="/static/css/code-styles.css" />
+
+        
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/"><img src="/static/images/images/devils.png" height=50 width=50/></a>
+            </nav>
+        </header>
+        <div class="main-div">
+            
+    <div class="note">
+        <div class="note-title">
+            <h3>Using ec2 instances as sneaker bid bots pt 1.</h3>
+            <p>Date: 2023-11-21<br>By: csr13</p>
+            <a 
+                href="/media/documentation/pdfs/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.pdf" 
+                target="_blank">
+                <button> <small>Download as PDF </small></button>
+            </a>
+        </div>
+            
+            <div class="flex flex-row">                    
+                <div class="series-list">
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+                <div class="note-body">
+                    <p>Use case, you have produced some program that executes on an online shop when certain item "drops" release, the store is very popular and you want to get as many items you want so you can resell them for 50% profit on your online store -- I am talking about for example, Nike Sneakers, which drop and have a lifetime of about 4 hours before they sell out.</p>
+<p>Well one way of ensuring you obtain these products is if you have the release date of the product and you deposit them on a database table or a cvs file and have cron jobs reading the file every day and checking the release date and executing an order to spaw 100+ bots per product release(ec2 instances with different ip addresses using a proxy to make a purchase, so websites like nike, supreme and adidas won't block you), the cost of doing this is about .008 cents per ec2 instance spawned, because the order is to spaw, execute and shutdown.</p>
+<p>Usually you want to have experience with the following to follow along.</p>
+<ul>
+<li>Aws console</li>
+<li>Creating VPN (Virtual Private Networks)</li>
+<li>Creating instances (Machines inside cloud private network)</li>
+<li>Creating snapshop of an initial machine (to clone bots off this machine exact build)</li>
+<li>Python and using boto library for connecting with AWS, and django web framework</li>
+<li>AWS Secrets Manager</li>
+</ul>
+<p>Let's say that you already have the main origin ec2, and ec2 is a machine on the cloud living in your virtual private network.</p>
+<p>If you have that then you also have the following.</p>
+<ul>
+<li>AMI ID </li>
+<li>SUBNET ID</li>
+<li>SECURITY GROUP ID</li>
+<li>VPC ID</li>
+<li>NETWORK INTERFACE ID</li>
+<li>INTERNET GATEWAY</li>
+</ul>
+<p>Now you need to store these values secureley, they can't live in your code because it's just not safe to do so, so I use this Loader that I wrote to pull secrets from AWS Secrets Manager services.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ImproperlyConfigured</span>
+<span class="kn">import</span> <span class="nn">boto3</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">AwsSecretLoader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_log</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;Error&quot;</span><span class="p">][</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ResourceNotFoundException&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The requested secret </span><span class="si">{</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="si">}</span><span class="s2"> was not found&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;Error&quot;</span><span class="p">][</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;InvalidRequestException&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The request was invalid.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;Error&quot;</span><span class="p">][</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;InvalidParameterException&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The request had invalid params&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;Error&quot;</span><span class="p">][</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;DecryptionFailure&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;The requested secret can&#39;t be decrypted using the provided KMS key&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">e</span><span class="o">.</span><span class="n">response</span><span class="p">[</span><span class="s2">&quot;Error&quot;</span><span class="p">][</span><span class="s2">&quot;Code&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;InternalServiceError&quot;</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Fatal error&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_aws_secret</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+
+        <span class="n">region_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;AWS_REGION_NAME&quot;</span><span class="p">,</span> <span class="s2">&quot;us-east-1&quot;</span><span class="p">)</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">client</span><span class="p">(</span>
+            <span class="n">service_name</span><span class="o">=</span><span class="s2">&quot;secretsmanager&quot;</span><span class="p">,</span>
+            <span class="n">region_name</span><span class="o">=</span><span class="n">region_name</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">get_secret_value_response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(</span><span class="n">SecretId</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2"> [SECRET_NAME] = </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="n">ImproperlyConfigured</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;SecretString&quot;</span> <span class="ow">in</span> <span class="n">get_secret_value_response</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">get_secret_value_response</span><span class="p">[</span><span class="s2">&quot;SecretString&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">get_secret_value_response</span><span class="p">[</span><span class="s2">&quot;SecretBinary&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+</code></pre></div>
+
+<p>Ok, this <code>Loader</code> object lives in <code>loader.py</code> </p>
+<p>Now Tests so is possible to test the functionality before writing any code inside the main client codebase, testing oriented programming is like streching pre working out, some people do it, others don't but it is very beneficial if you do so, because your preformance, during working (or program execution) is better.</p>
+<p>You will need an ec2 <code>init</code> script, which will be the first thing any ec2 clones will execute after being created on demand, this is what I may look like</p>
+<div class="codehilite"><pre><span></span><code>INIT= &#39;&#39;&#39;Content-Type: multipart/mixed; boundary= &quot;//&quot;
+MIME-Version: 1.0
+
+--//
+Content-Type: text/cloud-config; charset= &quot;us-ascii&quot;
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename= &quot;cloud-config.txt&quot;
+
+#cloud-config
+cloud_final_modules:
+    - [scripts-user, always]
+
+--//
+Content-Type: text/x-shellscript; charset= &quot;us-ascii&quot;
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename= &quot;userdata.txt&quot;
+
+#!/bin/bash
+systemctl restart checkout-service.service
+--//&#39;&#39;&#39;
+</code></pre></div>
+
+<p>All this does is it instructs the ec2 instance to execute <code>systemctl restart checkout-service.service</code> which is the program that the ec2 executes to make the product purchase.</p>
+<p>Now I want to test starting ec2 instances programatically with this init script via a module that my web application will run to trigger this mass action.</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">boto3</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">aws.loader</span> <span class="kn">import</span> <span class="n">AwsSecretLoader</span>
+<span class="kn">from</span> <span class="nn">aws.models</span> <span class="kn">import</span> <span class="n">UserAwsCheckoutResource</span>
+<span class="kn">from</span> <span class="nn">users.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">notifications.models</span> <span class="kn">import</span> <span class="n">UserNotification</span>
+
+
+<span class="n">LOADER</span><span class="o">=</span> <span class="n">AwsSecretLoader</span><span class="p">()</span>
+
+<span class="n">logger</span><span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="c1"># ---------------------------------------------------</span>
+<span class="c1"># Identifiers of main network components.</span>
+<span class="c1"># ---------------------------------------------------</span>
+
+<span class="n">CHECKOUT_AMI_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_AMI_ID&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;CHECKOUT_AMI_ID&quot;</span><span class="p">]</span>
+
+
+<span class="n">CHECKOUT_SUBNET_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_SUBNET_ID&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;CHECKOUT_SUBNET_ID&quot;</span><span class="p">]</span>
+
+
+<span class="n">CHECKOUT_SECURITY_GROUP_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_SECURITY_GROUP_ID&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;CHECKOUT_SECURITY_GROUP_ID&quot;</span><span class="p">]</span>
+
+
+<span class="n">CHECKOUT_VPC_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_VPC_ID&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;CHECKOUT_VPC_ID&quot;</span><span class="p">]</span>
+
+
+<span class="n">CHECKOUT_NETWORK_INTERFACE_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_NETWORK_INTERFACE_ID&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;NETWORK_INTERFACE_ID&quot;</span><span class="p">]</span>
+
+
+<span class="n">CHECKOUT_INTERNET_GATEWAY_ID</span><span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="n">LOADER</span><span class="o">.</span><span class="n">get_aws_secret</span><span class="p">(</span>
+        <span class="s2">&quot;CHECKOUT_INTERNET_GATEWAY&quot;</span>
+    <span class="p">)</span>
+<span class="p">)[</span><span class="s2">&quot;CHECKOUT_INTERNET_GATEWAY&quot;</span><span class="p">]</span>
+
+
+<span class="c1"># ----------------------------------------------------</span>
+<span class="c1"># Use boto3.client to create things on aws</span>
+<span class="c1"># ----------------------------------------------------</span>
+
+
+<span class="n">EC2_RESOURCE</span><span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">resource</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+<span class="n">EC2_CLIENT</span><span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s1">&#39;ec2&#39;</span><span class="p">)</span>
+
+<span class="n">INIT</span><span class="o">=</span> <span class="s1">&#39;&#39;&#39;Content-Type: multipart/mixed; boundary= &quot;//&quot;</span>
+<span class="s1">MIME-Version: 1.0</span>
+
+<span class="s1">--//</span>
+<span class="s1">Content-Type: text/cloud-config; charset= &quot;us-ascii&quot;</span>
+<span class="s1">MIME-Version: 1.0</span>
+<span class="s1">Content-Transfer-Encoding: 7bit</span>
+<span class="s1">Content-Disposition: attachment; filename= &quot;cloud-config.txt&quot;</span>
+
+<span class="s1">#cloud-config</span>
+<span class="s1">cloud_final_modules:</span>
+<span class="s1">    - [scripts-user, always]</span>
+
+<span class="s1">--//</span>
+<span class="s1">Content-Type: text/x-shellscript; charset= &quot;us-ascii&quot;</span>
+<span class="s1">MIME-Version: 1.0</span>
+<span class="s1">Content-Transfer-Encoding: 7bit</span>
+<span class="s1">Content-Disposition: attachment; filename= &quot;userdata.txt&quot;</span>
+
+<span class="s1">#!/bin/bash</span>
+<span class="s1">systemctl restart checkout-service.service</span>
+<span class="s1">--//&#39;&#39;&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TestEc2Wrapper</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="n">fixtures</span><span class="o">=</span> <span class="p">[</span><span class="s2">&quot;user-fixtures.json&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">=</span> <span class="n">EC2_RESOURCE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">=</span> <span class="n">EC2_CLIENT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">email</span><span class="o">=</span> <span class="s2">&quot;admin@admin.com&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_get_instance_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+        <span class="c1"># This will get called when the user subscribes and pays actual money.</span>
+        <span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+        <span class="c1"># Make the instances.</span>
+        <span class="c1"># ~~~~~~~~~~~~~~~~~~~</span>
+
+        <span class="n">instances</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">create_instances</span><span class="p">(</span>
+            <span class="n">ImageId</span><span class="o">=</span><span class="s2">&quot;ami-027ece036eecc0eea&quot;</span><span class="p">,</span>
+            <span class="n">MaxCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">MinCount</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">InstanceType</span><span class="o">=</span><span class="s2">&quot;t2.micro&quot;</span><span class="p">,</span>
+            <span class="n">TagSpecifications</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;ResourceType&quot;</span><span class="p">:</span> <span class="s2">&quot;instance&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Tags&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;Key&quot;</span><span class="p">:</span> <span class="s2">&quot;USER&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;Value&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                <span class="p">},</span>
+            <span class="p">],</span>
+            <span class="n">KeyName</span><span class="o">=</span><span class="s2">&quot;puppeeter&quot;</span><span class="p">,</span>
+            <span class="n">NetworkInterfaces</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;SubnetId&#39;</span><span class="p">:</span> <span class="n">CHECKOUT_SUBNET_ID</span><span class="p">,</span>
+                    <span class="s1">&#39;DeviceIndex&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s1">&#39;AssociatePublicIpAddress&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s1">&#39;Groups&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="n">CHECKOUT_SECURITY_GROUP_ID</span><span class="p">,</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">],</span>
+            <span class="n">UserData</span><span class="o">=</span><span class="n">INIT</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">:</span>
+            <span class="n">UserAwsCheckoutResource</span><span class="o">.</span><span class="n">cook_user_aws_checkout_resource</span><span class="p">(</span>
+                <span class="o">**</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                    <span class="n">instance_id</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="n">public_ip</span><span class="o">=</span><span class="s2">&quot;-&quot;</span><span class="p">,</span>
+                    <span class="n">meta</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># ============================</span>
+        <span class="c1"># Optimzing this is a priority</span>
+        <span class="c1"># ============================</span>
+
+        <span class="n">iterator</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">while</span> <span class="n">iterator</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">:</span>
+
+            <span class="n">current_instances</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span><span class="p">:</span>
+                <span class="n">current_instances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">resource</span><span class="o">.</span><span class="n">Instance</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">instance</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="p">)</span>
+
+            <span class="n">states_and_ids</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">current_instances</span><span class="p">:</span>
+                <span class="n">states_and_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="n">each</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">],</span>
+                        <span class="n">each</span><span class="o">.</span><span class="n">id</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span>
+                    <span class="nb">map</span><span class="p">(</span>
+                        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;running&quot;</span><span class="p">,</span> <span class="n">states_and_ids</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">):</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+                <span class="n">iterator</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="k">for</span> <span class="n">each</span> <span class="ow">in</span> <span class="n">current_instances</span><span class="p">:</span>
+                <span class="n">each</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">current_instances</span><span class="p">:</span>
+
+                <span class="c1"># ===================================</span>
+                <span class="c1"># Get the IP address of the instance.</span>
+                <span class="c1"># ===================================</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">ip</span><span class="o">=</span><span class="n">inst</span><span class="o">.</span><span class="n">public_ip_address</span>
+                    <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ip</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                        <span class="n">ip</span><span class="o">=</span><span class="n">inst</span><span class="o">.</span><span class="n">private_ip_address</span>
+                        <span class="k">if</span> <span class="n">ip</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">ip</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                            <span class="n">ip</span><span class="o">=</span><span class="s2">&quot;-&quot;</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+                    <span class="n">ip</span><span class="o">=</span><span class="s2">&quot;-&quot;</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">user_instance</span><span class="o">=</span><span class="n">UserAwsCheckoutResource</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+                        <span class="n">instance_id</span><span class="o">=</span><span class="n">inst</span><span class="p">,</span>
+                        <span class="n">public_ip</span><span class="o">=</span><span class="n">ip</span>
+                    <span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">error</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># =====================================</span>
+                <span class="c1"># Save the new state and the ip to the</span>
+                <span class="c1"># user instance resource</span>
+                <span class="c1"># =====================================</span>
+
+                <span class="n">user_instance</span><span class="o">.</span><span class="n">is_active</span><span class="o">=</span><span class="kc">False</span>
+                <span class="n">user_instance</span><span class="o">.</span><span class="n">public_ip</span><span class="o">=</span><span class="n">ip</span>
+                <span class="n">user_instance</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="k">break</span>
+
+        <span class="c1"># ===========================================</span>
+        <span class="c1"># Send the user a notification of this event.</span>
+        <span class="c1"># ===========================================</span>
+
+        <span class="n">bid</span><span class="o">=</span><span class="mi">1</span>
+        <span class="n">UserNotification</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+            <span class="n">user</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">,</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">settings</span><span class="o">.</span><span class="n">EVENT_TYPES</span><span class="p">[</span><span class="s2">&quot;RESOURCE_CREATED&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Proxy created for bid </span><span class="si">{</span><span class="n">bid</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+</code></pre></div>
+
+<p>I have added comments on the code so it is redable, but I just want to notice, the instances are started, and the number of instances are defined by some parameters when created, then this instances are related to a user, stored on the database, and on AWS
+these instances have the user username appended to their id, so they can be queried, regardless I store the ids on local database to keep track of which instances which user creates, their status, and more, for bookeeping.</p>
+<p>Only after instances are all up and running I can extract their public ip, to give them the purchase command on my main web application via an RPC (remote procedure call) and kind of have a command and control webserver, where I can control and instruct
+purchase bots, because I have each ec2 instance public ip, their id stored on my db. Therfore, because the init script boots my listener <code>checkout.service</code> program, via init command, which has RPC endpoints to trigger purchase and handle purchase errors, as well as other actions that I can use to relay tasks from my
+main C2 (command and control server) back to my botnet or purchase ec2 instances.</p>
+<p>Well well, now what ... well the good part has just started, now, it is time to make this a product people can use, and integrate some payment options via stripe so people can place bets on the sneakers they want, let's say new AIR JORDANS dropping soon,
+well I list them on my .onion site (tor site) then have a client invitation only server that has custom login/dashboard, have payment gateway so I can charge them the price for the sneakers, plus 2.00 USD per ec2 instance, which increases their chance to
+obtain their purchase (well, let's say the ec2 instance costs me 0.008 cents, and I am charging 2.00 usd per ec2 instance, each homie pays 15 usd of instances I am not even paying .50 cents of ec2 instances)</p>
+<p>Part 2 dropping soon, this will include, backend API's to handle frontend client dashboard purchase orders, ec2 creation webhooks from success payment gateway (post purchase) which triggers the code we tested, as well as how I instruct the ec2 instances
+the client payd for to execute their purchase of the model they want, and how refunds are handled if any error occured, because well shit happens.</p>
+                </div>
+            </div>
+            
+    </div>
+    <div class="related-posts">
+        <h3> Related Notes </h3>
+        
+    
+    
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.html'>
+                            1) Using ec2 instances as sneaker bid bots pt 2.
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-27 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/bots/list.html">
+                                    bots
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/aws/list.html">
+                                    aws
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/whatsapp-chatbot-python.html'>
+                            2) Whatsapp chatbot with Python and Twilio
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/whatsapp-chatbot-python.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-15 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/bots/list.html">
+                                    bots
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/whatsapp/list.html">
+                                    whatsapp
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/business/list.html">
+                                    business
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/live-speech-to-text-voice-translation.html'>
+                            3) Real Time Language Translation Agent System for Call Centers
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/live-speech-to-text-voice-translation.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-16 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/voip/list.html">
+                                    voip
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/telephony/list.html">
+                                    telephony
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/systems/list.html">
+                                    systems
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+        
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.html'>
+                            4) Using ec2 instances as sneaker bid bots pt 2.
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-27 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/bots/list.html">
+                                    bots
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/aws/list.html">
+                                    aws
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/whatsapp-chatbot-python.html'>
+                            5) Whatsapp chatbot with Python and Twilio
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/whatsapp-chatbot-python.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-15 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/bots/list.html">
+                                    bots
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/whatsapp/list.html">
+                                    whatsapp
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/business/list.html">
+                                    business
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/backend-task-manager-visual.html'>
+                            6) Backend Celery task manager dashboard via Flower
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/backend-task-manager-visual.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-10-29 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/backend/list.html">
+                                    backend
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/tasks/list.html">
+                                    tasks
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+        
+            
+        
+            
+        
+    
+        
+            
+        
+            
+        
+            
+        
+            
+                
+                <div class="post-list-item">
+                    <p>
+                        <a href='/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.html'>
+                            7) Using ec2 instances as sneaker bid bots pt 2.
+                        </a>
+                        <br>
+                        <a 
+                            href="/media/documentation/pdfs/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.pdf" 
+                            target="_blank">
+                            Download PDF 
+                        </a>
+                        <br>
+                        <small>
+                            Date published: 2023-11-27 
+                        </small>
+                        <br>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/bots/list.html">
+                                    bots
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/python/list.html">
+                                    python
+                                </a>
+                            </span>
+                        </small>
+                        
+                        <small> 
+                            <span class="category-span">
+                                <a href="/pages/posts/categories/aws/list.html">
+                                    aws
+                                </a>
+                            </span>
+                        </small>
+                        
+                    </p>
+                </div>
+
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    
+
+    </div>
+
+        </div>
+        <footer>
+            <div>
+                <div>
+                &copy; csr13 2023
+                </div>
+            </div>
+        </footer>
+        
+        <script src="/static/js/main.js"></script>
+    </body>
+</html>

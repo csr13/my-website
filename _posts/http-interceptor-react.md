@@ -1,4 +1,5 @@
 ---
+type: note
 title: React/React Native Http Interceptor.
 author: csr13
 description: Http Interceptor for React Native applications.

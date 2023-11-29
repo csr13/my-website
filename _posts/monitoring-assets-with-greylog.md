@@ -1,4 +1,5 @@
 ---
+type: note
 title: Setting up greylog to monitor server assets in your networks.
 author: csr13
 description: How to setup a greylog monitoring server to monitor server assets in your network.

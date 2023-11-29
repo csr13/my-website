@@ -1,4 +1,5 @@
 ---
+type: note
 title: Real Time Language Translation Agent System for Call Centers
 author: csr13
 description: Real time language translation agent system for call centers.

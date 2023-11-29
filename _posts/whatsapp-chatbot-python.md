@@ -1,4 +1,5 @@
 ---
+type: note
 title: Whatsapp chatbot with Python and Twilio
 author: csr13
 description: Making a chatbot with Python and Twilio for your business.

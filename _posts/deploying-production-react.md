@@ -1,4 +1,5 @@
 ---
+type: note
 title: Deploying production React app.
 author: csr13
 description: How to deploy a production React build without source map of the application.

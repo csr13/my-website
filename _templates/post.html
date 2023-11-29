@@ -34,9 +34,24 @@
                 <button> <small>Download as PDF </small></button>
             </a>
         </div>
-        <div class="note-body">
-            {{ note_body|safe }}
-        </div>
+            {% if type == 'series' %}
+            <div class="flex flex-row">                    
+                <div class="series-list">
+                    {% for post in all_posts %}
+                        {% if post.type == 'series' and post.series == series %}
+                            {{ post }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="note-body">
+                    {{ note_body|safe }}
+                </div>
+            </div>
+            {% elif type == 'note' %}
+                <div class="note-body">
+                    {{ note_body|safe }}
+                </div>
+            {% endif %}
     </div>
     <div class="related-posts">
         <h3> Related Notes </h3>

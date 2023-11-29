@@ -23,6 +23,8 @@ def main():
         "user-style-sheet" : "static/css/code-styles.css"
     }
     for each in os.listdir(posts_dir):
+        if os.path.isdir(os.path.join(posts_dir, each)):
+            continue
         name = each.replace(".html", ".pdf")
         with open(os.path.join(posts_dir, each), "r") as ts:
             pdfkit.from_file(

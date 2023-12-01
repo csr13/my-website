@@ -6,6 +6,7 @@ date: 2023-11-21
 categories: bots
             python
             aws
+            series
 permalink: /pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html
 type: series
 series_name: sneaker-bot

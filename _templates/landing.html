@@ -7,10 +7,11 @@
         <div class="archive-div">
             {% include 'about-site.html' %}
         </div>
-        <div class="archive-div">
-            {% include 'my-music.html' %}
+        <div class="middle-part flex flex-col">
+            {% include 'includes/verification-of-ownership.html' %}
+            {# {% include 'my-music.html' %} #}
         </div>
-        <div class="archive-div">
+        {# <div class="archive-div">
             <div>
                 {% with cat_rows = True, landing_page = True %}
                     {% include 'includes/category-list.html' %}
@@ -19,6 +20,9 @@
             <div>
                 {% include 'latest-notes.html' %}
             </div>
+        </div> #}
+        <div class="archive-div">
+            {% include 'includes/privacy.html' %}
         </div>
     </div>
 {% endblock %}

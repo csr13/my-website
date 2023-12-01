@@ -3,50 +3,45 @@
     <div class="penta"></div>
     <h1 style="color: transparent;">;)</h1>
 </div> -->
+
 <div class="about-site-few-words">
-    <div>
-        This system is a public archive of projects, documentation, notes, programs, and
-        interests.
-        <br><br>
-        System status is currently: {{ system_status }}
-    </div>
-    <div class="map-of-site">
-        <h4> Sections of System.</h4>
-        <nav class="flex flex-col">
-            <a class="post-list-item" href="/pages/notes-archive.html">&#10022; Techincal Writings/Notes </a>
-            <a class="post-list-item" href="/minerals" >&#10022; Large Mineral Catalog (for nature geeks)</a>
-            <a class="post-list-item" href="/pages/projects.html" > &#10022; Computer Programs & Open Source</a>
-            <a class="post-list-item" href="/pages/documentation-research-archive.html" >&#10022; Documentation & Research Papers</a>
-        </nav>
-    </div>
-    <div class="few-words">
-        <small>
-            <p>
-                <h3> Privacy </h3>
-                The site does not use cookies, or uses much custom javascript
-                (it uses only small bits of javascript to clean content), and it does not
-                load intrusive javascript 3rd party libraries that flood your browser and can perform action without your
-                consent. This site also does not uses or loads any analytic tracking
-                scripts that track your activity and expose your origin.
-                <br><br>
-                    You can also audit the code for this site (archive part only) on it's github repo 
-                    <a href="{{ site_repo }}" target="_blank">HERE</a> 
-            </p>
-        </small>
-    </div>
-    <h4> Verification of idenditity and proof of ownership</h4>
-    <div class="console">
-        <div class="console-menu flex flex-row space-between">
+    <div class="console-root">
+        <div class='console-menu flex flex-row space-between'>
             <div class="console-button">v</div>
-            <div>puppy@<span class="console-user">csr13</span>:~/root</div>
+            <div>puppy@<span class="console-user">root</span>:~/</div>
             <div class="flex flex-row space-between">
                 <div style="margin-right: 5px;" class="console-button">_</div>
                 <div style="margin-right: 5px;" class="console-button"> ^</div>
                 <div class="console-button" style="background:crimson; color: white; border-radius: 20px;">x</div>
             </div>
         </div>
-        <div class="console-panel">
-            <pre style="color: white; height: 500px;"><code>{{ proof }}</code></pre>
+        <div class="console-panel-root">
+            <div class="flex flex-col">
+                <div class="console-panel-root-pane-1">
+                    This system is a public archive of projects, documentation, notes, programs, and
+                    interests.
+                    <br><br>
+                    System status is currently: {{ system_status }}
+                </div>
+                <div class="console-panel-root-pane-2">
+                    <div class="map-of-site">
+                        <h4> Sections of System.</h4>
+                        <nav class="flex flex-col">
+                            <a class="post-list-item" href="/pages/notes-archive.html">&#10022; Techincal Writings/Notes </a>
+                            <a class="post-list-item" href="/minerals" >&#10022; Large Mineral Catalog (for nature geeks)</a>
+                            <a class="post-list-item" href="/pages/projects.html" > &#10022; Computer Programs & Open Source</a>
+                            <a class="post-list-item" href="/pages/documentation-research-archive.html" >&#10022; Documentation & Research Papers</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="console-root-footer">
+                <div class="flex flex-row">
+                    <div>[admin]</div>
+                    <div>0:site</div>
+                    <div style="margin-left: auto;">mXcOwGaL 18:19 20-08-20</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

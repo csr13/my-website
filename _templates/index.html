@@ -18,15 +18,11 @@
         {% block head_scripts %}{% endblock %}
     </head>
     <body>
-        <header>
-            <nav>
-                <a href="/"><img src="/static/images/images/devils.png" height=50 width=50/></a>
-            </nav>
-        </header>
+        {% include 'includes/header.html' %}
         <div class="main-div">
             {% block content %} {% endblock %}
         </div>
-        <footer>
+        <footer id="footer">
             <div>
                 <div>
                 &copy; csr13 2023

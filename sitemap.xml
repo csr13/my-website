@@ -2,532 +2,532 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.csr13.me</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>1.0</priority>
     </url>
         
     <url>
         <loc>https://www.csr13.me/pages/posts/backend-task-manager-visual.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/react-secure-storage.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/deploying-production-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-3.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/monitoring-assets-with-greylog.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/http-interceptor-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/whatsapp-chatbot-python.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-1.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/automatic-deployments.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/live-speech-to-text-voice-translation.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/using-ec2-instances-as-sneakers-bid-bots-pt-2.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/best-practice/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/best-practice/http-interceptor-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/devops/deploying-production-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/devops/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/devops/automatic-deployments.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/voip/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/voip/live-speech-to-text-voice-translation.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/telephony/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/telephony/live-speech-to-text-voice-translation.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/react-native/react-secure-storage.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/react-native/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/docker/deploying-production-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/docker/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/frontend/react-secure-storage.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/frontend/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/bots/using-ec2-instances-as-sneakers-bid-bots-pt-3.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/bots/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/bots/whatsapp-chatbot-python.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/bots/using-ec2-instances-as-sneakers-bid-bots-pt-1.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/bots/using-ec2-instances-as-sneakers-bid-bots-pt-2.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/linux/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/linux/monitoring-assets-with-greylog.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/backend-task-manager-visual.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/using-ec2-instances-as-sneakers-bid-bots-pt-3.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/whatsapp-chatbot-python.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/using-ec2-instances-as-sneakers-bid-bots-pt-1.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/live-speech-to-text-voice-translation.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/python/using-ec2-instances-as-sneakers-bid-bots-pt-2.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/sysadmin/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/sysadmin/monitoring-assets-with-greylog.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/storage/react-secure-storage.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/storage/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/whatsapp/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/whatsapp/whatsapp-chatbot-python.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/react/deploying-production-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/react/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/react/http-interceptor-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/aws/using-ec2-instances-as-sneakers-bid-bots-pt-3.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/aws/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/aws/using-ec2-instances-as-sneakers-bid-bots-pt-1.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/aws/using-ec2-instances-as-sneakers-bid-bots-pt-2.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/systems/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/systems/live-speech-to-text-voice-translation.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/github/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/github/automatic-deployments.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/logs/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/logs/monitoring-assets-with-greylog.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/series/using-ec2-instances-as-sneakers-bid-bots-pt-3.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/series/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/series/using-ec2-instances-as-sneakers-bid-bots-pt-1.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/series/using-ec2-instances-as-sneakers-bid-bots-pt-2.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/backend/backend-task-manager-visual.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/backend/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/tasks/backend-task-manager-visual.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/tasks/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/forensics/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/forensics/monitoring-assets-with-greylog.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/http/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/http/http-interceptor-react.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/mobile/react-secure-storage.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/mobile/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/business/list.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>
             
     <url>
         <loc>https://www.csr13.me/pages/posts/categories/business/whatsapp-chatbot-python.html</loc>
-        <lastmod>2023-12-01</lastmod>
+        <lastmod>2023-12-10</lastmod>
         <changefreq>always</changefreq>
         <priority>0.5</priority>
     </url>

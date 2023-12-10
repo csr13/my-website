@@ -16,13 +16,8 @@
     {% endif %}
     <meta property='og:url' content='{{ https_site }}{{ note_permalink }}' />
 {% endblock %}
-
-{% block extra_styles %}
-    <link rel="stylesheet" href="/static/css/code-styles.css" />
-{% endblock %}
-
+{% block extra_styles %}<link rel="stylesheet" href="/static/css/code-styles.css" />{% endblock %}
 {% block title %}{{ note_title|safe }}{% endblock %}
-
 {% block content %}
     <div class="note">
         <div class="note-title">
@@ -52,7 +47,6 @@
         {% endfor %}
     {% endif %}
     </div>
-
     <div class="related-posts">
         <h3> Related Notes </h3>
         {{ related_posts(all_posts, note_categories, note_title) }}

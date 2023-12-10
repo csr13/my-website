@@ -1,0 +1,35 @@
+ <div id="notes-archive-list" class="notes-archive-list">
+    <input 
+        class="search-field" 
+        id="notes-archive-search-field" 
+        placeholder="search by title" 
+    />
+    <div class="archive-notes-list">
+        {% for post in range(0, posts|length) %}
+            {% set counter = post + 1 %}
+            <div class="post-list-item">
+                <p class="post-list-item-title">
+                    <a href='{{ posts[post].href }}'>
+                        {{ counter }}) {{ posts[post].title }}
+                    </a>
+                </p>
+                <p class="post-list-item-date">
+                    <small>
+                        Date published: {{ posts[post].date|replace("00:00:00", "") }}
+                    </small>
+                </p>
+                <p class="post-list-items-cats">
+                    {% for cat in posts[post].categories %}
+                    <small> 
+                        <span class="category-span post-list-items-cat-span">
+                            <a href="{{categories_path }}/{{ cat }}/list.html">
+                                {{ cat }}
+                            </a>
+                        </span>
+                    </small>
+                    {% endfor %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</div>

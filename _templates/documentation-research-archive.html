@@ -1,7 +1,13 @@
 {% extends 'index.html' %}
 
-
 {% block title %} Documentation and Research {% endblock %}
+
+{% block meta %}
+    {% block canonical_link %}
+    <link rel="canonical" href="{{ https_site }}/pages/documentation-research-archive.html" />
+    {% endblock %}
+    <meta description="Documentation and research documents.">
+{% endblock %}
 
 {% block content %}
     <h4> Documentation and Research Archive </h4>

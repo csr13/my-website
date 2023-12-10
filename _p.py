@@ -23,7 +23,7 @@ env = Environment(
     loader=PackageLoader("_p", "_templates"),
     autoescape=select_autoescape()
 )
-
+env.add_extension("jinja2.ext.do")
 
 def get_posts():
     posts_dir = "_posts"
@@ -313,7 +313,6 @@ def generate_sitemap():
         <priority>1.0</priority>
     </url>
         ''' % (url, date)
-        
         pages = []
         for root, dirs, files in os.walk(PAGES_DIR):
             for d in dirs:
@@ -337,11 +336,9 @@ def generate_sitemap():
         xml += '''
 </urlset>
         '''
-
         with open(os.path.join(THIS_DIR, "sitemap.xml"), "w") as ts:
             ts.write(xml)
             ts.close()
-
     except Exception as error:
         if os.getenv("DEBUG") is not None:
             logger.info(str(error))

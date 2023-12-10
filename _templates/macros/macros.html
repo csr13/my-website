@@ -1,38 +1,29 @@
 {% macro related_posts(all_posts, post_categories, post_title) %}
-    {% set counter = namespace(value=0) %}
-    {% for cat in post_categories %}
-        {% for post in all_posts %}
-            {% if cat in post.categories and post_title != post.title %}
-                {% set counter.value = counter.value + 1 %}
-                <div class="post-list-item">
-                    <p>
-                        <a href='{{ post.href }}'>
-                            {{ counter.value }}) {{ post.title }}
-                        </a>
-                        <br>
-                        <a 
-                            href="{{ media_posts_pdf_root}}{{ post.post_name|replace('.md', '.pdf') }}" 
-                            target="_blank">
-                            Download PDF 
-                        </a>
-                        <br>
-                        <small>
-                            Date published: {{ post.date|replace("00:00:00", "") }}
-                        </small>
-                        <br>
-                        {% for cat in post.categories %}
-                        <small> 
-                            <span class="category-span">
-                                <a href="{{categories_path }}/{{ cat }}/list.html">
-                                    {{ cat }}
-                                </a>
-                            </span>
-                        </small>
-                        {% endfor %}
-                    </p>
-                </div>
-
+    {% set rel_posts = [] %}
+    {% set rel_posts_check = [] %}
+    {% for post in all_posts %}
+        {% for cat in post.categories %}
+            {% if cat in post_categories and post.title not in rel_posts_check %}
+                {% do rel_posts_check.append(post.title) %}
+                {% do rel_posts.append(post) %}
             {% endif %}
         {% endfor %}
+    {% endfor %}
+    {% set counter = namespace(value=0) %}
+    {% for post in rel_posts %}
+        {% set counter.value = counter.value + 1 %}
+        <div class="post-list-item">
+            <p><a href='{{ post.href }}'>{{ counter.value }}) {{ post.title }}</a></p>
+            <p><small>Date published: {{ post.date|replace("00:00:00", "") }}</small></p>
+            <p>
+                {% for cat in post.categories %}
+                <small>
+                    <span class="category-span">
+                        <a href="{{categories_path }}/{{ cat }}/list.html">{{ cat }}</a>
+                    </span>
+                </small>
+                {% endfor %}
+            </p>
+        </div>
     {% endfor %}
 {% endmacro %}

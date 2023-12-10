@@ -29,7 +29,7 @@ header nav a img {
     border: 1px solid black;
 }
 a {
-    color: crimson;
+    color: white;
     text-decoration: none;
 }
 a:hover {
@@ -167,7 +167,7 @@ pre {
     border: none;
 }
 .console-panel pre code {
-    color: crimson;
+    color: limegreen;
 }
 .category-span {
     margin:2px 4px 10px 0px;
@@ -276,3 +276,19 @@ footer {
 }
 .map-of-site {
 }
+.archive-list-download-pdf {
+    background: black;
+    color: white;
+    margint-top: 10;
+}
+.search-field {
+    background: transparent;
+    width: 100%;
+    color: white;
+}
+
+.archive-notes-list {
+    margin-top: 20px;
+}
+
+

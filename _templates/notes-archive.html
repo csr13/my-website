@@ -2,37 +2,28 @@
 
 {% block title %} Notes Archive {% endblock %}
 
+{% block meta %}
+    {% block canonical_link %} 
+    <link rel='canonical' href='{{ https_site }}/pages/note-archive.html' /> 
+    {% endblock %}
+    <meta property='og:description' content='Archive of IT/programming and other notes.' />
+    <meta property='og:url' content='{{ https_site }}pages/note-archive.html' />
+{% endblock %}
+
 {% block content %}
-    <h4>Archive</h4>
-    {% for post in range(0, posts|length) %}
-        {% set counter = post + 1 %}
-        <div class="post-list-item">
-            <p>
-                <a href='{{ posts[post].href }}'>
-                    {{ counter }}) {{ posts[post].title }}
-                </a>
-                <br>
-                <a 
-                    href="{{ media_posts_pdf_root}}{{ posts[post].post_name|replace('.md', '.pdf') }}" 
-                    target="_blank">
-                    Download PDF 
-                </a>
-                <br>
-                <small>
-                    Date published: {{ posts[post].date|replace("00:00:00", "") }}
-                </small>
-                <br>
-                {% for cat in posts[post].categories %}
-                <small> 
-                    <span class="category-span">
-                        <a href="{{categories_path }}/{{ cat }}/list.html">
-                            {{ cat }}
-                        </a>
-                    </span>
-                </small>
-                {% endfor %}
-            </p>
-        </div>
-    {% endfor %}
+    <div id="notes-archive-main-div">
+        <h4>Archive</h4>
+        {% include 'includes/full-note-archive-list.html' %}
+    </div>
     {% include 'includes/category-list.html' %}
+{% endblock %}
+
+{% block footer_scripts %}
+    <script src="/static/js/filters.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var notesComponentFilter = new ListFilter("notes-archive-list")
+            notesComponentFilter.main()
+        })
+    </script>
 {% endblock %}

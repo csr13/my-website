@@ -9,6 +9,7 @@
             {% endif %}
         {% endfor %}
     {% endfor %}
+    <div class="related-posts-list">
     {% set counter = namespace(value=0) %}
     {% for post in rel_posts %}
         {% set counter.value = counter.value + 1 %}
@@ -26,4 +27,5 @@
             </p>
         </div>
     {% endfor %}
+    </div>
 {% endmacro %}

@@ -1,10 +1,10 @@
 body {
     font-family: monospace; 
-    background: black;
-    color: white;
+    background: white;
+    color: black;
 }
 header {
-    background: linear-gradient(crimson, black);
+    background: linear-gradient(black, white);
     padding-left: 15px;
     padding-right: 15px;
     margin-bottom: 17px;
@@ -20,7 +20,7 @@ header nav a:hover {
     background: transparent;
 }
 header nav a img:hover {
-    background-color: limegreen;
+    background-color: black;
     border: 1px solid black;
 }
 header nav a img {
@@ -136,7 +136,7 @@ pre {
     justify-content: space-evenly;
 }
 .console {
-    background: rgba(255,255,255, .10);
+    background: rgba(0,0,0,.10)/*rgba(255,255,255, .10)*/;
     border: 1px solid rgba(255,255,255, .10);
     border-radius: 3px;
     height: 570px;
@@ -167,7 +167,7 @@ pre {
     border: none;
 }
 .console-panel pre code {
-    color: limegreen;
+    color: whitesmoke;
 }
 .category-span {
     margin:2px 4px 10px 0px;
@@ -178,8 +178,8 @@ pre {
     color: white;
 }
 .post-list-item {
-    background:  rgba(255,255,255, .10);;
-    padding: 1px;
+    background: rgba(0,0,0,.10) /*rgba(255,255,255, .10)*/;
+    padding: 5px;
     margin: 2px;
 }
 .post-list-item-landing{
@@ -187,11 +187,17 @@ pre {
     padding: 1px;
     margin: 2px;
 }
+.post-list-item-title a{
+    color: black;
+}
 .post-list-item-landing a {
     color: white;
 }
 .related-posts {
     border-top: 1px solid lightgray;
+}
+.related-posts-list .post-list-item p:first-child a {
+    color: black;
 }
 footer {
     padding-left: 15px;
@@ -204,41 +210,23 @@ footer {
 }
 .series-list div a {
     margin-left: 5px;
-}
-.mi-musica {
-    margin-top: 30px;
-    margin-bottom: 30px;
-    background: black;
-}
-.mi-musica .console .console-menu {
-    margin-bottom: 8px;
-}
-.rola {
-    margin: 8px;
-    border-radius: 10px;
-    height: 160px;
-    padding: 8px;
-}
-
-.console-panel-musica{
-    background: black;
-    height: 513px;
-    overflow: scroll;
+    color: black;
 }
 .console-root {
-    background: rgba(255,255,255, .10);
+    background: rgba(0,0,0,.10)/*rgba(255,255,255, .10)*/;
     border: 1px solid rgba(255,255,255, .10);
     border-radius: 3px;
 }
-
 .console-panel-root {
     margin-top: 10px;
     background: black;
     overflow: scroll;
+    color: white;
 }
 .console-root-footer {
     padding: 3px;
     color: rgba(255, 255, 255, .80);
+    border-top: 1px solid white;
 }
 .console-panel-root-pane-1 {
     padding: 20px;
@@ -284,7 +272,7 @@ footer {
 .search-field {
     background: transparent;
     width: 100%;
-    color: white;
+    color: black;
 }
 
 .archive-notes-list {

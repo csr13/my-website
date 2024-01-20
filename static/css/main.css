@@ -117,6 +117,9 @@ pre {
     margin: 5px;
     padding: 10px;
 }
+.project-div p:first-child a {
+    color: black;
+}
 .flex{
     display: flex;
 }
@@ -278,5 +281,10 @@ footer {
 .archive-notes-list {
     margin-top: 20px;
 }
-
-
+.documentation-list-item {
+    border-bottom: 1px solid grey;
+    padding: 2px;
+}
+.documentation-list-item a{
+    color: black;
+}

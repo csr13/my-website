@@ -11,8 +11,11 @@
 
 {% block content %}
     <h4> Documentation and Research Archive </h4>
+    <p>
+        Most of these documents are IT related.
+    </p>
     {% for each in objects %}
-        <p>
+        <p class="documentation-list-item">
             <a href="{{ each.href }}">
                 {{ loop.index }})
                 <span style="padding: 3px; margin-right: 5px; background-color: lightblue; color: black;">

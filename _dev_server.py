@@ -28,7 +28,6 @@ class ReloadHandler(PatternMatchingEventHandler):
         if run.returncode == 0:
             logger.info("Site regenerated")
             return True
-        print(run.stderr.decode("utf-8"))
         logger.info("Unable to regenerate site")
         return False
 

@@ -286,8 +286,8 @@ def generate_projects():
 
 def set_template_globals(env: Environment):
     env.globals["site_repo"] = "https://github.com/csr13/my-website"
-    env.globals["https_site"] = "https://www.csr13.me"
-    env.globals["http_site"] = "http://www.csr13.me"
+    env.globals["https_site"] = "https://www.itstealthki.com"
+    env.globals["http_site"] = "http://www.itstealthki.me"
     env.globals["github_site"] = "https://csr13.github.io"
     env.globals["media_posts_pdf_root"] = "/media/documentation/pdfs/posts/"
     env.globals["categories_path"] = "/pages/posts/categories"
@@ -301,8 +301,8 @@ def generate_sitemap():
     Regenerate sitemap on every build, for new pages.
     """
     try:
-        url = "https://www.csr13.me"
-        home = "https://www.csr13.me/"
+        url = "https://www.itstealthki.com"
+        home = "https://www.itstealthki.com/"
         date = datetime.datetime.today().__str__()[:10]
         xml = '''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

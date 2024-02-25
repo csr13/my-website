@@ -3,18 +3,18 @@
         <title>Category best-practice</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="google-site-verification" content="2-n524qe11JQDqWEr-bTEf5zILWMTB27nmruGud5C1c" />
+		<meta name="google-site-verification" content="cugrPltTa-D0mE3MWv8TLrO0WjXE5rz9iOFRymAMOs4" />
         
-        <link rel='canonical' href='https://www.csr13.me/pages/posts/categories/best-practice/list.html' />
+        <link rel='canonical' href='https://www.itstealthki.com/pages/posts/categories/best-practice/list.html' />
     
         <meta name='robots' content='index, follow'> 
         <meta name="description" content="My dump">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
     
-        <link rel='canonical' href='https://www.csr13.me/pages/posts/categories/best-practice/list.html' />
+        <link rel='canonical' href='https://www.itstealthki.com/pages/posts/categories/best-practice/list.html' />
     
-    <meta description="List of best-practice archives on https://www.csr13.me">
+    <meta description="List of best-practice archives on https://www.itstealthki.com">
 
         <link rel="stylesheet" href="/static/css/normalize.css" />
         <link rel="stylesheet" href="/static/css/main.css" />
@@ -36,46 +36,57 @@
         <div class="main-div">
             
     <h3>Posts tagged with Best-practice</h3>
-    
+	 <div id="notes-archive-list" class="notes-archive-list">
+    <input 
+        class="search-field" 
+        id="notes-archive-search-field" 
+        placeholder="search by title" 
+    />
+    <div class="archive-notes-list">
         
-        <div class="post-list-item">
-            <p>
-                <a href='/pages/posts/http-interceptor-react.html'>
-                    1) React/React Native Http Interceptor.
-                </a>
-                <br>
-                <small>
-                    Date published: 2023-11-13 
-                </small>
-                <br>
-                
-                <small> 
-                    <span class="category-span">
-                        <a href="/pages/posts/categories/react/list.html">
-                            react
-                        </a>
-                    </span>
-                </small>
-                
-                <small> 
-                    <span class="category-span">
-                        <a href="/pages/posts/categories/http/list.html">
-                            http
-                        </a>
-                    </span>
-                </small>
-                
-                <small> 
-                    <span class="category-span">
-                        <a href="/pages/posts/categories/best-practice/list.html">
-                            best-practice
-                        </a>
-                    </span>
-                </small>
-                
-            </p>
-        </div>
-    
+            
+            <div class="post-list-item">
+                <p class="post-list-item-title">
+                    <a href='/pages/posts/http-interceptor-react.html'>
+                        1) React/React Native Http Interceptor.
+                    </a>
+                </p>
+                <p class="post-list-item-date">
+                    <small>
+                        Date published: 2023-11-13 
+                    </small>
+                </p>
+                <p class="post-list-items-cats">
+                    
+                    <small> 
+                        <span class="category-span post-list-items-cat-span">
+                            <a href="/pages/posts/categories/react/list.html">
+                                react
+                            </a>
+                        </span>
+                    </small>
+                    
+                    <small> 
+                        <span class="category-span post-list-items-cat-span">
+                            <a href="/pages/posts/categories/http/list.html">
+                                http
+                            </a>
+                        </span>
+                    </small>
+                    
+                    <small> 
+                        <span class="category-span post-list-items-cat-span">
+                            <a href="/pages/posts/categories/best-practice/list.html">
+                                best-practice
+                            </a>
+                        </span>
+                    </small>
+                    
+                </p>
+            </div>
+        
+    </div>
+</div>
 
         </div>
         <footer id="footer">
@@ -86,6 +97,14 @@
             </div>
         </footer>
         
+    <script src="/static/js/filters.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var notesComponentFilter = new ListFilter("notes-archive-list")
+            notesComponentFilter.main()
+        })
+    </script>
+
         <script src="/static/js/main.js"></script>
     </body>
 </html>
